@@ -1,0 +1,226 @@
+package it.unige.parteval.Test;
+
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
+
+import it.unige.automata.Automaton;
+import it.unige.automata.State;
+import it.unige.automata.impl.DFAutomatonImpl;
+import it.unige.automata.impl.NFAutomatonImpl;
+import it.unige.automata.impl.StateImpl;
+import it.unige.automata.impl.TransitionImpl;
+import it.unige.automata.util.GraphViz;
+import it.unige.automata.util.Printer;
+import it.unige.parteval.Main;
+
+public abstract class Test {
+	
+	static int TESTNUM = 1;
+
+	public static void main(String[] args) {
+		
+		
+		DFAutomatonImpl A = TestAuto(TESTNUM);
+		
+		// assert(new StateImpl("a4").equals(new StateImpl("a4")));
+		
+		System.out.println(Printer.printDotAutomaton(A, "A"));
+		System.out.println("=============================");
+		createDotGraph(Printer.printDotAutomaton(A, "A"), "A");
+		
+		DFAutomatonImpl P = TestPol(TESTNUM);
+		
+		System.out.println(Printer.printDotAutomaton(P, "P"));
+		System.out.println("=============================");
+		createDotGraph(Printer.printDotAutomaton(P, "P"), "P");
+		
+		Set<String> G = TestGamma(TESTNUM);
+		
+		NFAutomatonImpl PpA = Main.partial(P, A, G);
+		
+		System.out.println(Printer.printDotAutomaton(PpA, "P_A"));
+		System.out.println("=============================");
+		createDotGraph(Printer.printDotAutomaton(PpA, "P_A"), "P_A");
+		
+		DFAutomatonImpl PpADet = PpA.specialDFA(G);
+		
+		System.out.println(Printer.printDotAutomaton(PpADet, "P_A_det"));
+		System.out.println("=============================");
+		createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"), "P_A_det");
+		
+//		DFAutomatonImpl PpADetMin = PpADet.minimize();
+//		
+//		System.out.println(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"));
+//		System.out.println("=============================");
+//		createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"), "P_A_det_min");
+		
+		System.out.println("\nFINISHED\n");
+	}
+	
+	static Set<String> TestGamma(int num) {
+		switch(num) {
+		case 0: return TestGamma0();
+		case 1: return TestGamma1();
+		default: return null;
+		}
+	}
+	
+	static DFAutomatonImpl TestAuto(int num) {
+		switch(num) {
+		case 0: return TestAuto0();
+		case 1: return TestAuto1();
+		default: return null;
+		}
+	}
+	
+	static DFAutomatonImpl TestPol(int num) {
+		switch(num) {
+		case 0: return TestPol0();
+		case 1: return TestPol1();
+		default: return null;
+		}
+	}
+
+	public static void createDotGraph(String dotFormat, String fileName) {
+	    GraphViz gv = new GraphViz();
+	    gv.add(dotFormat);
+	    String type = "pdf";
+	    // gv.increaseDpi();
+	    // gv.decreaseDpi();
+	    File out = new File(fileName+"."+ type); 
+	    gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out );
+	}
+	
+	static Set<String> TestGamma0() {
+		Set<String> G = new HashSet<String>();
+		
+		G.add("s");
+		G.add("-s");
+		
+		return G;
+	}
+	
+	static Set<String> TestGamma1() {
+		Set<String> G = new HashSet<String>();
+		
+		G.add("s");
+		G.add("r");
+		G.add("-s");
+		G.add("-r");
+		
+		return G;
+	}
+	
+	static DFAutomatonImpl TestAuto0() {
+		
+		State a0 = new StateImpl("a0");
+		State a1 = new StateImpl("a1");
+		
+		DFAutomatonImpl A = new DFAutomatonImpl(a0);
+		
+		A.addTransition(new TransitionImpl(a0, "a", a1));
+		// A.addTransition(new TransitionImpl(a1, "s", a2));
+		// A.addTransition(new TransitionImpl(new StateImpl("a1"), "s", new StateImpl("a2")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a2"), "-s", new StateImpl("a3")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a2"), "-r", new StateImpl("a4")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a2"), "r", a0));
+		// A.addTransition(new TransitionImpl(new StateImpl("a3"), "r", new StateImpl("a1")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a3"), "b", new StateImpl("a4")));
+		
+		A.setFinal(a1, true);
+		
+		return A;
+	}
+	
+	static DFAutomatonImpl TestAuto1() {
+		
+		State a0 = new StateImpl("a0");
+		State a1 = new StateImpl("a1");
+		State a2 = new StateImpl("a2");
+		
+		DFAutomatonImpl A = new DFAutomatonImpl(a0);
+		
+		A.addTransition(new TransitionImpl(a0, "a", a1));
+		A.addTransition(new TransitionImpl(a1, "s", a2));
+		// A.addTransition(new TransitionImpl(new StateImpl("a1"), "s", new StateImpl("a2")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a2"), "-s", new StateImpl("a3")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a2"), "-r", new StateImpl("a4")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a2"), "r", a0));
+		// A.addTransition(new TransitionImpl(new StateImpl("a3"), "r", new StateImpl("a1")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a3"), "b", new StateImpl("a4")));
+		
+		A.setFinal(a2, true);
+		
+		return A;
+	}
+	
+	static DFAutomatonImpl TestAuto2() {
+		
+		State a0 = new StateImpl("a0");
+		State a1 = new StateImpl("a1");
+		State a2 = new StateImpl("a2");
+		
+		DFAutomatonImpl A = new DFAutomatonImpl(a0);
+		
+		A.addTransition(new TransitionImpl(a0, "a", a1));
+		A.addTransition(new TransitionImpl(a1, "c", a1));
+		A.addTransition(new TransitionImpl(a1, "s", a2));
+		// A.addTransition(new TransitionImpl(new StateImpl("a1"), "s", new StateImpl("a2")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a2"), "-s", new StateImpl("a3")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a2"), "-r", new StateImpl("a4")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a2"), "r", a0));
+		// A.addTransition(new TransitionImpl(new StateImpl("a3"), "r", new StateImpl("a1")));
+		// A.addTransition(new TransitionImpl(new StateImpl("a3"), "b", new StateImpl("a4")));
+		
+		A.setFinal(a2, true);
+		
+		return A;
+	}
+	
+	static DFAutomatonImpl TestPol0() {
+		
+		StateImpl p0 = new StateImpl("p0");
+		StateImpl p1 = new StateImpl("p1");
+		StateImpl p2 = new StateImpl("p2");
+		//StateImpl p3 = new StateImpl("F");
+		
+		DFAutomatonImpl P = new DFAutomatonImpl(p0);
+		
+		P.setFinal(p0, true);
+		P.setFinal(p1, true);
+		P.setFinal(p2, true);
+		//P.setFail(p3, true);
+		
+		P.addTransition(new TransitionImpl(p0, Main.TAU, p0));
+		P.addTransition(new TransitionImpl(p0, "a", p1));
+		P.addTransition(new TransitionImpl(p1, Main.TAU, p1));
+		P.addTransition(new TransitionImpl(p1, "a", p2));
+		P.addTransition(new TransitionImpl(p2, Main.TAU, p2));
+		//P.addTransition(new TransitionImpl(p2, "a", p3));
+		//P.addTransition(new TransitionImpl(p3, Main.TAU, p3));
+		//P.addTransition(new TransitionImpl(p3, "a", p3));
+		
+		return P;
+	}
+	
+	static DFAutomatonImpl TestPol1() {
+		
+		StateImpl p0 = new StateImpl("p0");
+		StateImpl p1 = new StateImpl("p1");
+		
+		DFAutomatonImpl P = new DFAutomatonImpl(p0);
+		
+		P.setFinal(p0, true);
+		//P.setFail(p2, true);
+		
+		P.addTransition(new TransitionImpl(p0, Main.TAU, p0));
+		P.addTransition(new TransitionImpl(p0, "a", p1));
+		P.addTransition(new TransitionImpl(p1, Main.TAU, p1));
+		P.addTransition(new TransitionImpl(p1, "c", p1));
+		P.addTransition(new TransitionImpl(p1, "b", p0));
+		
+		return P;
+	}
+
+}
