@@ -9,6 +9,7 @@ import java.util.Set;
 import it.unige.automata.Automaton;
 import it.unige.automata.State;
 import it.unige.automata.Transition;
+import it.unige.automata.util.SetUtils;
 
 public class NFAutomatonImpl implements Automaton {
 
@@ -105,20 +106,20 @@ public class NFAutomatonImpl implements Automaton {
 		return "DFAutomatonImpl [inits=" + inits + ", finals=" + finals + ", fails=" + fails + ", delta=" + delta + "]";
 	}
 
-	@Override
-	public Set<State> getFails() {
-		return fails;
-	}
-
-	@Override
-	public boolean setFail(State s, boolean f) {
-		if(f) {
-			fails.add(s);
-			return states.add(s);
-		}
-		else
-			return fails.remove(s);
-	}
+//	@Override
+//	public Set<State> getFails() {
+//		return fails;
+//	}
+//
+//	@Override
+//	public boolean setFail(State s, boolean f) {
+//		if(f) {
+//			fails.add(s);
+//			return states.add(s);
+//		}
+//		else
+//			return fails.remove(s);
+//	}
 
 	@Override
 	public boolean removeState(State s) {
@@ -153,9 +154,10 @@ public class NFAutomatonImpl implements Automaton {
 			MultiStateImpl curr = todo.remove(0);
 			
 			for(State s : curr.states) {
-				if(this.getFails().contains(s))
-					dfa.setFail(curr, true);
-				else if(this.getFinals().contains(s))
+//				if(this.getFails().contains(s))
+//					dfa.setFail(curr, true);
+//				else 
+				if(this.getFinals().contains(s))
 					dfa.setFinal(curr, true);
 			}
 			
@@ -197,10 +199,12 @@ public class NFAutomatonImpl implements Automaton {
 		
 		todo.add(msi);
 		
+		SetUtils<State> util = new SetUtils<State>();
+		
 		while(!todo.isEmpty()) {
 			MultiStateImpl curr = todo.remove(0);
 			
-			if(this.getFinals().containsAll(curr.states))
+			if(!util.intersection(this.getFinals(), curr.states).isEmpty())
 				dfa.setFinal(curr, true);
 			
 			for(String a : this.getAlphabet()) {
@@ -290,7 +294,10 @@ public class NFAutomatonImpl implements Automaton {
 
 	    	output.addAll(dst);
 	    }
-	    return Closure(output);
+	    if(output.containsAll(Closure(output)))
+	    	return Closure(output);
+	    else
+	    	return new ArrayList<State>();
 	}
 	
 	private ArrayList<State> GammaMove(ArrayList<State> inputState, String label) {

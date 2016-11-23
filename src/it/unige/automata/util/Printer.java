@@ -48,15 +48,15 @@ public class Printer {
 			builder.append(";\n");
 		}
 		
-		if(!A.getFails().isEmpty()) {
-			builder.append("\tnode [shape = circle, style=filled, fillcolor=red]; ");
-			
-			for(State s : A.getFails()) {
-				builder.append(s.getLabel() + " ");
-			}
-			
-			builder.append(";\n");
-		}
+//		if(!A.getFails().isEmpty()) {
+//			builder.append("\tnode [shape = circle, style=filled, fillcolor=red]; ");
+//			
+//			for(State s : A.getFails()) {
+//				builder.append(s.getLabel() + " ");
+//			}
+//			
+//			builder.append(";\n");
+//		}
 		
 		builder.append("\tnode [shape = circle, fillcolor=white];\n");
 		

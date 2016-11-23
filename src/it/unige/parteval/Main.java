@@ -40,10 +40,10 @@ public class Main {
 		
 		State i = prod(P.getInitial(), A.getInitial());
 		NFAutomatonImpl B = new NFAutomatonImpl(i);
-		
+
 		for(State fa : A.getFinals())
-			for(State fp : P.getStates())
-				if(!P.getFails().contains(fp))
+			for(State fp : P.getFinals())
+				//if(!P.getFails().contains(fp))
 					B.setFinal(prod(fp, fa), true);
 		
 		for(State qp : P.getStates()) {
@@ -53,11 +53,12 @@ public class Main {
 					for(State qpp : Qpp) {
 						B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp, qa)));
 						Set<State> Qap = A.trans(qa, a);
-							for(State qap : Qap)
-								B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
+						for(State qap : Qap)
+							B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
 					
 						if(a.compareTo(TAU) == 0) {
 							for(String g : Gamma) {
+								Qap = A.trans(qa, g);
 								for(State qap : Qap) {
 									B.addTransition(new TransitionImpl(prod(qp,qa), neg(g), prod(qpp,qap)));
 								}
@@ -69,8 +70,8 @@ public class Main {
 						}
 					}
 				}
-				if(P.getFails().contains(qp) || A.getFails().contains(qa))
-					B.setFail(prod(qp, qa), true);
+//				if(P.getFails().contains(qp) || A.getFails().contains(qa))
+//					B.setFail(prod(qp, qa), true);
 			}
 		}
 		

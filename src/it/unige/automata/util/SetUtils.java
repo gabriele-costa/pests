@@ -1,12 +1,13 @@
 package it.unige.automata.util;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 public class SetUtils<T> {
 	
 	
-	public HashSet<T> intersection(Set<T> A, Set<T> B) {
+	public HashSet<T> intersection(Collection<T> A, Collection<T> B) {
 		
 		HashSet<T> S = new HashSet<T>();
 		

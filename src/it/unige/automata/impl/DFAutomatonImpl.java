@@ -106,20 +106,20 @@ public class DFAutomatonImpl implements Automaton {
 		return "DFAutomatonImpl [inits=" + inits + ", finals=" + finals + ", fails=" + fails + ", delta=" + delta + "]";
 	}
 
-	@Override
-	public Set<State> getFails() {
-		return fails;
-	}
+//	@Override
+//	public Set<State> getFails() {
+//		return fails;
+//	}
 
-	@Override
-	public boolean setFail(State s, boolean f) {
-		if(f) {
-			fails.add(s);
-			return states.add(s);
-		}
-		else
-			return fails.remove(s);
-	}
+//	@Override
+//	public boolean setFail(State s, boolean f) {
+//		if(f) {
+//			fails.add(s);
+//			return states.add(s);
+//		}
+//		else
+//			return fails.remove(s);
+//	}
 
 	@Override
 	public boolean removeState(State s) {
@@ -217,10 +217,10 @@ public class DFAutomatonImpl implements Automaton {
 				M.setFinal(new MultiStateImpl(S), true);
 		}
 		
-		for(Set<State> S : P) {
-			if(!util.intersection(S, this.getFails()).isEmpty())
-				M.setFail(new MultiStateImpl(S), true);
-		}
+//		for(Set<State> S : P) {
+//			if(!util.intersection(S, this.getFails()).isEmpty())
+//				M.setFail(new MultiStateImpl(S), true);
+//		}
 		
 		return M;
 			

@@ -12,11 +12,11 @@ public interface Automaton {
 	
 	public Set<State> getFinals();
 	
-	public Set<State> getFails();
+	// public Set<State> getFails();
 	
 	public boolean setFinal(State s, boolean f);
 	
-	public boolean setFail(State s, boolean f);
+	// public boolean setFail(State s, boolean f);
 	
 	public Set<State> getStates();
 	
