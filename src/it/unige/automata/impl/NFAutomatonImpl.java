@@ -295,7 +295,7 @@ public class NFAutomatonImpl implements Automaton {
 	    	output.addAll(dst);
 	    }
 	    if(output.containsAll(Closure(output)))
-	    	return Closure(output);
+	    	return output;
 	    else
 	    	return new ArrayList<State>();
 	}
