@@ -16,7 +16,7 @@ import it.unige.parteval.Main;
 
 public abstract class Test {
 	
-	static int TESTNUM = 3;
+	static int TESTNUM = 4;
 
 	public static void main(String[] args) {
 		
@@ -49,11 +49,11 @@ public abstract class Test {
 		System.out.println("=============================");
 		createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"), "P_A_det");
 		
-//		DFAutomatonImpl PpADetMin = PpADet.minimize();
-//		
-//		System.out.println(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"));
-//		System.out.println("=============================");
-//		createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"), "P_A_det_min");
+		DFAutomatonImpl PpADetMin = PpADet.minimize();
+		
+		System.out.println(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"));
+		System.out.println("=============================");
+		createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"), "P_A_det_min");
 		
 		System.out.println("\nFINISHED\n");
 	}
@@ -63,7 +63,8 @@ public abstract class Test {
 		case 0: return TestGamma0();
 		case 1: return TestGamma1();
 		case 2: return TestGamma2();
-		case 3: return TestGamma3();		
+		case 3: return TestGamma3();
+		case 4: return TestGamma4();		
 		default: return null;
 		}
 	}
@@ -74,6 +75,7 @@ public abstract class Test {
 		case 1: return TestAuto1();
 		case 2: return TestAuto2();
 		case 3: return TestAuto3();
+		case 4: return TestAuto4();
 		default: return null;
 		}
 	}
@@ -84,6 +86,7 @@ public abstract class Test {
 		case 1: return TestPol1();
 		case 2: return TestPol2();
 		case 3: return TestPol3();
+		case 4: return TestPol4();
 		default: return null;
 		}
 	}
@@ -124,6 +127,11 @@ public abstract class Test {
 	}
 	
 	static Set<String> TestGamma3() {
+		
+		return TestGamma2();
+	}
+	
+	static Set<String> TestGamma4() {
 		
 		return TestGamma2();
 	}
@@ -188,7 +196,7 @@ public abstract class Test {
 		return A;
 	}
 	
-static DFAutomatonImpl TestAuto3() {
+	static DFAutomatonImpl TestAuto3() {
 		
 		State a0 = new StateImpl("a0");
 		State a1 = new StateImpl("a1");
@@ -213,6 +221,30 @@ static DFAutomatonImpl TestAuto3() {
 		// A.addTransition(new TransitionImpl(new StateImpl("a3"), "b", new StateImpl("a4")));
 		
 		A.setFinal(a3, true);
+		
+		return A;
+	}
+	
+	static DFAutomatonImpl TestAuto4() {
+		
+		State a0 = new StateImpl("a0");
+		State a1 = new StateImpl("a1");
+		State a2 = new StateImpl("a2");
+		State a3 = new StateImpl("a3");
+		State a4 = new StateImpl("a4");
+		
+		DFAutomatonImpl A = new DFAutomatonImpl(a0);
+		
+		A.addTransition(new TransitionImpl(a0, "a", a1));
+		A.addTransition(new TransitionImpl(a1, "s", a2));
+		A.addTransition(new TransitionImpl(a2, "b", a3));
+		A.addTransition(new TransitionImpl(a1, "r", a3));
+		A.addTransition(new TransitionImpl(a2, "-r", a0));
+		A.addTransition(new TransitionImpl(a3, "a", a1));
+		A.addTransition(new TransitionImpl(a3, "c", a0));
+		A.addTransition(new TransitionImpl(a2, "-s", a4));
+		
+		A.setFinal(a4, true);
 		
 		return A;
 	}
@@ -267,6 +299,10 @@ static DFAutomatonImpl TestAuto3() {
 	}
 	
 	static DFAutomatonImpl TestPol3() {
+		return TestPol1();
+	}
+	
+	static DFAutomatonImpl TestPol4() {
 		return TestPol1();
 	}
 
