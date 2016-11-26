@@ -27,6 +27,19 @@ public class SetUtils<T> {
 		return S;
 	}
 	
+	public boolean contains(Collection<T> S, T elm) {
+		for(T t : S)
+			if(t.equals(elm))
+				return true;
+		return false;
+	}
+	
+	public boolean containsAll(Collection<T> S, Collection<T> s) {
+		for(T t : s)
+			if(!contains(S, t))
+				return false;
+		return true;
+	}
 	
 	public T pick(Set<T> A) {
 		

@@ -151,42 +151,49 @@ public class DFAutomatonImpl implements Automaton {
 		SetUtils<State> util = new SetUtils<State>();
 		
 		W.add(this.getFinals());
+		W.add(tmp);
 		
 		while(!W.isEmpty()) {
-			Set<State> A = Util.pick(W);
+			Set<State> S = Util.pick(W);
 			for(String c : this.getAlphabet()) {
-				HashSet<State> X = new HashSet<State>();
+				HashSet<State> Ia = new HashSet<State>();
 				for(State s : this.getStates()) {
-					if(A.contains(this.trans(s, c))) {
-						X.add(s);
+					if(util.containsAll(S,this.trans(s, c))) {
+						Ia.add(s);
 					}
 				}
 				
-				for(Set<State> Y : P) {
-					Set<State> CAP = util.intersection(X, Y);
-					Set<State> MIN = util.minus(Y, X);
+				Set<Set<State>> newP = new HashSet<Set<State>>();
+				for(Set<State> R : P) {
+					Set<State> R1 = util.intersection(Ia, R);
+					Set<State> R2 = util.minus(R, R1);
 					
-					if(CAP.isEmpty())
+					if(R1.isEmpty()) {
+						newP.add(R);
 						continue;
-					if(MIN.isEmpty())
+					}
+					if(R2.isEmpty()) {
+						newP.add(R);
 						continue;
+					}
 					
-					P.remove(Y);
-					P.add(CAP);
-					P.add(MIN);
+					newP.remove(R);
+					newP.add(R1);
+					newP.add(R2);
 					
-					if(W.contains(Y)) {
-						W.remove(Y);
-						W.add(CAP);
-						W.add(MIN);
+					if(W.contains(R)) {
+						W.remove(R);
+						W.add(R1);
+						W.add(R2);
 					}
 					else {
-						if(CAP.size() <= MIN.size())
-							W.add(CAP);
+						if(R1.size() <= R2.size())
+							W.add(R1);
 						else
-							W.add(MIN);
+							W.add(R2);
 					}
 				}
+				P = newP;
 			}
 		}
 		

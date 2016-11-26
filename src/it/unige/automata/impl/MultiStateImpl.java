@@ -12,6 +12,7 @@ public class MultiStateImpl implements State {
 	
 	public MultiStateImpl(Collection<State> S) {
 		states.addAll(S);
+		states.sort(null);
 	}
 	
 	
@@ -50,9 +51,7 @@ public class MultiStateImpl implements State {
 		if (getClass() != obj.getClass())
 			return false;
 		MultiStateImpl other = (MultiStateImpl) obj;
-		HashSet<State> s1 = new HashSet<State>(states);
-		HashSet<State> s2 = new HashSet<State>(other.states);
-		return s1.equals(s2);
+		return states.containsAll(other.states) && other.states.containsAll(states);
 	}
 
 	@Override
