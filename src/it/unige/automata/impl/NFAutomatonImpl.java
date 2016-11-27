@@ -165,7 +165,7 @@ public class NFAutomatonImpl implements Automaton {
 				if(a.compareTo(EPSILON) == 0)
 					continue;
 				
-				ArrayList<State> mc;
+				HashSet<State> mc;
 				/*			
 	 			* if(Gamma.contains(a))
 					mc = GammaMove(curr.states, a);
@@ -211,7 +211,7 @@ public class NFAutomatonImpl implements Automaton {
 				if(a.compareTo(EPSILON) == 0)
 					continue;
 				
-				ArrayList<State> mc;
+				HashSet<State> mc;
 				if(Gamma.contains(a))
 					mc = GammaMove(curr.states, a);
 				else
@@ -229,15 +229,15 @@ public class NFAutomatonImpl implements Automaton {
 		return dfa;
 	}
 	
-	private ArrayList<State> Closure(State s) {
-		ArrayList<State> als = new ArrayList<State>();
+	private HashSet<State> Closure(State s) {
+		HashSet<State> als = new HashSet<State>();
 		als.add(s);
 		return Closure(als);
 	}
 	
-	private ArrayList<State> Closure(ArrayList<State> inputStates)
+	private HashSet<State> Closure(HashSet<State> inputStates)
 	{
-	    ArrayList<State> output = new ArrayList<State>();
+		HashSet<State> output = new HashSet<State>();
 	    output.addAll(inputStates);
 	 
 	    // Keeps states we are going to add later
@@ -269,8 +269,8 @@ public class NFAutomatonImpl implements Automaton {
 		return fs;
 	}
 	
-	private ArrayList<State> Move(ArrayList<State> inputState, String label) {
-		ArrayList<State> output = new ArrayList<State>();
+	private HashSet<State> Move(HashSet<State> inputState, String label) {
+		HashSet<State> output = new HashSet<State>();
 	    for(State state : inputState)
 	    {
 	        for(Transition edge : this.getForwordStar(state))
@@ -284,24 +284,24 @@ public class NFAutomatonImpl implements Automaton {
 	    return Closure(output);
 	}
 	
-	private ArrayList<State> SpecialMove(ArrayList<State> inputState, String label) {
-		ArrayList<State> output = new ArrayList<State>();
+	private HashSet<State> SpecialMove(HashSet<State> inputState, String label) {
+		HashSet<State> output = new HashSet<State>();
 	    for(State state : inputState)
 	    {
 	    	Set<State> dst = trans(state, label);
 	    	if(dst.isEmpty())
-	    		return new ArrayList<State>();
+	    		return new HashSet<State>();
 
 	    	output.addAll(dst);
 	    }
 	    if(output.containsAll(Closure(output)))
 	    	return output;
 	    else
-	    	return new ArrayList<State>();
+	    	return new HashSet<State>();
 	}
 	
-	private ArrayList<State> GammaMove(ArrayList<State> inputState, String label) {
-		ArrayList<State> output = new ArrayList<State>();
+	private HashSet<State> GammaMove(HashSet<State> inputState, String label) {
+		HashSet<State> output = new HashSet<State>();
 	    for(State state : inputState)
 	    {
 	        for(Transition edge : this.getForwordStar(state))

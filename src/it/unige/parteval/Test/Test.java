@@ -16,7 +16,7 @@ import it.unige.parteval.Main;
 
 public abstract class Test {
 	
-	static int TESTNUM = 4;
+	static int TESTNUM = 5;
 
 	public static void main(String[] args) {
 		
@@ -64,7 +64,8 @@ public abstract class Test {
 		case 1: return TestGamma1();
 		case 2: return TestGamma2();
 		case 3: return TestGamma3();
-		case 4: return TestGamma4();		
+		case 4: return TestGamma4();
+		case 5: return TestGamma5();		
 		default: return null;
 		}
 	}
@@ -76,6 +77,7 @@ public abstract class Test {
 		case 2: return TestAuto2();
 		case 3: return TestAuto3();
 		case 4: return TestAuto4();
+		case 5: return TestAuto5();
 		default: return null;
 		}
 	}
@@ -87,6 +89,7 @@ public abstract class Test {
 		case 2: return TestPol2();
 		case 3: return TestPol3();
 		case 4: return TestPol4();
+		case 5: return TestPol5();
 		default: return null;
 		}
 	}
@@ -134,6 +137,17 @@ public abstract class Test {
 	static Set<String> TestGamma4() {
 		
 		return TestGamma2();
+	}
+	
+	static Set<String> TestGamma5() {
+		Set<String> G = new HashSet<String>();
+		
+		G.add("login");
+		G.add("logout");
+		G.add("-login");
+		G.add("-logout");
+		
+		return G;
 	}
 	
 	static DFAutomatonImpl TestAuto0() {
@@ -249,6 +263,34 @@ public abstract class Test {
 		return A;
 	}
 	
+	static DFAutomatonImpl TestAuto5() {
+		State a0 = new StateImpl("a0");
+		State a1 = new StateImpl("a1");
+		State a2 = new StateImpl("a2");
+		State a3 = new StateImpl("a3");
+		State a4 = new StateImpl("a4");
+		State a5 = new StateImpl("a5");
+		State a6 = new StateImpl("a6");
+		
+		DFAutomatonImpl A = new DFAutomatonImpl(a0);
+		
+		A.addTransition(new TransitionImpl(a0, "login", a1));
+		A.addTransition(new TransitionImpl(a0, "micro_req", a5));
+		A.addTransition(new TransitionImpl(a5, "alert", a6));
+		A.addTransition(new TransitionImpl(a6, "cancel", a0));
+		A.addTransition(new TransitionImpl(a6, "pay", a0));
+		A.addTransition(new TransitionImpl(a1, "logout", a0));
+		A.addTransition(new TransitionImpl(a1, "pay_req", a2));
+		A.addTransition(new TransitionImpl(a2, "alert", a3));
+		A.addTransition(new TransitionImpl(a3, "cancel", a1));
+		A.addTransition(new TransitionImpl(a3, "pay", a1));
+		A.addTransition(new TransitionImpl(a1, "micro_req", a4));
+		A.addTransition(new TransitionImpl(a4, "pay", a1));
+		A.setFinal(a0, true);
+		
+		return A;
+	}
+	
 	static DFAutomatonImpl TestPol0() {
 		
 		StateImpl p0 = new StateImpl("p0");
@@ -304,6 +346,30 @@ public abstract class Test {
 	
 	static DFAutomatonImpl TestPol4() {
 		return TestPol1();
+	}
+	
+	static DFAutomatonImpl TestPol5() {
+		
+		StateImpl p0 = new StateImpl("p0");
+		StateImpl p1 = new StateImpl("p1");
+		
+		DFAutomatonImpl P = new DFAutomatonImpl(p0);
+		
+		P.addTransition(new TransitionImpl(p0, Main.TAU, p0));
+		P.addTransition(new TransitionImpl(p0, "alert", p0));
+		P.addTransition(new TransitionImpl(p0, "cancel", p0));
+		P.addTransition(new TransitionImpl(p0, "pay_req", p0));
+		P.addTransition(new TransitionImpl(p0, "micro_req", p0));
+		P.addTransition(new TransitionImpl(p0, "pay", p1));
+		P.addTransition(new TransitionImpl(p1, Main.TAU, p1));
+		P.addTransition(new TransitionImpl(p1, "alert", p0));
+		P.addTransition(new TransitionImpl(p1, "cancel", p1));
+		P.addTransition(new TransitionImpl(p1, "pay_req", p1));
+		P.addTransition(new TransitionImpl(p1, "micro_req", p1));
+		
+		P.setFinal(p0, true);
+		
+		return P;
 	}
 
 }

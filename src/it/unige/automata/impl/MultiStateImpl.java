@@ -8,11 +8,10 @@ import it.unige.automata.State;
 
 public class MultiStateImpl implements State {
 
-	ArrayList<State> states = new ArrayList<State>();
+	HashSet<State> states = new HashSet<State>();
 	
 	public MultiStateImpl(Collection<State> S) {
 		states.addAll(S);
-		states.sort(null);
 	}
 	
 	
