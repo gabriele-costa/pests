@@ -158,7 +158,7 @@ public class Main {
 	}
 	
 	public static ArrayList<ArrayList<State>> AlgC4(LTS A, ArrayList<ArrayList<State>> Chi, ArrayList<String> Sigma_B) {
-		// TODO
+		
 		return null;
 	}
 	

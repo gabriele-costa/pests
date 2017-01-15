@@ -10,5 +10,10 @@ public class MuDia implements Assertion {
 		this.a = a;
 		this.f = f;
 	}
+	
+	@Override
+	public String toString() {
+		return "<" + a + "> " + f.toString();
+	}
 
 }

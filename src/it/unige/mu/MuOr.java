@@ -9,5 +9,10 @@ public class MuOr implements Assertion {
 		this.left = left;
 		this.right = right;
 	}
+	
+	@Override
+	public String toString() {
+		return left.toString() + " \\/ " + right.toString();
+	}
 
 }

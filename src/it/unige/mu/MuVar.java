@@ -8,5 +8,10 @@ public class MuVar implements Assertion {
 		super();
 		this.x = x;
 	}
+	
+	@Override
+	public String toString() {
+		return x;
+	}
 
 }

@@ -12,6 +12,7 @@ import it.unige.automata.impl.StateImpl;
 import it.unige.automata.impl.TransitionImpl;
 import it.unige.automata.util.GraphViz;
 import it.unige.automata.util.Printer;
+import it.unige.mu.*;
 import it.unige.parteval.Main;
 
 public abstract class Test {
@@ -20,7 +21,22 @@ public abstract class Test {
 
 	public static void main(String[] args) {
 		
+		// testProj();
+		// testPMC();
+		// testOld();
 		
+	}
+	
+	public static void testProj() {
+		
+	}
+	
+	public static void testPMC() {
+		MuSystem Phi = new MuSystem();
+		Assertion f;
+	}
+	
+	public static void testOld() {
 		DFAutomatonImpl A = TestAuto(TESTNUM);
 		
 		// assert(new StateImpl("a4").equals(new StateImpl("a4")));
