@@ -17,5 +17,9 @@ public class MuEquation {
 	public String toString() {
 		return x + " =" + ((mu) ? "m" : "n") + " " + f.toString();
 	}
+	
+	public int size() {
+		return f.size();
+	}
 
 }

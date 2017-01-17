@@ -6,4 +6,9 @@ public class MuFF implements Assertion {
 	public String toString() {
 		return "false";
 	}
+	
+	@Override
+	public int size() {
+		return 1;
+	}
 }

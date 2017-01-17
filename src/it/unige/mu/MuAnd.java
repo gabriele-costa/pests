@@ -14,4 +14,9 @@ public class MuAnd implements Assertion {
 	public String toString() {
 		return left.toString() + " /\\ " + right.toString();
 	}
+
+	@Override
+	public int size() {
+		return left.size() + right.size();
+	}
 }

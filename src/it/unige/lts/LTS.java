@@ -12,6 +12,11 @@ public class LTS {
 	public State inits;
 	public Set<Transition> delta;
 	
+	public LTS() {
+		states = new HashSet<State>();
+		delta = new HashSet<Transition>();
+	}
+	
 	public Set<String> Sigma() {
 		HashSet<String> Sigma = new HashSet<String>();
 		for(Transition t : delta) {

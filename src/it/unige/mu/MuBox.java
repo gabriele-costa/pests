@@ -15,4 +15,9 @@ public class MuBox implements Assertion {
 	public String toString() {
 		return "[" + a + "] " + f.toString();
 	}
+	
+	@Override
+	public int size() {
+		return f.size() + 1;
+	}
 }

@@ -18,4 +18,12 @@ public class MuSystem {
 
 		return s;
 	}
+	
+	public int size() {
+		int s = 0;
+		for(MuEquation e : eq) {
+			s += e.size();
+		}
+		return s;
+	}
 }

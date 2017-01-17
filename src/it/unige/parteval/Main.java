@@ -18,9 +18,6 @@ import it.unige.mu.*;
 import it.unige.parteval.Test.Test;
 
 public class Main {
-	
-	public static final String TAU = "[t]";
-	public static final String BAR = "-";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -29,14 +26,6 @@ public class Main {
 	
 	private static State prod(State p, State q) {
 		return new StateImpl("" + p.getLabel()+q.getLabel() + "");
-	}
-	
-	private static String neg(String a) {
-		if(a.startsWith(BAR)) {
-			return a.substring(1);
-		}
-		else
-			return BAR + a;
 	}
 	
 	public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Gamma) {
@@ -59,16 +48,10 @@ public class Main {
 						for(State qap : Qap)
 							B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
 					
-						if(a.compareTo(TAU) == 0) {
-							for(String g : Gamma) {
-								Qap = A.trans(qa, g);
-								for(State qap : Qap) {
-									B.addTransition(new TransitionImpl(prod(qp,qa), neg(g), prod(qpp,qap)));
-								}
-								Qap = A.trans(qa, neg(g));
-								for(State qap : Qap) {
-									B.addTransition(new TransitionImpl(prod(qp,qa), g, prod(qpp,qap)));
-								}
+						if(Gamma.contains(a)) {
+							Qap = A.trans(qa, a);
+							for(State qap : Qap) {
+								B.addTransition(new TransitionImpl(prod(qp,qa),a, prod(qpp,qap)));
 							}
 						}
 					}
@@ -175,7 +158,7 @@ public class Main {
 		else if(f instanceof MuFF) return new MuFF();
 		else if(f instanceof MuVar) return new MuVar(quotienting(((MuVar) f).x, s.getLabel()));
 		else if(f instanceof MuAnd) return new MuAnd(quotienting(((MuAnd) f).left, A, s, Sigma_B), quotienting(((MuAnd) f).right, A, s, Sigma_B));
-		else if(f instanceof MuOr) return new MuOr(quotienting(((MuAnd) f).left, A, s, Sigma_B), quotienting(((MuAnd) f).right, A, s, Sigma_B));
+		else if(f instanceof MuOr) return new MuOr(quotienting(((MuOr) f).left, A, s, Sigma_B), quotienting(((MuOr) f).right, A, s, Sigma_B));
 		else if(f instanceof MuDia) {
 			MuDia dia = (MuDia) f;
 			if(!Sigma_B.contains(dia.a)) { // Sigma_A \ Gamma

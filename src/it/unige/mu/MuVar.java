@@ -13,5 +13,10 @@ public class MuVar implements Assertion {
 	public String toString() {
 		return x;
 	}
+	
+	@Override
+	public int size() {
+		return 1;
+	}
 
 }

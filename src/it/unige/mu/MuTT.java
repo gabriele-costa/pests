@@ -6,4 +6,9 @@ public class MuTT implements Assertion {
 	public String toString() {
 		return "true";
 	}
+
+	@Override
+	public int size() {
+		return 1;
+	}
 }

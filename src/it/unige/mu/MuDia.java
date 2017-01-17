@@ -16,4 +16,9 @@ public class MuDia implements Assertion {
 		return "<" + a + "> " + f.toString();
 	}
 
+	@Override
+	public int size() {
+		return f.size() + 1;
+	}
+
 }
