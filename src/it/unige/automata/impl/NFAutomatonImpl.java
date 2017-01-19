@@ -314,4 +314,9 @@ public class NFAutomatonImpl implements Automaton {
 	    }
 	    return Closure(output);
 	}
+
+	@Override
+	public void removeTransition(Transition t) {
+		delta.remove(t);
+	}
 }

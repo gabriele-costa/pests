@@ -67,6 +67,11 @@ public class DFAutomatonImpl implements Automaton {
 	public Set<Transition> getTransitions() {
 		return delta;
 	}
+	
+	@Override
+	public void removeTransition(Transition t) {
+		delta.remove(t);
+	}
 
 	@Override
 	public boolean addTransition(Transition t) {

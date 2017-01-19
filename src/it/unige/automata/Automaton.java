@@ -32,4 +32,6 @@ public interface Automaton {
 	
 	public boolean removeState(State s);
 	
+	public void removeTransition(Transition t);
+	
 }

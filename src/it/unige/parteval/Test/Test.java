@@ -20,17 +20,19 @@ import it.unige.parteval.Main;
 
 public abstract class Test {
 	
-	static int TESTNUM = 5;
+	static int TESTNUM = 1;
 
 	public static void main(String[] args) {
 		
 		// testProj();
-		testPMC();
+//		testPMC();
+//		
+//		System.out.println("==============================");
+//		System.out.println("==============================");
 		
-		System.out.println("==============================");
-		System.out.println("==============================");
+		// testMyProj();
 		
-		testMyProj();
+		testOld();
 		
 	}
 	
@@ -204,9 +206,9 @@ public abstract class Test {
 		return P;
 	}
 
-	private static void makeSelfLoops(DFAutomatonImpl P, StateImpl p, String[] Act) {
+	private static void makeSelfLoops(DFAutomatonImpl P, State q, String[] Act) {
 		for(String a : Act) {
-			P.addTransition(new TransitionImpl(p, a, p));
+			P.addTransition(new TransitionImpl(q, a, q));
 		}
 	}
 
@@ -273,6 +275,8 @@ public abstract class Test {
 		
 		Set<String> G = TestGamma(TESTNUM);
 		
+		addGammaLoops(P, G); // necessario perchè le policy devono sempre avere self loop sulle azioni di sincronizzazione
+		
 		NFAutomatonImpl PpA = Main.partial(P, A, G);
 		
 		System.out.println(Printer.printDotAutomaton(PpA, "P_A"));
@@ -294,6 +298,19 @@ public abstract class Test {
 		System.out.println("\nFINISHED\n");
 	}
 	
+	private static void addGammaLoops(DFAutomatonImpl A, Set<String> g) {
+		String[] ga = new String[g.size()];
+		int i = 0;
+		for(String s : g) {
+			ga[i++] = s;
+		}
+		
+		for(State q : A.getStates()) {
+			makeSelfLoops(A, q, ga);
+		}
+		
+	}
+
 	static Set<String> TestGamma(int num) {
 		switch(num) {
 		case 0: return TestGamma0();
@@ -541,14 +558,8 @@ public abstract class Test {
 		P.setFinal(p2, true);
 		//P.setFail(p3, true);
 		
-		//P.addTransition(new TransitionImpl(p0, Main.TAU, p0));
 		P.addTransition(new TransitionImpl(p0, "a", p1));
-		//P.addTransition(new TransitionImpl(p1, Main.TAU, p1));
 		P.addTransition(new TransitionImpl(p1, "a", p2));
-		//P.addTransition(new TransitionImpl(p2, Main.TAU, p2));
-		//P.addTransition(new TransitionImpl(p2, "a", p3));
-		//P.addTransition(new TransitionImpl(p3, Main.TAU, p3));
-		//P.addTransition(new TransitionImpl(p3, "a", p3));
 		
 		return P;
 	}
@@ -563,9 +574,7 @@ public abstract class Test {
 		P.setFinal(p0, true);
 		//P.setFail(p2, true);
 		
-		//P.addTransition(new TransitionImpl(p0, Main.TAU, p0));
 		P.addTransition(new TransitionImpl(p0, "a", p1));
-		//P.addTransition(new TransitionImpl(p1, Main.TAU, p1));
 		P.addTransition(new TransitionImpl(p1, "c", p1));
 		P.addTransition(new TransitionImpl(p1, "b", p0));
 		
