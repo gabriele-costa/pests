@@ -26,6 +26,10 @@ public abstract class Test {
 		
 		// testProj();
 		testPMC();
+		
+		System.out.println("==============================");
+		System.out.println("==============================");
+		
 		testMyProj();
 		
 	}
@@ -103,7 +107,6 @@ public abstract class Test {
 		State s3 = new StateImpl("s3");
 		State s4 = new StateImpl("s4");
 		State s5 = new StateImpl("s5");
-		State s6 = new StateImpl("s6");
 		
 		P.states.add(s0);
 		P.states.add(s1);
@@ -111,7 +114,6 @@ public abstract class Test {
 		P.states.add(s3);
 		P.states.add(s4);
 		P.states.add(s5);
-		P.states.add(s6);
 		
 		P.inits = s0;
 		
@@ -122,7 +124,7 @@ public abstract class Test {
 		P.delta.add(new TransitionImpl(s2, "get0", s3));
 		P.delta.add(new TransitionImpl(s3, "eat0", s4));
 		P.delta.add(new TransitionImpl(s4, "put0", s5));
-		P.delta.add(new TransitionImpl(s5, "put1", s6));
+		P.delta.add(new TransitionImpl(s5, "put1", s0));
 		
 		return P;
 	}
@@ -171,6 +173,8 @@ public abstract class Test {
 		
 		G.add("get0");
 		G.add("get1");
+		G.add("put0");
+		G.add("put1");
 		//G.add("-get0");
 		//G.add("-get1");
 		
@@ -180,7 +184,7 @@ public abstract class Test {
 	private static DFAutomatonImpl makeSpecAuto() {
 		StateImpl p0 = new StateImpl("p0");
 		StateImpl p1 = new StateImpl("p1");
-		//StateImpl p3 = new StateImpl("F");
+		StateImpl p2 = new StateImpl("p2");
 		
 		DFAutomatonImpl P = new DFAutomatonImpl(p0);
 		
@@ -190,9 +194,12 @@ public abstract class Test {
 		
 		makeSelfLoops(P, p0, new String[] {"get0","get1","put0","put1","think0","think1"});
 		makeSelfLoops(P, p1, new String[] {"get0","get1","put0","put1","think0","think1"});
+		makeSelfLoops(P, p2, new String[] {"get0","get1","put0","put1","think0","think1","eat0","eat1"});
 		
 		P.addTransition(new TransitionImpl(p0, "eat0", p1));
 		P.addTransition(new TransitionImpl(p1, "eat1", p0));
+		P.addTransition(new TransitionImpl(p0, "eat1", p2));
+		P.addTransition(new TransitionImpl(p1, "eat0", p2));
 		
 		return P;
 	}
@@ -204,8 +211,36 @@ public abstract class Test {
 	}
 
 	private static DFAutomatonImpl makePhilAuto() {
-		LTS P = makePhil();
-		return LTS2FSA(P);
+		
+		State s0 = new StateImpl("s0");
+		State s1 = new StateImpl("s1");
+		State s2 = new StateImpl("s2");
+		State s3 = new StateImpl("s3");
+		State s4 = new StateImpl("s4");
+		State s5 = new StateImpl("s5");
+		
+
+		DFAutomatonImpl P = new DFAutomatonImpl(s0);
+		
+		P.addState(s0);
+		P.addState(s1);
+		P.addState(s2);
+		P.addState(s3);
+		P.addState(s4);
+		P.addState(s5);
+		
+		P.setFinal(s0, true);
+		
+		P.addTransition(new TransitionImpl(s0, "think0", s0));
+		P.addTransition(new TransitionImpl(s0, "get0", s1));
+		P.addTransition(new TransitionImpl(s0, "get1", s2));
+		P.addTransition(new TransitionImpl(s1, "get1", s3));
+		P.addTransition(new TransitionImpl(s2, "get0", s3));
+		P.addTransition(new TransitionImpl(s3, "eat0", s4));
+		P.addTransition(new TransitionImpl(s4, "put0", s5));
+		P.addTransition(new TransitionImpl(s5, "put1", s0));
+		
+		return P;
 	}
 
 	private static DFAutomatonImpl LTS2FSA(LTS T) {
