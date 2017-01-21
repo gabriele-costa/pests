@@ -20,7 +20,7 @@ import it.unige.parteval.Main;
 
 public abstract class Test {
 	
-	static int TESTNUM = 1;
+	static int TESTNUM = 2;
 
 	public static void main(String[] args) {
 		
