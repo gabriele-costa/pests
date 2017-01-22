@@ -8,7 +8,7 @@ public abstract class Test {
 
 	public static void main(String[] args) {
 		
-	    Result result = JUnitCore.runClasses(BasicTest.class);
+	    Result result = JUnitCore.runClasses(OfficialTest.class);
 	    for (Failure failure : result.getFailures()) {
 	      System.out.println(failure.toString());
 	    }

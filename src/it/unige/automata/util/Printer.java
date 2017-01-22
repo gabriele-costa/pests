@@ -1,14 +1,11 @@
 package it.unige.automata.util;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.io.File;
 
 import it.unige.automata.Automaton;
 import it.unige.automata.State;
 import it.unige.automata.Transition;
-import it.unige.parteval.Main;
 
 public class Printer {
 
@@ -71,6 +68,16 @@ public class Printer {
 		
 		return builder.toString();	
 		
+	}
+	
+	public static void createDotGraph(String dotFormat, String fileName) {
+	    GraphViz gv = new GraphViz();
+	    gv.add(dotFormat);
+	    String type = "pdf";
+	    // gv.increaseDpi();
+	    // gv.decreaseDpi();
+	    File out = new File(fileName+"."+ type); 
+	    gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out );
 	}
 	
 }
