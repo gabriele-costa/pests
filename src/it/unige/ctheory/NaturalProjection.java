@@ -2,19 +2,19 @@ package it.unige.ctheory;
 
 import java.util.*;
 import it.unige.automata.*;
-import it.unige.lts.*;
+import it.unige.lts.LTS;
+
 
 public class NaturalProjection {
 	private static ArrayList<ArrayList<State>> AlgC1(ArrayList<ArrayList<State>> Chi) {
-
-		int i = 1;
-		int k = Chi.size();
-		while(i <= k-1) {
+		int i = 0;
+		
+		while(i < Chi.size()-1) {
 			boolean flag = false;
 			Set<State> Y = new HashSet<State>();
 			ArrayList<Collection<State>> Chip = new ArrayList<Collection<State>>();
 			int j = i + 1;
-			while(j <= k) {
+			while(j < Chi.size()) {
 				Set<State> tmp = new HashSet<State>();
 				tmp.addAll(Chi.get(i));
 				tmp.retainAll(Chi.get(j));
@@ -32,8 +32,10 @@ public class NaturalProjection {
 				i++;
 			}
 			else {
+				// Ugly but it works
+				Y.addAll(Chi.get(i));
+				Chi.get(i).clear();
 				Chi.get(i).addAll(Y);
-				k = Chi.size();
 			}
 		}
 
@@ -48,39 +50,61 @@ public class NaturalProjection {
 
 		return AlgC1(Z);
 	}
-
-	private static ArrayList<ArrayList<State>> AlgC3(LTS A, Set<String> Sigma_B) {
-		ArrayList<State> Q = new ArrayList<State>();
-		Q.addAll(A.states);
-		State q0 = Q.get(0); // Assunzione sbagliata:  0 non corrisponde sempre allo stato iniziale. 
-		ArrayList<String> Sigma_AmB = new ArrayList<String>();
-		Sigma_AmB.addAll(A.Sigma());
-		Sigma_AmB.removeAll(Sigma_B);
-		Set<Transition> Tq0 = A.getTransitions(q0, Sigma_AmB); // Va presa la chiususa non solo il primo livello
-		ArrayList<State> Xq0 = new ArrayList<State>();
-		for(Transition t : Tq0) {
-			Xq0.add(t.getDestination());
+	
+	private static Set<State> getTransResult(Automaton A, State src, Set<String> Sigma){
+		HashSet<State> result = new HashSet<>();
+		for(String s : Sigma)
+			result.addAll(A.trans(src, s));
+		return result;
+	}
+	
+	public static ArrayList<State> reachableStates(Automaton A, State init, Set<String> Sigma){
+		HashSet<State> result = new HashSet<State>();
+		Stack<State> stack = new Stack<State>();
+		stack.push(init); 
+		result.add(init);
+		
+		while(!stack.isEmpty()){
+			State current = stack.pop();
+			//Set<Transition> T = A.getTransitions(current, Sigma);
+			Set<State> S = getTransResult(A, current, Sigma);
+			for(State target : S){
+				if(!result.contains(target)){
+					stack.push(target);
+					result.add(target);
+				}
+			}
 		}
-		ArrayList<ArrayList<State>> Chi = new ArrayList<ArrayList<State>>(); // Meglio set di set
+		
+		return new ArrayList<>(result);
+	}
+	
+	private static ArrayList<ArrayList<State>> AlgC3(Automaton A, Set<String> Sigma_B) {
+		// Initial state
+		State q0 = A.getInitial();
+		// Symbols to be projected
+		Set<String> Sigma_AmB = new HashSet<String>();
+		Sigma_AmB.addAll(A.getAlphabet());
+		Sigma_AmB.removeAll(Sigma_B);
+		
+		ArrayList<State> Xq0 = reachableStates(A, q0, Sigma_AmB);
+		
+		ArrayList<ArrayList<State>> Chi = new ArrayList<>(); 
 		Chi.add(Xq0);
 
-		ArrayList<State> Y = new ArrayList<State>();   // SortedSet
-		Y.addAll(Q);
+		SortedSet<State> Y = new TreeSet<State>();   // SortedSet
+		Y.addAll(A.getStates());
 		Y.removeAll(Xq0);
 		while(!Y.isEmpty()) {
-			State q = Y.get(0);
-			Set<Transition> Tq = A.getTransitions(q, Sigma_AmB);
-			ArrayList<State> Xq = new ArrayList<State>(); // Dobrebbe essere la chiusura
-			for(Transition t : Tq) {
-				Xq.add(t.getDestination());
-			}
+			State q = Y.first();
+			ArrayList<State> Xq = reachableStates(A, q, Sigma_AmB);
 			Chi.add(Xq);
 			Y.removeAll(Xq);
 		}
 
 		return AlgC1(Chi);
 	}
-
+	
 	private static ArrayList<ArrayList<State>> AlgC4(LTS A, ArrayList<ArrayList<State>> Chi, ArrayList<String> Sigma_B) {
 		ArrayList<ArrayList<ArrayList<State>>> PY = new ArrayList<ArrayList<ArrayList<State>>>();
 		for(ArrayList<State> X_i : Chi){
@@ -113,7 +137,7 @@ public class NaturalProjection {
 		return AlgC2(PY);
 	}
 
-	public static ArrayList<ArrayList<State>> computeRStar(LTS A, Set<String> Sigma_B){
+	public static ArrayList<ArrayList<State>> computeRStar(Automaton A, Set<String> Sigma_B){
 		return AlgC3(A, Sigma_B);
 	}
 	
