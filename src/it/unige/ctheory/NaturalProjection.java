@@ -2,6 +2,9 @@ package it.unige.ctheory;
 
 import java.util.*;
 import it.unige.automata.*;
+import it.unige.automata.impl.DFAutomatonImpl;
+import it.unige.automata.impl.MultiStateImpl;
+import it.unige.automata.impl.TransitionImpl;
 import it.unige.lts.LTS;
 
 
@@ -105,15 +108,15 @@ public class NaturalProjection {
 		return AlgC1(Chi);
 	}
 	
-	private static ArrayList<ArrayList<State>> AlgC4(LTS A, ArrayList<ArrayList<State>> Chi, ArrayList<String> Sigma_B) {
+	private static ArrayList<ArrayList<State>> AlgC4(Automaton A, ArrayList<ArrayList<State>> Chi, Set<String> Sigma_B) {
 		ArrayList<ArrayList<ArrayList<State>>> PY = new ArrayList<ArrayList<ArrayList<State>>>();
 		for(ArrayList<State> X_i : Chi){
 			ArrayList<ArrayList<State>> Y_ij = new ArrayList<ArrayList<State>>();
 			for(String sigma_j : Sigma_B){
 				HashSet<State> X_ij = new HashSet<State>();
 				for(State q : X_i){
-					for(Transition Tq : A.getTransitions(q, sigma_j))
-						X_ij.add(Tq.getDestination());
+					for(State target : A.trans(q, sigma_j))
+						X_ij.add(target);
 				}
 
 				HashSet<State> Y = new HashSet<State>();
@@ -130,9 +133,11 @@ public class NaturalProjection {
 				}
 				ArrayList<State> tmp = new ArrayList<State>();
 				tmp.addAll(Y);
+				if(!tmp.isEmpty())
 				Y_ij.add(tmp);
 			}
-			PY.add(Y_ij);
+			if(!Y_ij.isEmpty())
+				PY.add(Y_ij);
 		}
 		return AlgC2(PY);
 	}
@@ -141,14 +146,47 @@ public class NaturalProjection {
 		return AlgC3(A, Sigma_B);
 	}
 	
+	// TODO: It seems to be correct but it needs to be optimized: avoiding n iterations
+	public static ArrayList<ArrayList<State>> computeRPlus(Automaton A, ArrayList<ArrayList<State>> Chi, Set<String> Sigma_B){
+		ArrayList<ArrayList<State>> result = Chi;
+		
+		for(int i=0; i < Chi.size(); ++i) // Compute the fixed point \Omega(\pi). In the paper they said this computation requires n iteration
+		 result = AlgC4(A, result, Sigma_B);
+		
+		return result;
+		//return AlgC4(A, Chi, Sigma_B);
+	}
+	
 	/* Implementation schema: 
 	 * 1 - Compute R* through Alg3
 	 * 2 - Compute R+ => fixed point of \omega(R*) 
 	 * 3 - Compute canonical projection h : Q -> Y (see paper pag. 17)
 	 * 4 - Compute transitions (see paper pag. 17)
 	 */
-	public static LTS proj(LTS A, Set<String> Sigma_B) {
-		return null;
+	public static Automaton proj(Automaton A, Set<String> Sigma_B) {
+		ArrayList<ArrayList<State>> rstar = computeRStar(A, Sigma_B);
+		ArrayList<ArrayList<State>> rplus = computeRPlus(A, rstar, Sigma_B);
+		
+		// I suppose this is something similar to the canonical projection of the paper 
+		HashMap<State, State> map = new HashMap<>();
+		DFAutomatonImpl projA;		
+		
+		for(ArrayList<State> ls : rplus){
+			State ms = new MultiStateImpl(ls);
+			for(State s : ls)
+				map.put(s, ms);
+		}
+		
+		projA = new DFAutomatonImpl(map.get(A.getInitial()));
+		
+		for(State s : A.getStates())
+			for(String c : Sigma_B)
+				for(State target : A.trans(s, c))
+					projA.addTransition(new TransitionImpl(map.get(s), c, map.get(target)));
+					
+		
+		
+		return projA.minimize();
 	}
 	
 	public static LTS proj(LTS spec, LTS A, Set<String> Sigma_B) {

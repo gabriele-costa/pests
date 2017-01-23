@@ -8,6 +8,7 @@ import org.junit.runner.notification.*;
 
 import it.unige.automata.*;
 import it.unige.automata.impl.*;
+import it.unige.automata.util.Printer;
 import it.unige.ctheory.*;
 
 
@@ -66,6 +67,7 @@ public class BasicTest {
 		System.out.println(Rstar);
 	}
 	
+	
 	@Test
 	public void testRStarComputationEx323(){
 		HashSet<String> sigma = new HashSet<String>();
@@ -76,6 +78,7 @@ public class BasicTest {
 		System.out.println(Rstar);
 	}
 	
+	
 	@Test
 	public void testReachableStatesEx322(){
 		HashSet<String> sigma = new HashSet<String>();
@@ -84,6 +87,7 @@ public class BasicTest {
 		ArrayList<State> reachable = NaturalProjection.reachableStates(getEx322(), getEx322().getInitial(), sigma);
 		System.out.println(reachable);
 	}
+	
 	
 	@Test
 	public void testReachableStatesEx323(){
@@ -94,6 +98,36 @@ public class BasicTest {
 		System.out.println(reachable);
 	}
 	
+	
+	@Test
+	public void testRPlusComputationEx323(){
+		HashSet<String> sigma = new HashSet<String>();
+		sigma.add("a");
+		sigma.add("b");
+		sigma.add("d");
+		ArrayList<ArrayList<State>> Rstar = NaturalProjection.computeRStar(getEx323(), sigma);
+		ArrayList<ArrayList<State>> RPlus = NaturalProjection.computeRPlus(getEx323(), Rstar, sigma);
+		System.out.println(RPlus);
+	}
+	
+	/*@Test
+	public void testStupid(){
+		Assert.assertEquals("Prova stupida1", getEx322(), getEx322());
+		Assert.assertNotEquals("Prova stupida2", getEx322(), getEx323());
+		Assert.assertEquals(new StateImpl("q0"), new StateImpl("q0"));
+	}*/
+	
+	@Test
+	public void testProjectionEx323(){
+		HashSet<String> sigma = new HashSet<String>();
+		sigma.add("a");
+		sigma.add("b");
+		sigma.add("d");
+		Automaton proj = NaturalProjection.proj(getEx323(), sigma);
+		System.out.println(Printer.printDotAutomaton(proj, "ProjEx323"));
+	}
+	
+	
 	public static void main(String[] args){
 		Result result = JUnitCore.runClasses(BasicTest.class);
 		
@@ -102,5 +136,8 @@ public class BasicTest {
 	      }
 			
 	      System.out.println(result.wasSuccessful());
+	      
+		//BasicTest basic = new BasicTest();
+		//basic.testRPlusComputationEx323();
 	}
 }
