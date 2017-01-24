@@ -16,8 +16,8 @@ import it.unige.parteval.Projection;
 
 public class OfficialTest {
 
-	final int N_DRONES = 2;
-	final int N_NODES = 3;
+	final int N_DRONES = 6;
+	final int N_NODES = 7;
 	
 	final String LOCK = "lock";
 	final String FLY = "fly";
@@ -45,58 +45,77 @@ public class OfficialTest {
     	
     	DFAutomatonImpl P = getPolicy();
 		
-		System.out.println(Printer.printDotAutomaton(P, "Policy"));
+		// System.out.println(Printer.printDotAutomaton(P, "Policy"));
 		System.out.println("=============================");
 		Printer.createDotGraph(Printer.printDotAutomaton(P, "Policy"), "Policy");
-    	
-    	DFAutomatonImpl T = getTower();
 		
-		System.out.println(Printer.printDotAutomaton(T, "Tower"));
-		System.out.println("=============================");
-		Printer.createDotGraph(Printer.printDotAutomaton(T, "Tower"), "Tower");
+		System.out.println("POLICY SIZE: " + P.getStates().size() + " states, " + P.getTransitions().size() + " transitions");
+    	
+//    	DFAutomatonImpl T = getTower();
+//		
+//		System.out.println(Printer.printDotAutomaton(T, "Tower"));
+//		System.out.println("=============================");
+//		Printer.createDotGraph(Printer.printDotAutomaton(T, "Tower"), "Tower");
 		
 		DFAutomatonImpl[] D = new DFAutomatonImpl[N_DRONES]; 
 		
 		Set<String> G = makeGamma();
 		
 		for(int i = 0; i < N_DRONES; i++) {
-			D[i] = getDrone(i+1);
+			// D[i] = getGeneralDrone(i+1); // too big
+			D[i] = getSimpleDrone(i+1);
 			
-			System.out.println(Printer.printDotAutomaton(D[i], "Drone"+(i+1)));
-			System.out.println("=============================");
+			
+			// System.out.println(Printer.printDotAutomaton(D[i], "Drone"+(i+1)));
+			// System.out.println("=============================");
 			Printer.createDotGraph(Printer.printDotAutomaton(D[i], "Drone"+(i+1)), "Drone"+(i+1));
+			
+			System.out.println("MODEL "+i+" SIZE: " + D[i].getStates().size() + " states, " + D[i].getTransitions().size() + " transitions");
 		}
 		
+		System.out.println("=============================");
+		
 		DFAutomatonImpl PpADetMin = P;
-		DFAutomatonImpl PpADet;
-		NFAutomatonImpl PpA;
+		DFAutomatonImpl PpADet = null;
+		NFAutomatonImpl PpA = null;
 		
 		for(int i = 0; i < N_DRONES; i++) {
 		
 			PpA = Projection.partial(PpADetMin, D[i], G);
 		
-			System.out.println(Printer.printDotAutomaton(PpA, "P_A"+i));
-			System.out.println("=============================");
-			Printer.createDotGraph(Printer.printDotAutomaton(PpA, "P_A"+i), "P_A"+i);
+			// System.out.println(Printer.printDotAutomaton(PpA, "P_A"+i));
+			// System.out.println("=============================");
+			// Printer.createDotGraph(Printer.printDotAutomaton(PpA, "P_A"+i), "P_A"+i);
 			
-			System.out.println("SIZE: " + PpA.getStates().size() + " states, " + PpA.getTransitions().size() + " transitions");
+			System.out.println(i+": NFA PARTIAL SIZE: " + PpA.getStates().size() + " states, " + PpA.getTransitions().size() + " transitions");
 			
 			PpADet = PpA.specialDFA(G);
 		
-			System.out.println(Printer.printDotAutomaton(PpADet, "P_A_det"+i));
-			System.out.println("=============================");
-			Printer.createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"+i), "P_A_det"+i);
+			// System.out.println(Printer.printDotAutomaton(PpADet, "P_A_det"+i));
+			// System.out.println("=============================");
+			// Printer.createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"+i), "P_A_det"+i);
 			
-			System.out.println("SIZE: " + PpADet.getStates().size() + " states, " + PpADet.getTransitions().size() + " transitions");
+			System.out.println(i+": DFA PARTIAL SIZE: " + PpADet.getStates().size() + " states, " + PpADet.getTransitions().size() + " transitions");
 			
 			PpADetMin = PpADet.minimize();
+			
+			PpADetMin.renameStates("q");
 		
-			System.out.println(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"+i));
+			// System.out.println(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"+i));
+			// Printer.createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"+i), "P_A_det_min"+i);
+		
+			System.out.println(i+": MINIMIZED SIZE: " + PpADetMin.getStates().size() + " states, " + PpADetMin.getTransitions().size() + " transitions");
+			
 			System.out.println("=============================");
-			Printer.createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"+i), "P_A_det_min"+i);
-		
-			System.out.println("SIZE: " + PpADetMin.getStates().size() + " states, " + PpADetMin.getTransitions().size() + " transitions");
+			
 		}
+		
+		System.out.println("Writing on file 1/3");		
+		Printer.createDotGraph(Printer.printDotAutomaton(PpA, "P_A"), "P_A");
+		System.out.println("Writing on file 2/3");
+		Printer.createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"), "P_A_det");
+		System.out.println("Writing on file 3/3");
+		Printer.createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"), "P_A_det_min");
 
 		System.out.println("\nFINISHED\n");
 
@@ -135,8 +154,41 @@ public class OfficialTest {
     	
     	return P;
     }
+    
+private DFAutomatonImpl getSimpleDrone(int i) {
+    	
+    	assertTrue(i <= N_DRONES);
+    	assertTrue(N_DRONES < N_NODES);
+    	
+    	int ip1 = ((i+1) % N_NODES);
+    	
+    	StateImpl H1 = new StateImpl("H" + i);
+    	StateImpl H2 = new StateImpl("H" + ip1);
+    	StateImpl T1 = new StateImpl("T" + i);
+    	StateImpl T2 = new StateImpl("T" + ip1);
+    	StateImpl L1 = new StateImpl("L" + i);
+    	StateImpl L2 = new StateImpl("L" + ip1);
+    	
+    	DFAutomatonImpl drone = new DFAutomatonImpl(H1);
+    	// if drone joins from outside
+    	// 		drone.addTransition(new TransitionImpl(init, lock(i,i) ,H[i]));
+    	
+			
+		drone.addTransition(new TransitionImpl(H1, charge(i), H1));
+		drone.addTransition(new TransitionImpl(H1, lock(i,ip1), T1));
+		drone.addTransition(new TransitionImpl(H2, lock(i,i), T2));
+		drone.addTransition(new TransitionImpl(T1, fly(i), L1));
+		drone.addTransition(new TransitionImpl(T2, fly(i), L2));
+		drone.addTransition(new TransitionImpl(L1, unlock(i,i), H2));
+		drone.addTransition(new TransitionImpl(L2, unlock(i,ip1), H1));
+		
+		drone.setFinal(H1, true);
+		drone.setFinal(H2, true);
+    	
+    	return drone;
+    }
 
-	private DFAutomatonImpl getDrone(int i) {
+	private DFAutomatonImpl getGeneralDrone(int i) {
     	
     	assertTrue(i <= N_DRONES);
     	assertTrue(N_DRONES < N_NODES);

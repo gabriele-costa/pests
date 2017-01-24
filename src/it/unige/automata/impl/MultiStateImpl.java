@@ -62,4 +62,10 @@ public class MultiStateImpl implements State {
 		return r;
 	}
 
+
+	@Override
+	public void setLabel(String string) {
+		// nothing to do here
+	}
+
 }

@@ -55,4 +55,9 @@ public class StateImpl implements State {
 	public String toString() {
 		return "StateImpl [label=" + label + "]";
 	}
+
+	@Override
+	public void setLabel(String string) {
+		this.label = string;
+	}
 }
