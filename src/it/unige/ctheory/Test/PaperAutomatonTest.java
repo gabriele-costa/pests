@@ -22,8 +22,10 @@ public abstract class PaperAutomatonTest extends TestCase {
 	protected static Automaton makeAutomaton(State[] states, Transition[] trans){
 		Automaton A = new NFAutomatonImpl(states[0]);
 				
-		for(int i=1; i< states.length; ++i)
+		for(int i=1; i< states.length; ++i){
 			A.addState(states[i]);
+			A.setFinal(states[i], true);
+		}
 		
 		for(Transition t : trans)
 			A.addTransition(t);
@@ -65,8 +67,8 @@ public abstract class PaperAutomatonTest extends TestCase {
 		Set<Set<State>> actualRplus = toSetSet(result);
 		Set<Set<State>> expectedRplusSet = toSetSet(expectedRplus);
 		
-		assertEquals("testComputeRstar", expectedRplusSet, actualRplus);
-		System.out.println(this.getClass().getSimpleName() + "." + "testComputeRstar:" + expectedRplusSet);
+		assertEquals("testComputeRplus", expectedRplusSet, actualRplus);
+		System.out.println(this.getClass().getSimpleName() + "." + "testComputeRplus:" + expectedRplusSet);
 	}
 
 	

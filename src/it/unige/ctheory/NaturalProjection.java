@@ -144,12 +144,19 @@ public class NaturalProjection {
 		return AlgC3(A, Sigma_B);
 	}
 	
-	// TODO: It seems to be correct but it needs to be optimized: avoiding n iterations
+	// It is ugly but it works!
 	public static ArrayList<ArrayList<State>> computeRPlus(Automaton A, ArrayList<ArrayList<State>> Chi, Set<String> Sigma_B){
 		ArrayList<ArrayList<State>> result = Chi;
 		
-		for(int i=0; i < Chi.size(); ++i) // Compute the fixed point \Omega(\pi). In the paper they said this computation requires n iteration
-		 result = AlgC4(A, result, Sigma_B);
+		// Compute the fixed point \Omega(\pi). In the paper they said this computation requires at most n iteration
+		for(int i=0; i < Chi.size(); ++i){ 
+			ArrayList<ArrayList<State>> current = AlgC4(A, result, Sigma_B);
+			if(current.equals(result)){
+				//System.err.println("Fixed point! i = " + i);
+				break;
+			}
+			result = current;
+		}
 		
 		return result;
 		//return AlgC4(A, Chi, Sigma_B);
@@ -160,6 +167,8 @@ public class NaturalProjection {
 	 * 2 - Compute R+ => fixed point of \omega(R*) 
 	 * 3 - Compute canonical projection h : Q -> Y (see paper pag. 17)
 	 * 4 - Compute transitions (see paper pag. 17)
+	 * 5 - Minimize the resulting automaton: 
+	 *     I checked in the paper they said that this algorithm computes a generator (not necessarily the minimum)  
 	 */
 	public static Automaton proj(Automaton A, Set<String> Sigma_B) {
 		ArrayList<ArrayList<State>> rstar = computeRStar(A, Sigma_B);
@@ -181,6 +190,9 @@ public class NaturalProjection {
 			for(String c : Sigma_B)
 				for(State target : A.trans(s, c))
 					projA.addTransition(new TransitionImpl(map.get(s), c, map.get(target)));
+				
+		for(State s : projA.getStates())
+			projA.setFinal(s, true);
 					
 		
 		
