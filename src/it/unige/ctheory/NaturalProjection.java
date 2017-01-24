@@ -2,9 +2,7 @@ package it.unige.ctheory;
 
 import java.util.*;
 import it.unige.automata.*;
-import it.unige.automata.impl.DFAutomatonImpl;
-import it.unige.automata.impl.MultiStateImpl;
-import it.unige.automata.impl.TransitionImpl;
+import it.unige.automata.impl.*;
 import it.unige.lts.LTS;
 
 
