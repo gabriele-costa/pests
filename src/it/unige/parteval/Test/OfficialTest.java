@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -15,7 +16,7 @@ import it.unige.parteval.Projection;
 
 public class OfficialTest {
 
-	final int N_DRONES = 1;
+	final int N_DRONES = 2;
 	final int N_NODES = 3;
 	
 	final String LOCK = "lock";
@@ -42,44 +43,62 @@ public class OfficialTest {
     @Test
     public void dronePartial() {
     	
+    	DFAutomatonImpl P = getPolicy();
+		
+		System.out.println(Printer.printDotAutomaton(P, "Policy"));
+		System.out.println("=============================");
+		Printer.createDotGraph(Printer.printDotAutomaton(P, "Policy"), "Policy");
+    	
     	DFAutomatonImpl T = getTower();
 		
 		System.out.println(Printer.printDotAutomaton(T, "Tower"));
 		System.out.println("=============================");
 		Printer.createDotGraph(Printer.printDotAutomaton(T, "Tower"), "Tower");
 		
-		for(int i = 0; i < N_DRONES; i++) {
-			DFAutomatonImpl Di = getDrone(i);
-			
-			System.out.println(Printer.printDotAutomaton(Di, "Drone"+i));
-			System.out.println("=============================");
-			Printer.createDotGraph(Printer.printDotAutomaton(Di, "Drone"+i), "Drone"+i);
-		}
+		DFAutomatonImpl[] D = new DFAutomatonImpl[N_DRONES]; 
 		
 		Set<String> G = makeGamma();
 		
-//		NFAutomatonImpl PpA = Projection.partial(P, A, G);
-//		
-//		System.out.println(Printer.printDotAutomaton(PpA, "P_A"));
-//		System.out.println("=============================");
-//		Printer.createDotGraph(Printer.printDotAutomaton(PpA, "P_A"), "P_A");
-//		
-//		DFAutomatonImpl PpADet = PpA.specialDFA(G);
-//		
-//		System.out.println(Printer.printDotAutomaton(PpADet, "P_A_det"));
-//		System.out.println("=============================");
-//		Printer.createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"), "P_A_det");
-//		
-//		System.out.println("SIZE: " + PpADet.getStates().size() + " states, " + PpADet.getTransitions().size() + " transitions");
-//		
-//		
-//		DFAutomatonImpl PpADetMin = PpADet.minimize();
-//		
-//		System.out.println(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"));
-//		System.out.println("=============================");
-//		Printer.createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"), "P_A_det_min");
-//
-//		System.out.println("\nFINISHED\n");
+		for(int i = 0; i < N_DRONES; i++) {
+			D[i] = getDrone(i+1);
+			
+			System.out.println(Printer.printDotAutomaton(D[i], "Drone"+(i+1)));
+			System.out.println("=============================");
+			Printer.createDotGraph(Printer.printDotAutomaton(D[i], "Drone"+(i+1)), "Drone"+(i+1));
+		}
+		
+		DFAutomatonImpl PpADetMin = P;
+		DFAutomatonImpl PpADet;
+		NFAutomatonImpl PpA;
+		
+		for(int i = 0; i < N_DRONES; i++) {
+		
+			PpA = Projection.partial(PpADetMin, D[i], G);
+		
+			System.out.println(Printer.printDotAutomaton(PpA, "P_A"+i));
+			System.out.println("=============================");
+			Printer.createDotGraph(Printer.printDotAutomaton(PpA, "P_A"+i), "P_A"+i);
+			
+			System.out.println("SIZE: " + PpA.getStates().size() + " states, " + PpA.getTransitions().size() + " transitions");
+			
+			PpADet = PpA.specialDFA(G);
+		
+			System.out.println(Printer.printDotAutomaton(PpADet, "P_A_det"+i));
+			System.out.println("=============================");
+			Printer.createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"+i), "P_A_det"+i);
+			
+			System.out.println("SIZE: " + PpADet.getStates().size() + " states, " + PpADet.getTransitions().size() + " transitions");
+			
+			PpADetMin = PpADet.minimize();
+		
+			System.out.println(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"+i));
+			System.out.println("=============================");
+			Printer.createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"+i), "P_A_det_min"+i);
+		
+			System.out.println("SIZE: " + PpADetMin.getStates().size() + " states, " + PpADetMin.getTransitions().size() + " transitions");
+		}
+
+		System.out.println("\nFINISHED\n");
 
     }
     
@@ -87,15 +106,39 @@ public class OfficialTest {
 		HashSet<String> Gamma = new HashSet<String>();
 		for(int d = 0; d < N_DRONES; d++)
 			for(int n = 0; n < N_NODES; n++) {
-				Gamma.add(lock(d, n));
-				Gamma.add(unlock(d, n));
+				Gamma.add(lock(d+1, n));
+				Gamma.add(unlock(d+1, n));
 			}
 		return Gamma;
 	}
+    
+    private DFAutomatonImpl getPolicy() {
+    	// At most N_NODES - N_DRONES lock
+    	StateImpl C[] = new StateImpl[N_NODES - N_DRONES + 1];
+    	
+    	for(int i = 0; i < N_NODES - N_DRONES + 1; i++) {
+    		C[i] = new StateImpl("C" + i);
+    	}
+    	
+    	DFAutomatonImpl P = new DFAutomatonImpl(C[0]);
+    	
+    	for(int i = 0; i < N_NODES - N_DRONES; i++) {	
+	    	for(int d = 0; d < N_DRONES; d++) {
+	    		for(int n = 0; n < N_NODES; n++) {
+	    			P.addTransition(new TransitionImpl(C[i], lock(d, n), C[i + 1]));
+	    			P.addTransition(new TransitionImpl(C[i + 1], unlock(d, n), C[i]));
+	    		}
+	    	}
+    	}
+    	
+    	P.setFinal(C[0], true);
+    	
+    	return P;
+    }
 
 	private DFAutomatonImpl getDrone(int i) {
     	
-    	assertTrue(i < N_DRONES);
+    	assertTrue(i <= N_DRONES);
     	assertTrue(N_DRONES < N_NODES);
     	
     	StateImpl H[] = new StateImpl[N_NODES];
@@ -109,11 +152,17 @@ public class OfficialTest {
     		L[j] = new StateImpl("L" + j + "_" + (j+1));
     		L[N_NODES + j] = new StateImpl("L" + (j+1) + "_" + j);
     	}
-    	
-    	StateImpl init = new StateImpl("i"+i);
+
+    	// if drone joins from outside
+//    	StateImpl init = new StateImpl("i"+i);
+
+    	// if drone already in
+    	StateImpl init = H[i-1];
+
     	
     	DFAutomatonImpl drone = new DFAutomatonImpl(init);
-    	drone.addTransition(new TransitionImpl(init, lock(i,i) ,H[i]));
+    	// if drone joins from outside
+// 		drone.addTransition(new TransitionImpl(init, lock(i,i) ,H[i]));
     	
     	for(int j = 0; j < N_NODES; j++) {
     		
@@ -133,79 +182,171 @@ public class OfficialTest {
     	
     	return drone;
     }
+	
+	private void swap(int[] v, int i, int j) {
+		int tmp = v[i];
+		v[i] = v[j];
+		v[j] = tmp;
+	}
+	
+	private List<int[]> permute(int[] arr, int k){
+		ArrayList<int[]> list = new ArrayList<int[]>();
+		if(k == arr.length) {
+        	list.add(arr.clone());
+        	return list;
+        }
+        
+		for(int i = k; i < arr.length; i++){
+            swap(arr, i, k);
+            list.addAll(permute(arr, k+1));
+            swap(arr, k, i);
+        }
+		return list;
+    }
     
     private DFAutomatonImpl getTower() {
     	
-    	int iv[] = new int[N_NODES];
-    	for(int i = 0; i < N_NODES; i++)
-    		iv[i] = -1;
+    	assertTrue(N_DRONES > 0);
+    	assertTrue(N_NODES > N_DRONES);
     	
-    	ArrayList<int[]> todo = new ArrayList<int[]>();
-    	HashSet<int[]> done = new HashSet<int[]>();
-    	todo.add(iv);
+    	int iv[] = new int[N_NODES];
+    	for(int i = 0; i < N_NODES; i++) {
+    		if(i < N_DRONES) {
+    			iv[i] = i + 1;
+    		}
+    		else {
+    			iv[i] = 0;
+    		}
+    	}
+    	
+    	List<int[]> stateEnc = permute(iv, 0);
     	
     	State init = makeState(iv);
     	
     	DFAutomatonImpl tower = new DFAutomatonImpl(init);
     	
-    	while(!todo.isEmpty()) {
-    		int v[] = todo.remove(0);
-    		
-    		if(isDone(done, v)) {
-    			System.out.println("Done: " + v);
-    			continue;
-    		}
-    		
-    		System.out.println("Doing: " + v);
-    		
-    		done.add(v);
+    	for(int[] v : stateEnc) {
     		State s = makeState(v);
-    		
-    		for(int i = 0; i < N_NODES; i++) {
-    			if(v[i] >= 0) {
-    				int w[] = v.clone();
-    				int d = v[i];
-    				w[i] = -1;
-    				todo.add(w);
-    				State dst = makeState(w);
-    				tower.addTransition(new TransitionImpl(s, unlock(d, i), dst));
-    			}
-    			else {
-    				for(int d = 0; d < N_DRONES; d++) {
-    					int w[] = v.clone();
-        				w[i] = d;
-        				todo.add(w);
-        				State dst = makeState(w);
-        				tower.addTransition(new TransitionImpl(s, lock(d, i), dst));
-        			}
-    			}
-    		}
+    		tower.addState(s);
+    		tower.setFinal(s, true);
     	}
     	
-    	for(State s : tower.getStates()) {
-    		tower.setFinal(s, true);
-    	}	
+    	List<int[]> next, previous;
+    	previous = stateEnc;
+    	
+    	do {
+    		
+    		next = generateNextLayer(previous);
+    		
+    		for(int[] nx : next) 
+    			for(int[] pv : previous)
+    				if(related(pv, nx)) {
+    					State t = makeState(pv);
+    					State d = makeState(nx);
+    					tower.addTransition(new TransitionImpl(t, makeLock(pv, nx), d));
+    					tower.addTransition(new TransitionImpl(t, makeUnlock(nx, pv), d));    					
+    				}
+    		
+    		
+    		previous = next;
+    		
+    		
+    	} while(!last(next));
     	
     	return tower;
     }
-    
-    private boolean isDone(HashSet<int[]> done, int[] v) {
-		for(int[] u : done) {
-			assertEquals("Vectors must have same length", v.length, u.length);
-			boolean eq = true;
-			for(int i = 0; i<v.length; i++) {
-				eq &= (v[i] == u[i]);
+
+	private String makeUnlock(int[] nx, int[] pv) {
+		int h = -1;
+		for(int i = 0; i < nx.length; i++) {
+			if(pv[i] != nx[i]) {
+				h = i;
+				break;
 			}
-			if(eq)
-				return true;
+		}
+		
+		assertTrue(h >= 0);
+		
+		return unlock(nx[h], h);
+	}
+
+	private String makeLock(int[] pv, int[] nx) {
+		int h = -1;
+		for(int i = 0; i < nx.length; i++) {
+			if(pv[i] != nx[i]) {
+				h = i;
+				break;
+			}
+		}
+		
+		assertTrue(h >= 0);
+		
+		return lock(nx[h], h);
+	}
+
+	private boolean related(int[] pv, int[] nx) {
+		boolean f = false;
+		for(int i = 0; i < pv.length; i++) {
+			if(pv[i] != nx[i]) {
+				if(f)
+					return false;
+				else 
+					f = true;
+			}
+		}
+		
+		return f;
+	}
+
+	private List<int[]> generateNextLayer(List<int[]> previous) {
+		int[] gv = previous.get(0).clone();
+		int a = -1;
+		for(int i = 0; i < gv.length; i++)
+			if(gv[i] == 0)
+				a = i;
+		
+		assertTrue(a >= 0);
+		
+		List<int[]> layer = new ArrayList<int[]>();
+		
+		for(int d = 0; d < N_DRONES; d++) {
+			if(!replicated(d+1, gv)) {
+				gv[a] = d + 1;
+				layer.addAll(permute(gv, 0));
+			}
+		}
+		
+		return layer;
+	}
+
+	private boolean replicated(int d, int[] gv) {
+		boolean f = false;
+		for(int i = 0; i < gv.length; i++) {
+			if(gv[i] == d)
+				if(f)
+					return true;
+				else
+					f = true;
 		}
 		return false;
+	}
+
+	private boolean last(List<int[]> layer) {
+		
+		if(layer.size() <= 0)
+			return true;
+		
+		int[] v = layer.get(0);
+		for(int i = 0; i < v.length; i++)
+			if(v[i] == 0)
+				return false;
+		return true;
 	}
 
 	private State makeState(int b[]) {
     	String l = "H";
     	for(int i = 0; i < b.length; i++) {
-    		l += (b[i] >= 0) ? b[i] : "e";
+    		l += b[i];
     	}
     	
     	return new StateImpl(l);
