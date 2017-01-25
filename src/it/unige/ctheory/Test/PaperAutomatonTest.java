@@ -75,13 +75,23 @@ public abstract class PaperAutomatonTest extends TestCase {
 	@Test
 	public void testProjAutomatonSetOfString() {
 		Automaton proj = NaturalProjection.proj(automaton, sigma);
-		System.out.println(this.getClass().getSimpleName() + "." + "testProjAutomatonSetOfString:\n" + Printer.printDotAutomaton(proj, this.getClass().getSimpleName()));
+		System.out.println(this.getClass().getSimpleName() + "." + "testProjAutomatonSetOfString:\n" + 
+							Printer.printDotAutomaton(proj, this.getClass().getSimpleName()));
 	}
 
-	/*@Ignore
+	
 	@Test
-	public void testProjLTSLTSSetOfString() {
-		fail("Not yet implemented");
-	}*/
+	public void testProjAutomatonAutomatonSetOfString() {
+		State s0 = new StateImpl("s0");
+		Automaton SigmaStar = new DFAutomatonImpl(s0);
+		SigmaStar.setFinal(s0, true);
+		
+		for(String s : sigma)
+			SigmaStar.addTransition(new TransitionImpl(s0, s, s0));
+		
+		Automaton proj = NaturalProjection.proj(automaton, SigmaStar, new HashSet<>());
+		System.out.println(this.getClass().getSimpleName() + "." + "testProjAutomatonAutomatonSetOfString:\n" + 
+							Printer.printDotAutomaton(proj, this.getClass().getSimpleName()));
+	}
 
 }

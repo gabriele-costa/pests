@@ -3,7 +3,7 @@ package it.unige.ctheory;
 import java.util.*;
 import it.unige.automata.*;
 import it.unige.automata.impl.*;
-import it.unige.lts.LTS;
+
 
 
 public class NaturalProjection {
@@ -199,7 +199,10 @@ public class NaturalProjection {
 		return projA.minimize();
 	}
 	
-	public static LTS proj(LTS spec, LTS A, Set<String> Sigma_B) {
-		return null;
+	public static Automaton proj(Automaton spec, Automaton A, Set<String> Sigma_B) {
+		Set<String> sigma = new HashSet<>();
+		sigma.addAll(Sigma_B);
+		sigma.addAll(A.getAlphabet());
+		return proj(spec, sigma);
 	}
 }
