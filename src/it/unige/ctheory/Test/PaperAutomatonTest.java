@@ -22,8 +22,10 @@ public abstract class PaperAutomatonTest extends TestCase {
 	protected static Automaton makeAutomaton(State[] states, Transition[] trans){
 		Automaton A = new NFAutomatonImpl(states[0]);
 				
-		for(int i=1; i< states.length; ++i)
+		for(int i=1; i< states.length; ++i){
 			A.addState(states[i]);
+			A.setFinal(states[i], true);
+		}
 		
 		for(Transition t : trans)
 			A.addTransition(t);
@@ -65,21 +67,31 @@ public abstract class PaperAutomatonTest extends TestCase {
 		Set<Set<State>> actualRplus = toSetSet(result);
 		Set<Set<State>> expectedRplusSet = toSetSet(expectedRplus);
 		
-		assertEquals("testComputeRstar", expectedRplusSet, actualRplus);
-		System.out.println(this.getClass().getSimpleName() + "." + "testComputeRstar:" + expectedRplusSet);
+		assertEquals("testComputeRplus", expectedRplusSet, actualRplus);
+		System.out.println(this.getClass().getSimpleName() + "." + "testComputeRplus:" + expectedRplusSet);
 	}
 
 	
 	@Test
 	public void testProjAutomatonSetOfString() {
 		Automaton proj = NaturalProjection.proj(automaton, sigma);
-		System.out.println(this.getClass().getSimpleName() + "." + "testProjAutomatonSetOfString:\n" + Printer.printDotAutomaton(proj, this.getClass().getSimpleName()));
+		System.out.println(this.getClass().getSimpleName() + "." + "testProjAutomatonSetOfString:\n" + 
+							Printer.printDotAutomaton(proj, this.getClass().getSimpleName()));
 	}
 
-	/*@Ignore
+	
 	@Test
-	public void testProjLTSLTSSetOfString() {
-		fail("Not yet implemented");
-	}*/
+	public void testProjAutomatonAutomatonSetOfString() {
+		State s0 = new StateImpl("s0");
+		Automaton SigmaStar = new DFAutomatonImpl(s0);
+		SigmaStar.setFinal(s0, true);
+		
+		for(String s : sigma)
+			SigmaStar.addTransition(new TransitionImpl(s0, s, s0));
+		
+		Automaton proj = NaturalProjection.proj(automaton, SigmaStar, new HashSet<>());
+		System.out.println(this.getClass().getSimpleName() + "." + "testProjAutomatonAutomatonSetOfString:\n" + 
+							Printer.printDotAutomaton(proj, this.getClass().getSimpleName()));
+	}
 
 }
