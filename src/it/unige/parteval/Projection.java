@@ -56,17 +56,17 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Gamm
 		return B;
 	}
 
-private static State prod(State p, State q) {
-	return new StateImpl("" + p.getLabel()+q.getLabel() + "");
-}
-
-private static void addGammaLoops(Automaton A, Set<String> g) {
-	
-	for(State q : A.getStates()) {
-		makeSelfLoops(A, q, g);
+	private static State prod(State p, State q) {
+		return new StateImpl("" + p.getLabel()+q.getLabel() + "");
 	}
 	
-}
+	private static void addGammaLoops(Automaton A, Set<String> g) {
+		
+		for(State q : A.getStates()) {
+			makeSelfLoops(A, q, g);
+		}
+		
+	}
 
 	private static void makeSelfLoops(Automaton P, State q, Set<String> Act) {
 		for(String a : Act) {

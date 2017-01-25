@@ -45,7 +45,7 @@ public class OfficialTest {
     @Test
     public void dronePartial() {
     	
-    	DFAutomatonImpl P = getPolicy();
+    	DFAutomatonImpl P = getTrivialPolicy(); // getPolicy();
 		
 		// System.out.println(Printer.printDotAutomaton(P, "Policy"));
 		System.out.println("=============================");
@@ -176,7 +176,29 @@ public class OfficialTest {
     	return P;
     }
     
-private DFAutomatonImpl getSimpleDrone(int i) {
+    private DFAutomatonImpl getTrivialPolicy() {
+    	
+    	StateImpl p0 = new StateImpl("p0");
+    	StateImpl p1 = new StateImpl("p1");
+    	StateImpl p2 = new StateImpl("p2");
+    	
+    	
+    	DFAutomatonImpl P = new DFAutomatonImpl(p0);
+    		
+    	P.addTransition(new TransitionImpl(p0, CHG, p0));
+    	P.addTransition(new TransitionImpl(p0, FLY, p1));
+    	P.addTransition(new TransitionImpl(p1, FLY, p2));
+    	P.addTransition(new TransitionImpl(p1, CHG, p0));
+    	P.addTransition(new TransitionImpl(p2, CHG, p0));
+
+    	P.setFinal(p0, true);
+    	P.setFinal(p1, true);
+    	P.setFinal(p2, true);
+    	
+    	return P;
+    }
+    
+    private DFAutomatonImpl getSimpleDrone(int i) {
     	
     	assertTrue(i <= N_DRONES);
     	assertTrue(N_DRONES < N_NODES);
