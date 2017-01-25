@@ -159,8 +159,12 @@ public class DFAutomatonImpl implements Automaton {
 		W.add(tmp);
 		
 		while(!W.isEmpty()) {
+			
+			// System.out.println(W.size());
+			
 			Set<State> S = Util.pick(W);
 			for(String c : this.getAlphabet()) {
+			
 				HashSet<State> Ia = new HashSet<State>();
 				for(State s : this.getStates()) {
 					if(util.containsAll(S,this.trans(s, c))) {
@@ -198,6 +202,7 @@ public class DFAutomatonImpl implements Automaton {
 							W.add(R2);
 					}
 				}
+				
 				P = newP;
 			}
 		}

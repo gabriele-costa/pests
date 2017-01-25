@@ -16,8 +16,8 @@ import it.unige.parteval.Projection;
 
 public class OfficialTest {
 
-	final int N_DRONES = 6;
-	final int N_NODES = 7;
+	final int N_DRONES = 5;
+	final int N_NODES = 6;
 	
 	final String LOCK = "lock";
 	final String FLY = "fly";
@@ -29,7 +29,8 @@ public class OfficialTest {
 	}
 	
 	private String fly(int d) {
-		return FLY + d;
+		// return FLY + d;
+		return FLY;
 	}
 	
 	private String unlock(int d, int n) {
@@ -37,7 +38,8 @@ public class OfficialTest {
 	}
 	
 	private String charge(int d) {
-		return CHG + d;
+		// return CHG + d;
+		return CHG;
 	}
 	
     @Test
@@ -93,7 +95,7 @@ public class OfficialTest {
 		
 			// System.out.println(Printer.printDotAutomaton(PpADet, "P_A_det"+i));
 			// System.out.println("=============================");
-			// Printer.createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"+i), "P_A_det"+i);
+			Printer.createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"+i), "P_A_det"+i);
 			
 			System.out.println(i+": DFA PARTIAL SIZE: " + PpADet.getStates().size() + " states, " + PpADet.getTransitions().size() + " transitions");
 			
@@ -123,33 +125,52 @@ public class OfficialTest {
     
     private Set<String> makeGamma() {
 		HashSet<String> Gamma = new HashSet<String>();
-		for(int d = 0; d < N_DRONES; d++)
-			for(int n = 0; n < N_NODES; n++) {
-				Gamma.add(lock(d+1, n));
-				Gamma.add(unlock(d+1, n));
-			}
+		for(int d = 0; d < N_DRONES; d++) {
+				Gamma.add(lock(d+1, d+1));
+				Gamma.add(unlock(d+1, d+1));
+				Gamma.add(lock(d+1, 1+((d+1)%N_DRONES)));
+				Gamma.add(unlock(d+1, 1+((d+1)%N_DRONES)));
+		}
 		return Gamma;
 	}
     
     private DFAutomatonImpl getPolicy() {
     	// At most N_NODES - N_DRONES lock
-    	StateImpl C[] = new StateImpl[N_NODES - N_DRONES + 1];
+		//    	StateImpl C[] = new StateImpl[N_NODES - N_DRONES + 1];
+		//    	
+		//    	for(int i = 0; i < N_NODES - N_DRONES + 1; i++) {
+		//    		C[i] = new StateImpl("C" + i);
+		//    	}
+		//    	
+		//    	DFAutomatonImpl P = new DFAutomatonImpl(C[0]);
+		//    	
+		//    	for(int i = 0; i < N_NODES - N_DRONES; i++) {	
+		//	    	for(int d = 0; d < N_DRONES; d++) {
+		//	    		for(int n = 0; n < N_NODES; n++) {
+		//	    			P.addTransition(new TransitionImpl(C[i], lock(d, n), C[i + 1]));
+		//	    			P.addTransition(new TransitionImpl(C[i + 1], unlock(d, n), C[i]));
+		//	    		}
+		//	    	}
+		//    	}
+		//    	
+		//    	P.setFinal(C[0], true);
     	
-    	for(int i = 0; i < N_NODES - N_DRONES + 1; i++) {
+    	StateImpl C[] = new StateImpl[N_DRONES + 1];
+    	
+    	for(int i = 0; i < N_DRONES + 1; i++) {
     		C[i] = new StateImpl("C" + i);
     	}
     	
     	DFAutomatonImpl P = new DFAutomatonImpl(C[0]);
     	
-    	for(int i = 0; i < N_NODES - N_DRONES; i++) {	
-	    	for(int d = 0; d < N_DRONES; d++) {
-	    		for(int n = 0; n < N_NODES; n++) {
-	    			P.addTransition(new TransitionImpl(C[i], lock(d, n), C[i + 1]));
-	    			P.addTransition(new TransitionImpl(C[i + 1], unlock(d, n), C[i]));
-	    		}
-	    	}
-    	}
-    	
+    	for(int d = 0; d < N_DRONES; d++) {
+			P.addTransition(new TransitionImpl(C[d], FLY, C[d + 1]));
+			if(d > 0) { 
+				P.addTransition(new TransitionImpl(C[d + 1], CHG, C[d - 1]));		
+			}
+    	}		
+    	P.addTransition(new TransitionImpl(C[1], CHG, C[0]));
+
     	P.setFinal(C[0], true);
     	
     	return P;
@@ -168,19 +189,20 @@ private DFAutomatonImpl getSimpleDrone(int i) {
     	StateImpl T2 = new StateImpl("T" + ip1);
     	StateImpl L1 = new StateImpl("L" + i);
     	StateImpl L2 = new StateImpl("L" + ip1);
+    	StateImpl R = new StateImpl("R");
     	
     	DFAutomatonImpl drone = new DFAutomatonImpl(H1);
     	// if drone joins from outside
     	// 		drone.addTransition(new TransitionImpl(init, lock(i,i) ,H[i]));
     	
 			
-		drone.addTransition(new TransitionImpl(H1, charge(i), H1));
+		drone.addTransition(new TransitionImpl(R, charge(i), H1));
 		drone.addTransition(new TransitionImpl(H1, lock(i,ip1), T1));
 		drone.addTransition(new TransitionImpl(H2, lock(i,i), T2));
 		drone.addTransition(new TransitionImpl(T1, fly(i), L1));
 		drone.addTransition(new TransitionImpl(T2, fly(i), L2));
 		drone.addTransition(new TransitionImpl(L1, unlock(i,i), H2));
-		drone.addTransition(new TransitionImpl(L2, unlock(i,ip1), H1));
+		drone.addTransition(new TransitionImpl(L2, unlock(i,ip1), R));
 		
 		drone.setFinal(H1, true);
 		drone.setFinal(H2, true);
