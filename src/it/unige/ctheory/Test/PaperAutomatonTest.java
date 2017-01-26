@@ -89,9 +89,12 @@ public abstract class PaperAutomatonTest extends TestCase {
 		for(String s : sigma)
 			SigmaStar.addTransition(new TransitionImpl(s0, s, s0));
 		
+		Printer.createDotGraph(Printer.printDotAutomaton(automaton, this.getClass().getSimpleName()), "natural.automaton." + this.getClass().getSimpleName());
+		Printer.createDotGraph(Printer.printDotAutomaton(SigmaStar, this.getClass().getSimpleName()), "natural.sigmastar." + this.getClass().getSimpleName());
+
 		Automaton proj = NaturalProjection.proj(automaton, SigmaStar, new HashSet<>());
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(proj, this.getClass().getSimpleName()), "natural." + this.getClass().getSimpleName());
+		Printer.createDotGraph(Printer.printDotAutomaton(proj, this.getClass().getSimpleName()), "natural.projection." + this.getClass().getSimpleName());
 		// System.out.println(this.getClass().getSimpleName() + "." + "testProjAutomatonAutomatonSetOfString:\n" + 
 		//					Printer.printDotAutomaton(proj, this.getClass().getSimpleName()));
 	}
