@@ -251,4 +251,24 @@ public class DFAutomatonImpl implements Automaton {
 		}
 	}
 	
+	public void collapse() {
+		Set<State> toKeep = new HashSet<State>();
+		toKeep.addAll(this.getFinals());
+		
+		boolean mod = false;
+		do {
+			for(State s : getStates()) {
+				if(!toKeep.contains(s)) {
+					for(String a : getAlphabet()) {
+						Set<State> reach = trans(s,a);
+						reach.retainAll(toKeep);
+						if(!reach.isEmpty()) {
+							// FIXME
+						}
+					}
+				}
+			}
+		} while(!mod);
+	}
+	
 }

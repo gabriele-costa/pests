@@ -41,7 +41,7 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 						Set<State> Qap = A.trans(qa, a);
 						
 						if(!Gamma.contains(a)) {
-							if(SigmaB.contains(a)) { 		// a in SigmaB \ Gamma
+							if(SigmaB.contains(a)) { 			// a in SigmaB \ Gamma
 								B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp, qa)));
 							}						
 							
@@ -50,7 +50,7 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 									B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
 							}
 						}
-						else { 							// a in Gamma
+						else { 									// a in Gamma
 							for(State qap : Qap) {
 								B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp,qap)));
 							}
