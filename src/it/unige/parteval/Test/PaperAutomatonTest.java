@@ -24,7 +24,7 @@ public abstract class PaperAutomatonTest extends TestCase {
 	protected static Automaton makeAutomaton(State[] states, Transition[] trans){
 		Automaton A = new NFAutomatonImpl(states[0]);
 				
-		for(int i=1; i< states.length; ++i){
+		for(int i=0; i< states.length; ++i){
 			A.addState(states[i]);
 			A.setFinal(states[i], true);
 		}
