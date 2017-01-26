@@ -14,10 +14,10 @@ import it.unige.automata.impl.*;
 import it.unige.automata.util.Printer;
 import it.unige.parteval.Projection;
 
-public class OfficialTest {
+public class CasestudyTest {
 
-	final int N_DRONES = 10;
-	final int N_NODES = 11;
+	final int N_DRONES = 1;
+	final int N_NODES = 2;
 	
 	final String LOCK = "lock";
 	final String FLY = "fly";
@@ -42,11 +42,48 @@ public class OfficialTest {
 		return CHG;
 	}
 	
-    @Test
-    public void dronePartial() {
-    	
-    	DFAutomatonImpl P = getPolicy(); // getTrivialPolicy();
+    //@Test
+    public void droneAvailability() {
+    	runTest(getAvailabilityPolicy(), makeAvailabilitySigmaB(), makeAvailabilityGamma());
+    }
+    
+    private Set<String> makeAvailabilitySigmaB() {
+		HashSet<String> SigmaB = new HashSet<>();
 		
+		for(int d = 1; d <= N_DRONES; d++) {
+			for(int n = 1; n <= N_NODES; n++) {
+				SigmaB.add(lock(d, n));
+				SigmaB.add(unlock(d, n));
+			}
+		}
+		
+		return SigmaB;
+	}
+
+	@Test
+    public void droneRefueling() {
+    	runTest(getRefuelingPolicy(), makeRefuelingSigmaB(), makeRefuelingGamma());
+    }
+    
+    
+    private Set<String> makeRefuelingSigmaB() {
+    	HashSet<String> SigmaB = new HashSet<>();
+		
+		for(int d = 1; d <= N_DRONES; d++) {
+			for(int n = 1; n <= N_NODES; n++) {
+				SigmaB.add(lock(d, n));
+				SigmaB.add(unlock(d, n));
+			}
+		}
+		
+		SigmaB.add(FLY);
+		SigmaB.add(CHG);
+		
+		return SigmaB;
+	}
+
+	public void runTest(DFAutomatonImpl P, Set<String> SigmaB, Set<String> G) {
+    	
 		// System.out.println(Printer.printDotAutomaton(P, "Policy"));
 		System.out.println("=============================");
 		Printer.createDotGraph(Printer.printDotAutomaton(P, "Policy"), "Policy");
@@ -61,7 +98,6 @@ public class OfficialTest {
 		
 		DFAutomatonImpl[] D = new DFAutomatonImpl[N_DRONES]; 
 		
-		Set<String> G = makeGamma();
 		
 		for(int i = 0; i < N_DRONES; i++) {
 			// D[i] = getGeneralDrone(i+1); // too big
@@ -82,8 +118,8 @@ public class OfficialTest {
 		NFAutomatonImpl PpA = null;
 		
 		for(int i = 0; i < N_DRONES; i++) {
-		
-			PpA = Projection.partial(PpADetMin, D[i], G);
+			//  addActions(D[i],SigmaB)
+			PpA = Projection.partial(PpADetMin, D[i], SigmaB, G);
 		
 			// System.out.println(Printer.printDotAutomaton(PpA, "P_A"+i));
 			// System.out.println("=============================");
@@ -123,47 +159,71 @@ public class OfficialTest {
 
     }
     
-    private Set<String> makeGamma() {
+    private Set<String> addActions(DFAutomatonImpl A, Set<String> SigmaB) {
+		HashSet<String> Sigma = new HashSet<>();
+		
+		Sigma.addAll(SigmaB);
+		Sigma.addAll(A.getAlphabet());
+
+		return SigmaB;
+	}
+
+	private Set<String> makeAvailabilityGamma() {
+		HashSet<String> Gamma = new HashSet<String>();
+		
+		return Gamma;
+	}
+    
+    private Set<String> makeRefuelingGamma() {
 		HashSet<String> Gamma = new HashSet<String>();
 		for(int d = 0; d < N_DRONES; d++) {
-				Gamma.add(lock(d+1, d+1));
-				Gamma.add(unlock(d+1, d+1));
-				Gamma.add(lock(d+1, 1+((d+1)%N_DRONES)));
-				Gamma.add(unlock(d+1, 1+((d+1)%N_DRONES)));
+			for(int n = 0; n < N_NODES; n++) {
+				Gamma.add(lock(d+1, n+1));
+				Gamma.add(unlock(d+1, n+1));
+			}
 		}
 		return Gamma;
 	}
     
-    private DFAutomatonImpl getPolicy() {
-    	// At most N_NODES - N_DRONES lock
-		//    	StateImpl C[] = new StateImpl[N_NODES - N_DRONES + 1];
-		//    	
-		//    	for(int i = 0; i < N_NODES - N_DRONES + 1; i++) {
-		//    		C[i] = new StateImpl("C" + i);
-		//    	}
-		//    	
-		//    	DFAutomatonImpl P = new DFAutomatonImpl(C[0]);
-		//    	
-		//    	for(int i = 0; i < N_NODES - N_DRONES; i++) {	
-		//	    	for(int d = 0; d < N_DRONES; d++) {
-		//	    		for(int n = 0; n < N_NODES; n++) {
-		//	    			P.addTransition(new TransitionImpl(C[i], lock(d, n), C[i + 1]));
-		//	    			P.addTransition(new TransitionImpl(C[i + 1], unlock(d, n), C[i]));
-		//	    		}
-		//	    	}
-		//    	}
-		//    	
-		//    	P.setFinal(C[0], true);
+    private DFAutomatonImpl getAvailabilityPolicy() {
+    	 // At most N_NODES - N_DRONES lock
+    	StateImpl C[] = new StateImpl[N_NODES - N_DRONES + 1];
     	
-    	StateImpl C[] = new StateImpl[N_DRONES + 1];
-    	
-    	for(int i = 0; i < N_DRONES + 1; i++) {
+    	for(int i = 0; i < N_NODES - N_DRONES + 1; i++) {
     		C[i] = new StateImpl("C" + i);
     	}
     	
     	DFAutomatonImpl P = new DFAutomatonImpl(C[0]);
     	
     	for(int d = 0; d < N_DRONES; d++) {
+    		for(int n = 0; n < N_NODES; n++) {
+    			P.addTransition(new TransitionImpl(C[0], unlock(d, n), C[0]));
+    	    	for(int i = 0; i < N_NODES - N_DRONES; i++) {	
+    	    		P.addTransition(new TransitionImpl(C[i], lock(d, n), C[i + 1]));
+	    			P.addTransition(new TransitionImpl(C[i + 1], unlock(d, n), C[i]));
+	    		}
+	    	}
+    	}
+    	
+    	for(int i = 0; i < C.length; i++) {
+    		P.setFinal(C[i], true);
+    	}
+    	
+    	return P;
+    }
+    
+    private DFAutomatonImpl getRefuelingPolicy() {
+    	
+    	StateImpl C[] = new StateImpl[N_NODES + 1];
+    	StateImpl F = new StateImpl("fail");
+    	
+    	for(int i = 0; i < N_NODES + 1; i++) {
+    		C[i] = new StateImpl("C" + i);
+    	}
+    	
+    	DFAutomatonImpl P = new DFAutomatonImpl(C[0]);
+    	
+    	for(int d = 0; d < N_NODES; d++) {
 			P.addTransition(new TransitionImpl(C[d], FLY, C[d + 1]));
 			if(d > 0) { 
 				P.addTransition(new TransitionImpl(C[d + 1], CHG, C[d - 1]));		
@@ -171,9 +231,14 @@ public class OfficialTest {
     	}		
     	P.addTransition(new TransitionImpl(C[1], CHG, C[0]));
     	P.addTransition(new TransitionImpl(C[0], CHG, C[0]));
+    	P.addTransition(new TransitionImpl(C[N_NODES], FLY, F));
+    	P.addTransition(new TransitionImpl(F, FLY, F));
+    	P.addTransition(new TransitionImpl(F, CHG, F));
 
-    	for(int i = 0; i < N_DRONES + 1; i++)
+    	for(int i = 0; i < N_NODES + 1; i++)
     		P.setFinal(C[i], true);
+    	
+    	
     	
     	return P;
     }
@@ -205,7 +270,7 @@ public class OfficialTest {
     	assertTrue(i <= N_DRONES);
     	assertTrue(N_DRONES < N_NODES);
     	
-    	int ip1 = ((i+1) % N_NODES);
+    	int ip1 = 1+(i % (N_NODES+1));
     	
     	StateImpl H1 = new StateImpl("H" + i);
     	StateImpl H2 = new StateImpl("H" + ip1);

@@ -34,18 +34,21 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 					
 					// if Qpp is empty == false
 					if(Qpp.isEmpty())
-						B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, ffstate));
+						B.addTransition(new TransitionImpl(prod(qp,qa), a, ffstate));
 										
 					for(State qpp : Qpp) {
 						
 						Set<State> Qap = A.trans(qa, a);
 						
-						if(SigmaB.contains(a)) { 		// a in SigmaB \ Gamma
-							B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp, qa)));
-						}						
-						else if(!Gamma.contains(a)) { 	// a in SigmaA \ Gamma
-							for(State qap : Qap)
-								B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
+						if(!Gamma.contains(a)) {
+							if(SigmaB.contains(a)) { 		// a in SigmaB \ Gamma
+								B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp, qa)));
+							}						
+							
+							if(A.getAlphabet().contains(a)) { 	// a in SigmaA \ Gamma
+								for(State qap : Qap)
+									B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
+							}
 						}
 						else { 							// a in Gamma
 							for(State qap : Qap) {
@@ -59,8 +62,10 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 			}
 		}
 		
-		removeGammaLoops(P, Gamma);
-		removeGammaLoops(B, Gamma);
+		// removeGammaLoops(P, Gamma);
+		// removeGammaLoops(B, Gamma);
+		
+		makeSelfLoops(B, ffstate, B.getAlphabet());
 		
 		return B;
 	}
@@ -75,10 +80,13 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 		return new StateImpl("" + p.getLabel()+q.getLabel() + "");
 	}
 	
-	private static void addGammaLoops(Automaton A, Set<String> g) {
+	private static void addGammaLoops(Automaton A, Set<String> G) {
 		
 		for(State q : A.getStates()) {
-			makeSelfLoops(A, q, g);
+			for(String g : G) {
+				if(A.trans(q, g).isEmpty()) 
+					A.addTransition(new TransitionImpl(q, g, q));
+			}
 		}
 		
 	}
