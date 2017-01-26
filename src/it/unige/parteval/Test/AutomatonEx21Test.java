@@ -38,6 +38,7 @@ public class AutomatonEx21Test extends PaperAutomatonTest {
 		sigma.add("c");
 		cosigma = new HashSet<>();
 		cosigma.add("d");
+		gamma = new HashSet<>();
 		
 		
 		expectedResultReachable = new HashSet<>();

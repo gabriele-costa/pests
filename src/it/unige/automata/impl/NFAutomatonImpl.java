@@ -199,12 +199,10 @@ public class NFAutomatonImpl implements Automaton {
 		
 		todo.add(msi);
 		
-		SetUtils<State> util = new SetUtils<State>();
-		
 		while(!todo.isEmpty()) {
 			MultiStateImpl curr = todo.remove(0);
 			
-			if(!util.intersection(this.getFinals(), curr.states).isEmpty())
+			if(this.getFinals().containsAll(curr.states))
 				dfa.setFinal(curr, true);
 			
 			for(String a : this.getAlphabet()) {

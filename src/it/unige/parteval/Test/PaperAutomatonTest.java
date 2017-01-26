@@ -16,6 +16,7 @@ public abstract class PaperAutomatonTest extends TestCase {
 	protected Automaton automaton;
 	protected Set<String> sigma;
 	protected Set<String> cosigma;
+	protected Set<String> gamma;
 	protected Set<State> expectedResultReachable;
 	protected ArrayList<ArrayList<State>> expectedRstar;
 	protected ArrayList<ArrayList<State>> expectedRplus;
@@ -75,16 +76,18 @@ public abstract class PaperAutomatonTest extends TestCase {
 
 	@Test
 	public void testProjAutomatonAutomatonSetOfString() {
-		Automaton SigmaC = makeComplementAutomato(cosigma);
+		Automaton coSigmaAutomaton = makeComplementAutomato(cosigma);
 		
 		Printer.createDotGraph(Printer.printDotAutomaton(automaton, this.getClass().getSimpleName()), "partial.automaton." + this.getClass().getSimpleName());
-		Printer.createDotGraph(Printer.printDotAutomaton(SigmaC, this.getClass().getSimpleName()), "partial.cosigmastar." + this.getClass().getSimpleName());
+		Printer.createDotGraph(Printer.printDotAutomaton(coSigmaAutomaton, this.getClass().getSimpleName()), "partial.cosigmastar." + this.getClass().getSimpleName());
 
-		
-		NFAutomatonImpl nfaproj = Projection.partial(automaton, SigmaC, new HashSet<>());
+		Set<String> SigmaB = new HashSet<String>();
+		SigmaB.addAll(automaton.getAlphabet());
+		SigmaB.removeAll(coSigmaAutomaton.getAlphabet());
+		NFAutomatonImpl nfaproj = Projection.partial(automaton, coSigmaAutomaton, SigmaB, gamma);
 		Printer.createDotGraph(Printer.printDotAutomaton(nfaproj, this.getClass().getSimpleName()), "partial.nfaprojection." + this.getClass().getSimpleName());
 		
-		DFAutomatonImpl proj = nfaproj.specialDFA(new HashSet<>());
+		DFAutomatonImpl proj = nfaproj.specialDFA(gamma);
 		proj = proj.minimize();
 		
 		Printer.createDotGraph(Printer.printDotAutomaton(proj, this.getClass().getSimpleName()), "partial.projection." + this.getClass().getSimpleName());

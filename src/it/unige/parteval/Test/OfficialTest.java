@@ -16,8 +16,8 @@ import it.unige.parteval.Projection;
 
 public class OfficialTest {
 
-	final int N_DRONES = 5;
-	final int N_NODES = 6;
+	final int N_DRONES = 10;
+	final int N_NODES = 11;
 	
 	final String LOCK = "lock";
 	final String FLY = "fly";
@@ -45,7 +45,7 @@ public class OfficialTest {
     @Test
     public void dronePartial() {
     	
-    	DFAutomatonImpl P = getTrivialPolicy(); // getPolicy();
+    	DFAutomatonImpl P = getPolicy(); // getTrivialPolicy();
 		
 		// System.out.println(Printer.printDotAutomaton(P, "Policy"));
 		System.out.println("=============================");
@@ -87,7 +87,7 @@ public class OfficialTest {
 		
 			// System.out.println(Printer.printDotAutomaton(PpA, "P_A"+i));
 			// System.out.println("=============================");
-			// Printer.createDotGraph(Printer.printDotAutomaton(PpA, "P_A"+i), "P_A"+i);
+			Printer.createDotGraph(Printer.printDotAutomaton(PpA, "P_A"+i), "P_A"+i);
 			
 			System.out.println(i+": NFA PARTIAL SIZE: " + PpA.getStates().size() + " states, " + PpA.getTransitions().size() + " transitions");
 			
@@ -170,8 +170,10 @@ public class OfficialTest {
 			}
     	}		
     	P.addTransition(new TransitionImpl(C[1], CHG, C[0]));
+    	P.addTransition(new TransitionImpl(C[0], CHG, C[0]));
 
-    	P.setFinal(C[0], true);
+    	for(int i = 0; i < N_DRONES + 1; i++)
+    		P.setFinal(C[i], true);
     	
     	return P;
     }

@@ -30,6 +30,7 @@ public class AutomatonEx323Test extends PaperAutomatonTest {
 		sigma.add("d");
 		cosigma = new HashSet<>();
 		cosigma.add("c");
+		gamma = new HashSet<>();
 		
 		
 		// Here to change
