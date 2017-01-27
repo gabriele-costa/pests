@@ -29,11 +29,42 @@ import it.unige.parteval.Main;
 import it.unige.parteval.Projection;
 
 public class FunctionalTest {
+	
+	int N = 1; 
 
 	@Test
 	public void iterative() {
 
 		DFAutomatonImpl P = getPolicy();
+		
+		Printer.createDotGraph(Printer.printDotAutomaton(P, "P"), "P");
+		
+		Set<String> G = getGamma();
+		
+		for(int i = 1; i <= N; i++) {
+			DFAutomatonImpl Ai = getA(i);
+			Printer.createDotGraph(Printer.printDotAutomaton(Ai, "A"+i), "A"+i);
+			
+			NFAutomatonImpl Pp = Projection.partial(P, Ai, getSigma(), G);
+			Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPA"+i), "nPA"+i);
+			P = Pp.specialDFA(G);
+			P.minimize();
+			P.collapse();
+			P.complete(G);
+			Printer.createDotGraph(Printer.printDotAutomaton(P, "PA"+i), "PA"+i);
+			
+			DFAutomatonImpl Bi = getB(i);
+			Printer.createDotGraph(Printer.printDotAutomaton(Bi, "B"+i), "B"+i);
+			
+			Pp = Projection.partial(P, Bi, getSigma(), G);
+			Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPB"+i), "nPB"+i);
+			P = Pp.specialDFA(G);
+			P.minimize();
+			P.collapse();
+			P.complete(G);
+			Printer.createDotGraph(Printer.printDotAutomaton(P, "PB"+i), "PB"+i);
+			
+		}
 		
 		
 	}
@@ -59,6 +90,20 @@ public class FunctionalTest {
 	   	return P;
 	}
 	
+	private Set<String> getGamma() {
+		HashSet<String> G = new HashSet<>();
+		G.add("c");
+		
+		return G;
+	}
+	
+	private Set<String> getSigma() {
+		Set<String> Sigma = new HashSet<>();
+		Sigma.add("a");
+		Sigma.add("b");
+		return Sigma;
+	}
+	
 	private DFAutomatonImpl getA(int i) {
 
 		assertTrue(i > 0);
@@ -66,12 +111,12 @@ public class FunctionalTest {
 	   	StateImpl[] c = new StateImpl[2*i+1];
 	   	
 	   	for(int j = 0; j < c.length; j++) {
-	   		c[j] = new StateImpl("p"+j);
+	   		c[j] = new StateImpl("q"+j);
 	   	}
 	   	
 	   	DFAutomatonImpl P = new DFAutomatonImpl(c[0]);
 	   	
-	   	for(int j = 0; j < c.length; j+=2) {
+	   	for(int j = 0; j < c.length-2; j+=2) {
 	   	
 	   		P.addTransition(new TransitionImpl(c[j], "a", c[j+1]));
 	   		P.addTransition(new TransitionImpl(c[j+1], "c", c[j+2]));
@@ -89,12 +134,12 @@ public class FunctionalTest {
 	   	StateImpl[] c = new StateImpl[2*i+1];
 	   	
 	   	for(int j = 0; j < c.length; j++) {
-	   		c[j] = new StateImpl("q"+j);
+	   		c[j] = new StateImpl("r"+j);
 	   	}
 	   	
 	   	DFAutomatonImpl P = new DFAutomatonImpl(c[0]);
 	   	
-	   	for(int j = 0; j < c.length; j+=2) {
+	   	for(int j = 0; j < c.length-2; j+=2) {
 	   	
 	   		P.addTransition(new TransitionImpl(c[j], "c", c[j+1]));
 	   		P.addTransition(new TransitionImpl(c[j+1], "b", c[j+2]));

@@ -27,9 +27,13 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 				//if(!P.getFails().contains(fp))
 					B.setFinal(prod(fp, fa), true);
 		
+		Set<String> Sigma = new HashSet<>();
+		Sigma.addAll(A.getAlphabet());
+		Sigma.addAll(SigmaB);
+		
 		for(State qp : P.getStates()) {
 			for(State qa : A.getStates()) {
-				for(String a : P.getAlphabet() ) {
+				for(String a : Sigma ) {
 					Set<State> Qpp = P.trans(qp, a);
 					
 					// if Qpp is empty == false
@@ -93,7 +97,8 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 
 	private static void makeSelfLoops(Automaton P, State q, Set<String> Act) {
 		for(String a : Act) {
-			P.addTransition(new TransitionImpl(q, a, q));
+			if(P.trans(q, a).isEmpty())
+				P.addTransition(new TransitionImpl(q, a, q));
 		}
 	}
 	

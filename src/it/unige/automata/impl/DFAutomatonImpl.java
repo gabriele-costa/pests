@@ -251,6 +251,19 @@ public class DFAutomatonImpl implements Automaton {
 		}
 	}
 	
+	public void complete(Set<String> Gamma) {
+		
+		State pit = new StateImpl(FAIL);
+		this.addState(pit);
+		
+		for(State s : this.getStates()) {
+			for(String a : this.getAlphabet()) {
+				if(trans(s, a).isEmpty() && !Gamma.contains(a))
+					this.addTransition(new TransitionImpl(s, a, pit));
+			}
+		}
+	}
+	
 	public void collapse() {
 		Set<State> toKeep = new HashSet<State>();
 		toKeep.addAll(this.getFinals());
@@ -279,7 +292,7 @@ public class DFAutomatonImpl implements Automaton {
 		if(toCollapse.size() < 2)
 			return;
 		
-		State ff = new StateImpl("ff");
+		State ff = new StateImpl(FAIL);
 		
 		Set<Transition> toRemove = new HashSet<Transition>();
 		Set<Transition> toAdd = new HashSet<Transition>();

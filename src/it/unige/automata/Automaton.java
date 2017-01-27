@@ -4,7 +4,8 @@ import java.util.Set;
 
 public interface Automaton {
 	
-	public static final String EPSILON = "[e]";
+	public static final String EPSILON 	= "[e]";
+	public static final String FAIL 	= "ff";
 	
 	public State getInitial();
 	
