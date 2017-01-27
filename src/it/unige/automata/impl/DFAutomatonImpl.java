@@ -255,20 +255,49 @@ public class DFAutomatonImpl implements Automaton {
 		Set<State> toKeep = new HashSet<State>();
 		toKeep.addAll(this.getFinals());
 		
-		boolean mod = false;
+		boolean mod;
 		do {
+			mod = false;
 			for(State s : getStates()) {
 				if(!toKeep.contains(s)) {
 					for(String a : getAlphabet()) {
 						Set<State> reach = trans(s,a);
 						reach.retainAll(toKeep);
 						if(!reach.isEmpty()) {
-							// FIXME
+							mod = true;
+							toKeep.add(s);
 						}
 					}
 				}
 			}
-		} while(!mod);
+		} while(mod);
+		
+		Set<State> toCollapse = new HashSet<State>();
+		toCollapse.addAll(getStates());
+		toCollapse.removeAll(toKeep);
+		
+		if(toCollapse.size() < 2)
+			return;
+		
+		State ff = new StateImpl("ff");
+		
+		Set<Transition> toRemove = new HashSet<Transition>();
+		Set<Transition> toAdd = new HashSet<Transition>();
+		
+		for(Transition t: getTransitions()) {
+			if(toCollapse.contains(t.getDestination())) {
+				toRemove.add(t);
+				if(toCollapse.contains(t.getSource())) {
+					toAdd.add(new TransitionImpl(ff, t.getLabel(), ff));
+				}
+				else {
+					toAdd.add(new TransitionImpl(t.getSource(), t.getLabel(), ff));
+				}
+			}
+		}
+		
+		this.states.removeAll(toCollapse);
+		this.delta.removeAll(toRemove);	
+		this.delta.addAll(toAdd);
 	}
-	
 }

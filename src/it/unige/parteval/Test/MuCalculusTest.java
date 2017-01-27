@@ -28,7 +28,7 @@ import it.unige.mu.MuVar;
 import it.unige.parteval.Main;
 import it.unige.parteval.Projection;
 
-public class BasicTest {
+public class MuCalculusTest {
 
 	
 	private static int TESTNUM = 0;

@@ -16,8 +16,8 @@ import it.unige.parteval.Projection;
 
 public class CasestudyTest {
 
-	final int N_DRONES = 1;
-	final int N_NODES = 2;
+	final int N_DRONES = 3;
+	final int N_NODES = 4;
 	
 	final String LOCK = "lock";
 	final String FLY = "fly";
@@ -137,10 +137,12 @@ public class CasestudyTest {
 			
 			PpADetMin = PpADet.minimize();
 			
+			PpADet.collapse();
+			
 			PpADetMin.renameStates("q");
 		
 			// System.out.println(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"+i));
-			// Printer.createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"+i), "P_A_det_min"+i);
+			Printer.createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"+i), "P_A_det_min"+i);
 		
 			System.out.println(i+": MINIMIZED SIZE: " + PpADetMin.getStates().size() + " states, " + PpADetMin.getTransitions().size() + " transitions");
 			
@@ -148,12 +150,12 @@ public class CasestudyTest {
 			
 		}
 		
-		System.out.println("Writing on file 1/3");		
-		Printer.createDotGraph(Printer.printDotAutomaton(PpA, "P_A"), "P_A");
-		System.out.println("Writing on file 2/3");
-		Printer.createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"), "P_A_det");
-		System.out.println("Writing on file 3/3");
-		Printer.createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"), "P_A_det_min");
+//		System.out.println("Writing on file 1/3");		
+//		Printer.createDotGraph(Printer.printDotAutomaton(PpA, "P_A"), "P_A");
+//		System.out.println("Writing on file 2/3");
+//		Printer.createDotGraph(Printer.printDotAutomaton(PpADet, "P_A_det"), "P_A_det");
+//		System.out.println("Writing on file 3/3");
+//		Printer.createDotGraph(Printer.printDotAutomaton(PpADetMin, "P_A_det_min"), "P_A_det_min");
 
 		System.out.println("\nFINISHED\n");
 
@@ -268,7 +270,7 @@ public class CasestudyTest {
     private DFAutomatonImpl getSimpleDrone(int i) {
     	
     	assertTrue(i <= N_DRONES);
-    	assertTrue(N_DRONES < N_NODES);
+    	// assertTrue(N_DRONES < N_NODES);
     	
     	int ip1 = 1+(i % (N_NODES+1));
     	

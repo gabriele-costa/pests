@@ -1,0 +1,107 @@
+package it.unige.parteval.Test;
+
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Test;
+
+import it.unige.automata.State;
+import it.unige.automata.Transition;
+import it.unige.automata.impl.DFAutomatonImpl;
+import it.unige.automata.impl.NFAutomatonImpl;
+import it.unige.automata.impl.StateImpl;
+import it.unige.automata.impl.TransitionImpl;
+import it.unige.automata.util.GraphViz;
+import it.unige.automata.util.Printer;
+import it.unige.lts.LTS;
+import it.unige.mu.Assertion;
+import it.unige.mu.MuDia;
+import it.unige.mu.MuEquation;
+import it.unige.mu.MuFF;
+import it.unige.mu.MuOr;
+import it.unige.mu.MuSystem;
+import it.unige.mu.MuVar;
+import it.unige.parteval.Main;
+import it.unige.parteval.Projection;
+
+public class FunctionalTest {
+
+	@Test
+	public void iterative() {
+
+		DFAutomatonImpl P = getPolicy();
+		
+		
+	}
+	
+	private DFAutomatonImpl getPolicy() {
+	   	
+	   	StateImpl p0 = new StateImpl("p0");
+	   	StateImpl p1 = new StateImpl("p1");
+	   	StateImpl ff = new StateImpl("ff");
+	   	
+	   	DFAutomatonImpl P = new DFAutomatonImpl(p0);
+	   	
+	   	P.addTransition(new TransitionImpl(p0, "a", p1));
+	   	P.addTransition(new TransitionImpl(p1, "b", p0));
+	   	
+	   	P.setFinal(p0, true);
+	   	
+	   	P.addTransition(new TransitionImpl(p0, "b", ff));
+	   	P.addTransition(new TransitionImpl(p1, "a", ff));
+	   	P.addTransition(new TransitionImpl(ff, "a", ff));
+	   	P.addTransition(new TransitionImpl(ff, "b", ff));
+	   		   	
+	   	return P;
+	}
+	
+	private DFAutomatonImpl getA(int i) {
+
+		assertTrue(i > 0);
+		
+	   	StateImpl[] c = new StateImpl[2*i+1];
+	   	
+	   	for(int j = 0; j < c.length; j++) {
+	   		c[j] = new StateImpl("p"+j);
+	   	}
+	   	
+	   	DFAutomatonImpl P = new DFAutomatonImpl(c[0]);
+	   	
+	   	for(int j = 0; j < c.length; j+=2) {
+	   	
+	   		P.addTransition(new TransitionImpl(c[j], "a", c[j+1]));
+	   		P.addTransition(new TransitionImpl(c[j+1], "c", c[j+2]));
+	   	}
+	   		
+	   	P.setFinal(c[c.length-1], true);
+	   	
+	   	return P;
+	}
+	
+	private DFAutomatonImpl getB(int i) {
+
+		assertTrue(i > 0);
+		
+	   	StateImpl[] c = new StateImpl[2*i+1];
+	   	
+	   	for(int j = 0; j < c.length; j++) {
+	   		c[j] = new StateImpl("q"+j);
+	   	}
+	   	
+	   	DFAutomatonImpl P = new DFAutomatonImpl(c[0]);
+	   	
+	   	for(int j = 0; j < c.length; j+=2) {
+	   	
+	   		P.addTransition(new TransitionImpl(c[j], "c", c[j+1]));
+	   		P.addTransition(new TransitionImpl(c[j+1], "b", c[j+2]));
+	   	}
+	   		
+	   	P.setFinal(c[c.length-1], true);
+	   	
+	   	return P;
+	}
+}
