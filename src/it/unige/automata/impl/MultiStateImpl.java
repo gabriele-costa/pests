@@ -9,6 +9,7 @@ import it.unige.automata.State;
 public class MultiStateImpl implements State {
 
 	HashSet<State> states = new HashSet<State>();
+	String label;
 	
 	public MultiStateImpl(Collection<State> S) {
 		states.addAll(S);
@@ -55,6 +56,10 @@ public class MultiStateImpl implements State {
 
 	@Override
 	public String getLabel() {
+		
+		if(label != null)
+			return label;
+		
 		String r = "_";
 		for(State s : states)
 			r += s.getLabel() + "_";
@@ -65,7 +70,7 @@ public class MultiStateImpl implements State {
 
 	@Override
 	public void setLabel(String string) {
-		// nothing to do here
+		this.label = string;
 	}
 
 }

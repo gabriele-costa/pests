@@ -30,7 +30,7 @@ import it.unige.parteval.Projection;
 
 public class FunctionalTest {
 	
-	int N = 1; 
+	int N = 20; 
 
 	@Test
 	public void iterative() {
@@ -42,6 +42,9 @@ public class FunctionalTest {
 		Set<String> G = getGamma();
 		
 		for(int i = 1; i <= N; i++) {
+			
+			System.out.println("Loop "+i);
+			
 			DFAutomatonImpl Ai = getA(i);
 			Printer.createDotGraph(Printer.printDotAutomaton(Ai, "A"+i), "A"+i);
 			
@@ -51,9 +54,10 @@ public class FunctionalTest {
 			P.minimize();
 			P.collapse();
 			P.complete(G);
+			//P.renameStates("p");
 			Printer.createDotGraph(Printer.printDotAutomaton(P, "PA"+i), "PA"+i);
 			
-			DFAutomatonImpl Bi = getB(i);
+			DFAutomatonImpl Bi = getB(++i);
 			Printer.createDotGraph(Printer.printDotAutomaton(Bi, "B"+i), "B"+i);
 			
 			Pp = Projection.partial(P, Bi, getSigma(), G);
@@ -62,6 +66,7 @@ public class FunctionalTest {
 			P.minimize();
 			P.collapse();
 			P.complete(G);
+			//P.renameStates("p");
 			Printer.createDotGraph(Printer.printDotAutomaton(P, "PB"+i), "PB"+i);
 			
 		}
@@ -108,7 +113,7 @@ public class FunctionalTest {
 
 		assertTrue(i > 0);
 		
-	   	StateImpl[] c = new StateImpl[2*i+1];
+	   	StateImpl[] c = new StateImpl[i+2];
 	   	
 	   	for(int j = 0; j < c.length; j++) {
 	   		c[j] = new StateImpl("q"+j);
@@ -116,11 +121,13 @@ public class FunctionalTest {
 	   	
 	   	DFAutomatonImpl P = new DFAutomatonImpl(c[0]);
 	   	
-	   	for(int j = 0; j < c.length-2; j+=2) {
-	   	
-	   		P.addTransition(new TransitionImpl(c[j], "a", c[j+1]));
-	   		P.addTransition(new TransitionImpl(c[j+1], "c", c[j+2]));
+	   	for(int j = 0; j < c.length-3; j++) {
+	   		P.addTransition(new TransitionImpl(c[j], "c", c[j+1]));
 	   	}
+	   	
+	   	P.addTransition(new TransitionImpl(c[c.length-3], "a", c[c.length-2]));
+	   	P.addTransition(new TransitionImpl(c[c.length-2], "c", c[c.length-1]));
+   		
 	   		
 	   	P.setFinal(c[c.length-1], true);
 	   	
@@ -131,19 +138,21 @@ public class FunctionalTest {
 
 		assertTrue(i > 0);
 		
-	   	StateImpl[] c = new StateImpl[2*i+1];
+	   	StateImpl[] c = new StateImpl[i+2];
 	   	
 	   	for(int j = 0; j < c.length; j++) {
-	   		c[j] = new StateImpl("r"+j);
+	   		c[j] = new StateImpl("q"+j);
 	   	}
 	   	
 	   	DFAutomatonImpl P = new DFAutomatonImpl(c[0]);
 	   	
-	   	for(int j = 0; j < c.length-2; j+=2) {
-	   	
+	   	for(int j = 0; j < c.length-3; j++) {
 	   		P.addTransition(new TransitionImpl(c[j], "c", c[j+1]));
-	   		P.addTransition(new TransitionImpl(c[j+1], "b", c[j+2]));
 	   	}
+	   	
+	   	P.addTransition(new TransitionImpl(c[c.length-3], "b", c[c.length-2]));
+	   	P.addTransition(new TransitionImpl(c[c.length-2], "c", c[c.length-1]));
+   		
 	   		
 	   	P.setFinal(c[c.length-1], true);
 	   	

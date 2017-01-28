@@ -244,7 +244,6 @@ public class DFAutomatonImpl implements Automaton {
 	}
 
 	public void renameStates(String base) {
-		// TODO Auto-generated method stub
 		int i = 0;
 		for(State s : this.states) {
 			s.setLabel(base + (i++));

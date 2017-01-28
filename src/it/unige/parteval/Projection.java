@@ -42,20 +42,19 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 										
 					for(State qpp : Qpp) {
 						
-						Set<State> Qap = A.trans(qa, a);
-						
 						if(!Gamma.contains(a)) {
-							if(SigmaB.contains(a)) { 			// a in SigmaB \ Gamma
-								B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp, qa)));
-							}						
 							
 							if(A.getAlphabet().contains(a)) { 	// a in SigmaA \ Gamma
-								for(State qap : Qap)
+								for(State qap : A.trans(qa, a))
 									B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
 							}
+							
+							if(SigmaB.contains(a)) { 		// a in SigmaB \ Gamma
+								B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp, qa)));
+							}								
 						}
 						else { 									// a in Gamma
-							for(State qap : Qap) {
+							for(State qap : A.trans(qa, a)) {
 								B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp,qap)));
 							}
 						}
