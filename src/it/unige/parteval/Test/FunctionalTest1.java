@@ -28,7 +28,7 @@ import it.unige.mu.MuVar;
 import it.unige.parteval.Main;
 import it.unige.parteval.Projection;
 
-public class FunctionalTest {
+public class FunctionalTest1 {
 	
 	int N = 20; 
 
