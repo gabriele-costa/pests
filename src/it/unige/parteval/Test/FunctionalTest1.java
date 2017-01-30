@@ -30,7 +30,7 @@ import it.unige.parteval.Projection;
 
 public class FunctionalTest1 {
 	
-	int N = 20; 
+	int N = 4; 
 
 	@Test
 	public void iterative() {

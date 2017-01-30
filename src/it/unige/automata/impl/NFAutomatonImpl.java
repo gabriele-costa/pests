@@ -137,7 +137,7 @@ public class NFAutomatonImpl implements Automaton {
 	}
 	
 	// Set<String> Gamma
-	public DFAutomatonImpl toDFA(Set<String> Gamma) {
+	public DFAutomatonImpl toDFA() {
 		/*
 		 * From NFA to DFA (standard algorithm)
 		 */
