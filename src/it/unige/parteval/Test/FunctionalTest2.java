@@ -31,29 +31,48 @@ import it.unige.parteval.Projection;
 
 public class FunctionalTest2 {
 	
-	int N = 20; 
+	int N = 4; 
 
 	@Test
 	public void iterative() {
+		
+		DFAutomatonImpl Sa = getA();
+		Printer.createDotGraph(Printer.printDotAutomaton(Sa, "A"), "A");
+		DFAutomatonImpl Sb = getB();
 
-		DFAutomatonImpl P = getPolicy();
+		Printer.createDotGraph(Printer.printDotAutomaton(Sb, "B"), "B");
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(P, "P"), "P");
-		
-		Set<String> G = getGamma();
+		for(int i = 0; i < N; i++) {
+	
+			DFAutomatonImpl P = getPolicy();
 			
-		DFAutomatonImpl Ai = getA();
-		Printer.createDotGraph(Printer.printDotAutomaton(Ai, "A"), "A");
-		
-		NFAutomatonImpl Pp = Projection.partial(P, Ai, getSigma(), G);
-		Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPA"), "nPA");
-		P = Pp.specialDFA(G);
-		P.minimize();
-		P.collapse();
-		P.complete(G);
-		//P.renameStates("p");
-		Printer.createDotGraph(Printer.printDotAutomaton(P, "PA"), "PA");	
-		
+			Printer.createDotGraph(Printer.printDotAutomaton(P, "P"), "P");
+			
+			Set<String> G = getGamma();
+				
+			
+			
+			NFAutomatonImpl nSb = Projection.partial(P, Sa, Sb.getAlphabet(), G);
+			
+			Printer.createDotGraph(Printer.printDotAutomaton(nSb, "nSb"+i), "nSb"+i);
+			Sb = nSb.specialDFA(G);
+			Sb.minimize();
+			Sb.collapse();
+			//Sa.complete(G);
+			//P.renameStates("p");
+			Printer.createDotGraph(Printer.printDotAutomaton(Sb, "Sa"+i), "Sa"+i);	
+			
+			
+			NFAutomatonImpl nSa = Projection.partial(P, Sb, Sa.getAlphabet(), G);
+			
+			Printer.createDotGraph(Printer.printDotAutomaton(nSa, "nSa"+i), "nSa"+i);
+			Sa = nSa.specialDFA(G);
+			Sa.minimize();
+			Sa.collapse();
+			//Sa.complete(G);
+			//P.renameStates("p");
+			Printer.createDotGraph(Printer.printDotAutomaton(Sa, "Sa"+i), "Sa"+i);	
+		}
 	}
 	
 	private DFAutomatonImpl getPolicy() {
@@ -63,17 +82,17 @@ public class FunctionalTest2 {
 	   	StateImpl p1 = new StateImpl("p1");
 	   	
 	   	
-	   	NFAutomatonImpl nP = new NFAutomatonImpl(p0);
+	   	DFAutomatonImpl nP = new DFAutomatonImpl(p0);
 	   	
-	   	nP.addTransition(new TransitionImpl(p0, "a", p0));
-	   	nP.addTransition(new TransitionImpl(p0, "d", p1));
-	   	nP.addTransition(new TransitionImpl(p1, "a", p1));
-	   	nP.addTransition(new TransitionImpl(p1, "b", p1));
-	   	nP.addTransition(new TransitionImpl(p1, Automaton.EPSILON, p0));
+	   	nP.addTransition(new TransitionImpl(p0, "c", p0));
+	   	nP.addTransition(new TransitionImpl(p0, "a", p1));
+	   	nP.addTransition(new TransitionImpl(p1, "c", p1));
+	   	nP.addTransition(new TransitionImpl(p1, "b", p0));
 	   	
 	   	nP.setFinal(p0, true);
+	   	nP.setFinal(p1, true);
 	   		   	
-	   	return nP.toDFA();
+	   	return nP;
 	}
 	
 	private Set<String> getGamma() {
@@ -86,53 +105,35 @@ public class FunctionalTest2 {
 	private Set<String> getSigma() {
 		Set<String> Sigma = new HashSet<>();
 		//Sigma.add("a");
-		Sigma.add("b");
+		//Sigma.add("b");
 		//Sigma.add("d");
 		return Sigma;
 	}
 	
 	private DFAutomatonImpl getA() {
 		
-	   	StateImpl c0 = new StateImpl("c0");
-	   	StateImpl c1 = new StateImpl("c1");
-	   	StateImpl c2 = new StateImpl("c2");
-	   	
+		StateImpl c0 = new StateImpl("c0");
 	   	
 	   	DFAutomatonImpl P = new DFAutomatonImpl(c0);
 	   	
 	   	P.addTransition(new TransitionImpl(c0, "a", c0));
-	   	P.addTransition(new TransitionImpl(c0, "c", c1));
-	   	P.addTransition(new TransitionImpl(c1, "a", c1));
-	   	P.addTransition(new TransitionImpl(c1, "d", c2));
-	   	P.addTransition(new TransitionImpl(c2, "a", c2));
-	   	P.addTransition(new TransitionImpl(c2, "c", c0));
+	   	P.addTransition(new TransitionImpl(c0, "c", c0));
 	   		
 	   	P.setFinal(c0, true);
 	   	
 	   	return P;
 	}
 	
-	private DFAutomatonImpl getB(int i) {
+	private DFAutomatonImpl getB() {
 
-		assertTrue(i > 0);
-		
-	   	StateImpl[] c = new StateImpl[i+2];
+		StateImpl c0 = new StateImpl("c0");
 	   	
-	   	for(int j = 0; j < c.length; j++) {
-	   		c[j] = new StateImpl("q"+j);
-	   	}
+	   	DFAutomatonImpl P = new DFAutomatonImpl(c0);
 	   	
-	   	DFAutomatonImpl P = new DFAutomatonImpl(c[0]);
-	   	
-	   	for(int j = 0; j < c.length-3; j++) {
-	   		P.addTransition(new TransitionImpl(c[j], "c", c[j+1]));
-	   	}
-	   	
-	   	P.addTransition(new TransitionImpl(c[c.length-3], "b", c[c.length-2]));
-	   	P.addTransition(new TransitionImpl(c[c.length-2], "c", c[c.length-1]));
-   		
+	   	P.addTransition(new TransitionImpl(c0, "b", c0));
+	   	P.addTransition(new TransitionImpl(c0, "c", c0));
 	   		
-	   	P.setFinal(c[c.length-1], true);
+	   	P.setFinal(c0, true);
 	   	
 	   	return P;
 	}
