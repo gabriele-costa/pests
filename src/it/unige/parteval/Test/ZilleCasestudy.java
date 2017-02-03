@@ -32,8 +32,8 @@ public class ZilleCasestudy {
 		State p0 = new StateImpl("s0");
 		State p1 = new StateImpl("s1");
 		State p2 = new StateImpl("s2");
-		State p3 = new StateImpl("s3");
-		State p4 = new StateImpl("s4");
+//		State p3 = new StateImpl("s3");
+//		State p4 = new StateImpl("s4");
 		State ff = new StateImpl("ff");
 		
 		DFAutomatonImpl agv1 = new DFAutomatonImpl(p0);
@@ -179,17 +179,13 @@ public class ZilleCasestudy {
 		
 		// Printer.createDotGraph(Printer.printDotAutomaton(PA, "PA"), "PA");
 		
-		NFAutomatonImpl nY = Projection.partial(P, A, sigma(), sigmac());
+		NFAutomatonImpl nY = Projection.partial(P, A, sigmac(), sigmac());
 		
 		Printer.createDotGraph(Printer.printDotAutomaton(nY, "nY"), "nY");
 		
 		DFAutomatonImpl Y = nY.specialDFA(sigmac());
 		Y.minimize();
 		Y.collapse();
-		Y.minimize();
-		
-		Y.removeState(new StateImpl(Automaton.FAIL));
-		
 		
 		/*
 		 * 
@@ -226,7 +222,15 @@ public class ZilleCasestudy {
 		
 		DFAutomatonImpl AY = DFAutomatonImpl.parallel(A, Y, sigmac());
 		
+		//assertTrue(AY.getStates().contains(new StateImpl(Automaton.FAIL)));
+		
 		Printer.createDotGraph(Printer.printDotAutomaton(AY, "AY"), "AY");
+		
+		Projection.makeController(AY, sigmac());
+		
+		AY.minimize();
+		
+		Printer.createDotGraph(Printer.printDotAutomaton(AY, "CY"), "CY");
 		
     }
     

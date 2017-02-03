@@ -35,7 +35,7 @@ public class StateImpl implements State {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof StateImpl))
 			return false;
 		StateImpl other = (StateImpl) obj;
 		if (label == null) {

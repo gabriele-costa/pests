@@ -365,4 +365,16 @@ public class DFAutomatonImpl implements Automaton {
 		return AB;
 		
 	}
+
+	public void removeTransitions(Set<Transition> toCut) {
+		for(Transition t : toCut) {
+			removeTransition(t);
+		}
+	}
+
+	public void removeStates(Set<State> toRmv) {
+		for(State s : toRmv) {
+			removeState(s);
+		}
+	}
 }

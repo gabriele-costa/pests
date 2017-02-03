@@ -6,9 +6,11 @@ import java.util.Set;
 import it.unige.automata.Automaton;
 import it.unige.automata.State;
 import it.unige.automata.Transition;
+import it.unige.automata.impl.DFAutomatonImpl;
 import it.unige.automata.impl.NFAutomatonImpl;
 import it.unige.automata.impl.StateImpl;
 import it.unige.automata.impl.TransitionImpl;
+import it.unige.automata.util.SetUtils;
 
 public class Projection {
 
@@ -112,6 +114,50 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 			A.removeTransition(t);
 		}
 		
+	}
+	
+	public static void makeController(DFAutomatonImpl A, Set<String> SigmaC) {
+		Set<State> toRmv = new HashSet<State>();
+		
+
+		do {
+			toRmv.clear();
+			toRmv.addAll(getPits(A));
+			
+			boolean found = true;
+			while(found) {
+				found = false;
+				Set<Transition> toCut = new HashSet<>();
+				for(Transition t : A.getTransitions()) {
+					if(toRmv.contains(t.getDestination())) {
+						toCut.add(t);
+						if(!SigmaC.contains(t.getLabel())) {
+							toRmv.add(t.getSource());
+							found = true;
+						}
+					}
+				}
+				
+				A.removeTransitions(toCut);
+				A.removeStates(toRmv);
+			}
+		
+			A.minimize();
+		} while(!toRmv.isEmpty());
+	}
+
+	private static Set<State> getPits(DFAutomatonImpl A) {
+		Set<State> pits = new HashSet<>();
+		for(Transition t : A.getTransitions()) {
+			if(!A.getFinals().contains(t.getDestination()))
+				pits.add(t.getDestination());
+		}
+		
+		for(Transition t : A.getTransitions()) {
+			if(!(t.getSource().equals(t.getDestination())))
+				pits.remove(t.getSource());
+		}
+		return pits;
 	}
 	
 }
