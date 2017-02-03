@@ -41,35 +41,36 @@ public class FunctionalTest2 {
 		DFAutomatonImpl Sb = getB();
 
 		Printer.createDotGraph(Printer.printDotAutomaton(Sb, "B"), "B");
+	
+		DFAutomatonImpl P = getPolicy();
+		
+		Printer.createDotGraph(Printer.printDotAutomaton(P, "P"), "P");
+		
+		Set<String> G = getGamma();
+		
 		
 		for(int i = 0; i < N; i++) {
-	
-			DFAutomatonImpl P = getPolicy();
-			
-			Printer.createDotGraph(Printer.printDotAutomaton(P, "P"), "P");
-			
-			Set<String> G = getGamma();
-				
 			
 			
 			NFAutomatonImpl nSb = Projection.partial(P, Sa, Sb.getAlphabet(), G);
 			
 			Printer.createDotGraph(Printer.printDotAutomaton(nSb, "nSb"+i), "nSb"+i);
-			Sb = nSb.specialDFA(G);
-			Sb.minimize();
-			Sb.collapse();
-			//Sa.complete(G);
-			//P.renameStates("p");
-			Printer.createDotGraph(Printer.printDotAutomaton(Sb, "Sa"+i), "Sa"+i);	
-			
 			
 			NFAutomatonImpl nSa = Projection.partial(P, Sb, Sa.getAlphabet(), G);
 			
 			Printer.createDotGraph(Printer.printDotAutomaton(nSa, "nSa"+i), "nSa"+i);
+			
+			Sb = nSb.specialDFA(G);
+			Sb.minimize();
+			Sb.collapse();
+			Sb.complete(G);
+			//P.renameStates("p");
+			Printer.createDotGraph(Printer.printDotAutomaton(Sb, "Sa"+i), "Sa"+i);	
+			
 			Sa = nSa.specialDFA(G);
 			Sa.minimize();
 			Sa.collapse();
-			//Sa.complete(G);
+			Sa.complete(G);
 			//P.renameStates("p");
 			Printer.createDotGraph(Printer.printDotAutomaton(Sa, "Sa"+i), "Sa"+i);	
 		}
@@ -86,7 +87,6 @@ public class FunctionalTest2 {
 	   	
 	   	nP.addTransition(new TransitionImpl(p0, "c", p0));
 	   	nP.addTransition(new TransitionImpl(p0, "a", p1));
-	   	nP.addTransition(new TransitionImpl(p1, "c", p1));
 	   	nP.addTransition(new TransitionImpl(p1, "b", p0));
 	   	
 	   	nP.setFinal(p0, true);
@@ -118,6 +118,7 @@ public class FunctionalTest2 {
 	   	
 	   	P.addTransition(new TransitionImpl(c0, "a", c0));
 	   	P.addTransition(new TransitionImpl(c0, "c", c0));
+	   	
 	   		
 	   	P.setFinal(c0, true);
 	   	

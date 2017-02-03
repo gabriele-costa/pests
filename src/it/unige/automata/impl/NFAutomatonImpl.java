@@ -77,6 +77,11 @@ public class NFAutomatonImpl implements Automaton {
 		this.addState(t.getDestination());
 		return delta.add(t);
 	}
+	
+	@Override
+	public boolean addTransition(State s, String l, State d) {
+		return this.addTransition(new TransitionImpl(s, l, d));
+	}
 
 	@Override
 	public Set<String> getAlphabet() {
@@ -202,7 +207,16 @@ public class NFAutomatonImpl implements Automaton {
 		while(!todo.isEmpty()) {
 			MultiStateImpl curr = todo.remove(0);
 			
-			if(this.getFinals().containsAll(curr.states))
+			Set<State> tmp, ff;
+			tmp = new HashSet<>();
+			ff = new HashSet<>();
+			
+			tmp.addAll(this.getStates());
+			tmp.removeAll(this.getFinals());
+			ff.addAll(curr.states);
+			ff.removeAll(tmp);
+			
+			if(!ff.isEmpty())
 				dfa.setFinal(curr, true);
 			
 			for(String a : this.getAlphabet()) {

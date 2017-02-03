@@ -76,10 +76,8 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 	public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Gamma) {
 		return partial(P, A, A.getAlphabet(), Gamma);
 	}
-	
-	
 
-	private static State prod(State p, State q) {
+	public static State prod(State p, State q) {
 		return new StateImpl("" + p.getLabel()+q.getLabel() + "");
 	}
 	

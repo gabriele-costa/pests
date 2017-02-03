@@ -14,7 +14,7 @@ import it.unige.automata.impl.*;
 import it.unige.automata.util.Printer;
 import it.unige.parteval.Projection;
 
-public class CasestudyTest {
+public class DroneCasestudyTest {
 
 	final int N_DRONES = 3;
 	final int N_NODES = 4;

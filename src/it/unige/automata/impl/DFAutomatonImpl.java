@@ -7,6 +7,7 @@ import it.unige.automata.Automaton;
 import it.unige.automata.State;
 import it.unige.automata.Transition;
 import it.unige.automata.util.SetUtils;
+import it.unige.parteval.Projection;
 
 public class DFAutomatonImpl implements Automaton {
 
@@ -79,6 +80,11 @@ public class DFAutomatonImpl implements Automaton {
 		this.addState(t.getSource());
 		this.addState(t.getDestination());
 		return delta.add(t);
+	}
+	
+	@Override
+	public boolean addTransition(State s, String l, State d) {
+		return this.addTransition(new TransitionImpl(s, l, d)); 
 	}
 
 	@Override
@@ -311,5 +317,52 @@ public class DFAutomatonImpl implements Automaton {
 		this.states.removeAll(toCollapse);
 		this.delta.removeAll(toRemove);	
 		this.delta.addAll(toAdd);
+	}
+	
+	public static DFAutomatonImpl parallel(DFAutomatonImpl A, DFAutomatonImpl B, Set<String> Gamma) {
+		
+		State init = Projection.prod(A.inits, B.inits);
+		
+		Set<String> Sigma = new HashSet<>();
+		Sigma.addAll(Gamma);
+		Sigma.addAll(A.getAlphabet());
+		Sigma.addAll(B.getAlphabet());
+		
+		NFAutomatonImpl nfa = new NFAutomatonImpl(init);
+		
+		for(State p : A.getStates()) {
+			for(State q : B.getStates()) {
+				for(String a : Sigma) {
+					if(Gamma.contains(a)) {								
+						for(State pp : A.trans(p, a)) {
+							for(State qq : B.trans(q, a)) {
+								nfa.addTransition(Projection.prod(p, q), a, Projection.prod(pp, qq));
+							}
+						}
+					}
+					else {
+						if(A.getAlphabet().contains(a)) {
+							for(State pp : A.trans(p, a)) {
+									nfa.addTransition(Projection.prod(p, q), a, Projection.prod(pp, q));
+							}
+						}
+						if(B.getAlphabet().contains(a)) {
+							for(State qq : B.trans(q, a)) {
+								nfa.addTransition(Projection.prod(p, q), a, Projection.prod(p, qq));
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		for(State p : A.getFinals())
+			for(State q : B.getFinals())
+				nfa.setFinal(Projection.prod(p, q), true);
+		
+		DFAutomatonImpl AB = nfa.toDFA().minimize();
+		AB.collapse();
+		return AB;
+		
 	}
 }

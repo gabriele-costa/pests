@@ -26,6 +26,8 @@ public interface Automaton {
 	public Set<Transition> getTransitions();
 	
 	public boolean addTransition(Transition t);
+	
+	public boolean addTransition(State s, String l, State d);
 
 	public Set<String> getAlphabet();
 	
