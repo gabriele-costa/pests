@@ -15,7 +15,7 @@ import it.unige.automata.impl.*;
 import it.unige.automata.util.Printer;
 import it.unige.parteval.Projection;
 
-public class ZilleCasestudy {
+public class ZillerCasestudy {
 	
 	final String a = "a"; 				
 	final String l = "l";

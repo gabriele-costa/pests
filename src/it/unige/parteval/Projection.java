@@ -83,7 +83,7 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 		return new StateImpl("" + p.getLabel()+q.getLabel() + "");
 	}
 	
-	private static void addGammaLoops(Automaton A, Set<String> G) {
+	public static void addGammaLoops(Automaton A, Set<String> G) {
 		
 		for(State q : A.getStates()) {
 			for(String g : G) {

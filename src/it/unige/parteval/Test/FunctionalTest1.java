@@ -30,10 +30,10 @@ import it.unige.parteval.Projection;
 
 public class FunctionalTest1 {
 	
-	int N = 10; 
+	int N = 4; 
 
 	@Test
-	public void iterative() {
+	public void edit() {
 
 		DFAutomatonImpl P = getPolicy();
 		
@@ -68,6 +68,48 @@ public class FunctionalTest1 {
 			P.complete(G);
 			//P.renameStates("p");
 			Printer.createDotGraph(Printer.printDotAutomaton(P, "PB"+i), "PB"+i);
+			
+		}
+	}
+	
+	@Test
+	public void control() {
+
+		DFAutomatonImpl P = getPolicy();
+		
+		Printer.createDotGraph(Printer.printDotAutomaton(P, "Pc"), "Pc");
+		
+		Set<String> G = getGamma();
+		
+		for(int i = 1; i <= N; i++) {
+			
+			System.out.println("Loop "+i);
+			
+			DFAutomatonImpl Ai = getA(i);
+			Printer.createDotGraph(Printer.printDotAutomaton(Ai, "Ac"+i), "Ac"+i);
+			
+			NFAutomatonImpl Pp = Projection.partial(P, Ai, G, G);
+			Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPAc"+i), "nPAc"+i);
+			P = Pp.specialDFA(G);
+			P.minimize();
+			P.collapse();
+			P.complete(G);
+			//P.renameStates("p");
+			Printer.createDotGraph(Printer.printDotAutomaton(P, "PAc"+i), "PAc"+i);
+			
+			i++;
+			
+			DFAutomatonImpl Bi = getB(i);
+			Printer.createDotGraph(Printer.printDotAutomaton(Bi, "Bc"+i), "Bc"+i);
+			
+			Pp = Projection.partial(P, Bi, getSigma(), G);
+			Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPBc"+i), "nPBc"+i);
+			P = Pp.specialDFA(G);
+			P.minimize();
+			P.collapse();
+			P.complete(G);
+			//P.renameStates("p");
+			Printer.createDotGraph(Printer.printDotAutomaton(P, "PBc"+i), "PBc"+i);
 			
 		}
 		
