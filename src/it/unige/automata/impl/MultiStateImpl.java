@@ -8,7 +8,7 @@ import it.unige.automata.State;
 
 public class MultiStateImpl implements State {
 
-	HashSet<State> states = new HashSet<State>();
+	public HashSet<State> states = new HashSet<State>();
 	String label;
 	
 	public MultiStateImpl(Collection<State> S) {

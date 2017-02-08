@@ -42,11 +42,11 @@ public class ETHTest {
 		DFAutomatonImpl A = getA();
 		Printer.createDotGraph(Printer.printDotAutomaton(A, "A"), "A");
 			
-		NFAutomatonImpl Pp = Projection.partial(P, A, getSigma(), G);
-		P = Pp.specialDFA(G);
-		P.minimize();
-		P.collapse();
-		P.complete(G);
+		NFAutomatonImpl Pp = Projection.partialA(P, A, getSigma(), G);
+		Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPA"), "nPA");
+		P = Projection.unify(Pp, G);
+		//P.collapse();
+		//P.minimize();
 		//P.renameStates("p");
 		Printer.createDotGraph(Printer.printDotAutomaton(P, "PA"), "PA");
 	}
@@ -60,8 +60,10 @@ public class ETHTest {
 	   	
 	   	DFAutomatonImpl P = new DFAutomatonImpl(p0);
 	   	
-	   	P.addTransition(new TransitionImpl(p0, "l", p1));
-	   	P.addTransition(new TransitionImpl(p1, "u", p0));
+	   	P.addTransition(new TransitionImpl(p0, "a", p1));
+	   	P.addTransition(new TransitionImpl(p1, "b", p0));
+	   	P.addTransition(new TransitionImpl(p0, "s", p0));
+	   	P.addTransition(new TransitionImpl(p1, "s", p1));
 	   	
 	   	P.setFinal(p0, true);
 //	   	
@@ -82,7 +84,7 @@ public class ETHTest {
 	
 	private Set<String> getSigma() {
 		Set<String> Sigma = new HashSet<>();
-		Sigma.add("u");
+		Sigma.add("b");
 		return Sigma;
 	}
 	
@@ -90,16 +92,16 @@ public class ETHTest {
 		
 	   	StateImpl p0 = new StateImpl("p0");
 	   	StateImpl p1 = new StateImpl("p1");
-	   	// StateImpl p2 = new StateImpl("p2"); // ADD
+	   	StateImpl p2 = new StateImpl("p2"); // ADD
 	   	
 	   	DFAutomatonImpl P = new DFAutomatonImpl(p0);
 	   	
-	   	P.addTransition(new TransitionImpl(p0, "l", p1));
-	   	P.addTransition(new TransitionImpl(p1, "s", p0)); // REMOVE
-	   	// P.addTransition(new TransitionImpl(p1, "s", p2)); // ADD
-	   	// P.addTransition(new TransitionImpl(p2, "s", p0)); // ADD
+	   	P.addTransition(new TransitionImpl(p0, "a", p1));
+	   	// P.addTransition(new TransitionImpl(p1, "s", p0)); // REMOVE
+	   	P.addTransition(new TransitionImpl(p1, "s", p2)); // ADD
+	   	P.addTransition(new TransitionImpl(p2, "s", p0)); // ADD
 	   		
-	   	P.setFinal(p0, true);
+	   	P.setFinal(p2, true);
 	   	
 	   	return P;
 	}

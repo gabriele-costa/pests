@@ -1,5 +1,6 @@
 package it.unige.parteval;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import it.unige.automata.Automaton;
 import it.unige.automata.State;
 import it.unige.automata.Transition;
 import it.unige.automata.impl.DFAutomatonImpl;
+import it.unige.automata.impl.MultiStateImpl;
 import it.unige.automata.impl.NFAutomatonImpl;
 import it.unige.automata.impl.StateImpl;
 import it.unige.automata.impl.TransitionImpl;
@@ -164,22 +166,19 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 	}
 	
 	/*
-	 * Alternative algorithm
+	 * Official algorithm
 	 */
-	public static NFAutomatonImpl partialA(Automaton P, Automaton A, Set<String> SigmaB, Set<String> Gamma) {
+	public static NFAutomatonImpl partialA(DFAutomatonImpl P, DFAutomatonImpl A, Set<String> SigmaB, Set<String> Gamma) {
 		// TODO
-		
-		addGammaLoops(P, Gamma);
 		
 		State i = prod(P.getInitial(), A.getInitial());
 		NFAutomatonImpl B = new NFAutomatonImpl(i);
 		
-		State ffstate = new StateImpl("ff");
+//		State ffstate = new StateImpl(Automaton.FAIL);
 
 		for(State fa : A.getFinals())
 			for(State fp : P.getFinals())
-				//if(!P.getFails().contains(fp))
-					B.setFinal(prod(fp, fa), true);
+				B.setFinal(prod(fp, fa), true);
 		
 		Set<String> Sigma = new HashSet<>();
 		Sigma.addAll(A.getAlphabet());
@@ -191,18 +190,18 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 					Set<State> Qpp = P.trans(qp, a);
 					
 					// if Qpp is empty == false
-					if(Qpp.isEmpty())
-						B.addTransition(new TransitionImpl(prod(qp,qa), a, ffstate));
+					if(Qpp.isEmpty() && SigmaB.contains(a))
+						continue;
+//						B.addTransition(new TransitionImpl(prod(qp,qa), a, ffstate));
 										
 					for(State qpp : Qpp) {
 						
 						if(!Gamma.contains(a)) {
-							
 							if(A.getAlphabet().contains(a)) { 	// a in SigmaA \ Gamma
 								for(State qap : A.trans(qa, a))
 									B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
 							}
-							
+							// else?
 							if(SigmaB.contains(a)) { 		// a in SigmaB \ Gamma
 								B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp, qa)));
 							}								
@@ -214,17 +213,90 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 						}
 					}
 				}
-//				if(P.getFails().contains(qp) || A.getFails().contains(qa))
-//					B.setFail(prod(qp, qa), true);
 			}
 		}
 		
-		// removeGammaLoops(P, Gamma);
-		// removeGammaLoops(B, Gamma);
-		
-		makeSelfLoops(B, ffstate, B.getAlphabet());
-		
 		return B;
 	}
-	
+
+	public static DFAutomatonImpl unify(NFAutomatonImpl B, Set<String> G) {
+		/*
+		 * From NFA to DFA (special algorithm)
+		 */
+		
+		MultiStateImpl msi = new MultiStateImpl(B.Closure(B.getInitial()));
+		
+		DFAutomatonImpl dfa = new DFAutomatonImpl(msi);
+		
+		ArrayList<MultiStateImpl> todo = new ArrayList<MultiStateImpl>();
+		
+		todo.add(msi);
+		
+		while(!todo.isEmpty()) {
+			MultiStateImpl curr = todo.remove(0);
+			
+			Set<State> tmp, ff;
+			tmp = new HashSet<>();
+			ff = new HashSet<>();
+			
+			tmp.addAll(B.getFinals());
+			tmp.removeAll(curr.states);
+			ff.addAll(curr.states);
+			ff.removeAll(B.getFinals());
+			
+			if(ff.isEmpty() && tmp.isEmpty())
+				dfa.setFinal(curr, true);
+			
+			for(String a : B.getAlphabet()) {
+				if(a.compareTo(Automaton.EPSILON) == 0)
+					continue;
+				
+				HashSet<State> mc;
+				if(!G.contains(a))
+					mc = AndMove(B, curr.states, a);
+				else
+					mc = OrMove(B, curr.states, a);
+				
+				if(!mc.isEmpty()) {
+					MultiStateImpl dest = new MultiStateImpl(mc);
+					if(!dfa.getStates().contains(dest))
+						todo.add(dest);
+					dfa.addTransition(new TransitionImpl(curr, a, dest));
+				}
+			}
+		}
+		
+		return dfa;
+	}
+
+	private static HashSet<State> OrMove(NFAutomatonImpl B, HashSet<State> states, String a) {
+		HashSet<State> output = new HashSet<State>();
+	    for(State state : states)
+	    {
+	        for(Transition edge : B.getForwordStar(state))
+	        {
+	            if (edge.getLabel().compareTo(a) == 0)
+	            {
+	                output.add(edge.getDestination());
+	            }
+	        }
+	    }
+	    return B.Closure(output);
+	}
+
+	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
+		HashSet<State> output = new HashSet<State>();
+	    for(State state : states)
+	    {
+	    	Set<State> dst = B.trans(state, a);
+	    	if(dst.isEmpty())
+	    		return new HashSet<State>();
+
+	    	output.addAll(dst);
+	    }
+	    if(output.containsAll(B.Closure(output)))
+	    	return output;
+	    else
+	    	return new HashSet<State>();
+	}
 }

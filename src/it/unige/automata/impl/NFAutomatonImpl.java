@@ -241,13 +241,13 @@ public class NFAutomatonImpl implements Automaton {
 		return dfa;
 	}
 	
-	private HashSet<State> Closure(State s) {
+	public HashSet<State> Closure(State s) {
 		HashSet<State> als = new HashSet<State>();
 		als.add(s);
 		return Closure(als);
 	}
 	
-	private HashSet<State> Closure(HashSet<State> inputStates)
+	public HashSet<State> Closure(HashSet<State> inputStates)
 	{
 		HashSet<State> output = new HashSet<State>();
 	    output.addAll(inputStates);
@@ -272,7 +272,7 @@ public class NFAutomatonImpl implements Automaton {
 	    return output;
 	}
 
-	private ArrayList<Transition> getForwordStar(State state) {
+	public ArrayList<Transition> getForwordStar(State state) {
 		ArrayList<Transition> fs = new ArrayList<Transition>();
 		for(Transition t : this.getTransitions()) {
 			if(t.getSource().compareTo(state) == 0)
