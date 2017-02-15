@@ -184,21 +184,26 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 		Sigma.addAll(A.getAlphabet());
 		Sigma.addAll(SigmaB);
 		
+		Set<State> violating = new HashSet<State>();
+		
 		for(State qp : P.getStates()) {
 			for(State qa : A.getStates()) {
 				for(String a : Sigma ) {
 					Set<State> Qpp = P.trans(qp, a);
+					Set<State> Qap = A.trans(qa, a);
 					
 					// if Qpp is empty == false
-					if(Qpp.isEmpty() && SigmaB.contains(a))
+					if(Qpp.isEmpty() && !Qap.isEmpty()) {
+						violating.add(prod(qp,qa));
 						continue;
+					}
 //						B.addTransition(new TransitionImpl(prod(qp,qa), a, ffstate));
 										
 					for(State qpp : Qpp) {
 						
 						if(!Gamma.contains(a)) {
 							if(A.getAlphabet().contains(a)) { 	// a in SigmaA \ Gamma
-								for(State qap : A.trans(qa, a))
+								for(State qap : Qap)
 									B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
 							}
 							// else?
@@ -207,13 +212,17 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 							}								
 						}
 						else { 									// a in Gamma
-							for(State qap : A.trans(qa, a)) {
+							for(State qap : Qap) {
 								B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp,qap)));
 							}
 						}
 					}
 				}
 			}
+		}
+		
+		for(State v : violating) {
+			B.removeState(v);
 		}
 		
 		return B;
@@ -224,7 +233,9 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 		 * From NFA to DFA (special algorithm)
 		 */
 		
-		MultiStateImpl msi = new MultiStateImpl(B.Closure(B.getInitial()));
+		Set<State> I = new HashSet<State>();
+		I.addAll(B.Closure(B.getInitial()));
+		MultiStateImpl msi = new MultiStateImpl(I);
 		
 		DFAutomatonImpl dfa = new DFAutomatonImpl(msi);
 		
@@ -281,22 +292,6 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 	    return B.Closure(output);
 	}
 	
-	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
-		HashSet<State> output = new HashSet<State>();
-	    for(State state : states)
-	    {
-	    	Set<State> dst = B.trans(state, a);
-	    	if(dst.isEmpty())
-	    		return new HashSet<State>();
-	    	
-	    	if(output.isEmpty())
-	    		output.addAll(dst);
-	    	else 
-	    		output.retainAll(dst);
-	    }
-	    return output;
-	}
-
 //	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
 //		HashSet<State> output = new HashSet<State>();
 //	    for(State state : states)
@@ -304,12 +299,29 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 //	    	Set<State> dst = B.trans(state, a);
 //	    	if(dst.isEmpty())
 //	    		return new HashSet<State>();
-//
-//	    	output.addAll(dst);
+//	    	
+//	    	if(output.isEmpty())
+//	    		output.addAll(dst);
+//	    	else 
+//	    		output.retainAll(dst);
 //	    }
-//	    if(output.containsAll(B.Closure(output)))
-//	    	return output;
-//	    else
-//	    	return new HashSet<State>();
+//	    return output;
 //	}
+
+	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
+		HashSet<State> output = new HashSet<State>();
+	    boolean first = true;
+		for(State state : states)
+	    {
+			Set<State> dst = B.trans(state, a);
+	    	if(first) {
+	    		first = false;
+	    		output.addAll(B.Closure(dst));
+	    	}
+	    	else {
+	    		output.retainAll(B.Closure(dst));
+	    	}
+	    }
+		return output;
+	}
 }

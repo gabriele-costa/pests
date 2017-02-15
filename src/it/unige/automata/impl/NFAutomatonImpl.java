@@ -247,7 +247,7 @@ public class NFAutomatonImpl implements Automaton {
 		return Closure(als);
 	}
 	
-	public HashSet<State> Closure(HashSet<State> inputStates)
+	public HashSet<State> Closure(Set<State> inputStates)
 	{
 		HashSet<State> output = new HashSet<State>();
 	    output.addAll(inputStates);
