@@ -202,7 +202,7 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 									B.addTransition(new TransitionImpl(prod(qp,qa), Automaton.EPSILON, prod(qpp, qap)));
 							}
 							// else?
-							if(SigmaB.contains(a)) { 		// a in SigmaB \ Gamma
+							if(SigmaB.contains(a)) { 			// a in SigmaB \ Gamma
 								B.addTransition(new TransitionImpl(prod(qp,qa), a, prod(qpp, qa)));
 							}								
 						}
@@ -236,15 +236,12 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 			MultiStateImpl curr = todo.remove(0);
 			
 			Set<State> tmp, ff;
-			tmp = new HashSet<>();
 			ff = new HashSet<>();
 			
-			tmp.addAll(B.getFinals());
-			tmp.removeAll(curr.states);
 			ff.addAll(curr.states);
 			ff.removeAll(B.getFinals());
 			
-			if(ff.isEmpty() && tmp.isEmpty())
+			if(ff.isEmpty())
 				dfa.setFinal(curr, true);
 			
 			for(String a : B.getAlphabet()) {
@@ -283,7 +280,7 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 	    }
 	    return B.Closure(output);
 	}
-
+	
 	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
 		HashSet<State> output = new HashSet<State>();
 	    for(State state : states)
@@ -291,12 +288,28 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 	    	Set<State> dst = B.trans(state, a);
 	    	if(dst.isEmpty())
 	    		return new HashSet<State>();
-
-	    	output.addAll(dst);
+	    	
+	    	if(output.isEmpty())
+	    		output.addAll(dst);
+	    	else 
+	    		output.retainAll(dst);
 	    }
-	    if(output.containsAll(B.Closure(output)))
-	    	return output;
-	    else
-	    	return new HashSet<State>();
+	    return output;
 	}
+
+//	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
+//		HashSet<State> output = new HashSet<State>();
+//	    for(State state : states)
+//	    {
+//	    	Set<State> dst = B.trans(state, a);
+//	    	if(dst.isEmpty())
+//	    		return new HashSet<State>();
+//
+//	    	output.addAll(dst);
+//	    }
+//	    if(output.containsAll(B.Closure(output)))
+//	    	return output;
+//	    else
+//	    	return new HashSet<State>();
+//	}
 }
