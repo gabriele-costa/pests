@@ -221,6 +221,14 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 			}
 		}
 		
+		for(State u : B.getStates()) {
+			Set<State> C = B.Closure(u);
+			C.retainAll(violating);
+			if(!C.isEmpty()) {
+				violating.add(u);	
+			}
+		}
+		
 		for(State v : violating) {
 			B.removeState(v);
 		}
