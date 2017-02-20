@@ -73,7 +73,7 @@ public class Printer {
 	public static void createDotGraph(String dotFormat, String fileName) {
 	    GraphViz gv = new GraphViz();
 	    gv.add(dotFormat);
-	    String type = "pdf";
+	    String type = "png";
 	    // gv.increaseDpi();
 	    // gv.decreaseDpi();
 	    File out = new File(fileName+"."+ type); 

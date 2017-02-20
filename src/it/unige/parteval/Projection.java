@@ -193,8 +193,9 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 					Set<State> Qap = A.trans(qa, a);
 					
 					// if Qpp is empty == false
-					if(Qpp.isEmpty() && !Qap.isEmpty()) {
-						violating.add(prod(qp,qa));
+					if(Qpp.isEmpty()) {
+						if(!Qap.isEmpty())
+							violating.add(prod(qp,qa));
 						continue;
 					}
 //						B.addTransition(new TransitionImpl(prod(qp,qa), a, ffstate));
@@ -324,12 +325,12 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 			Set<State> dst = B.trans(state, a);
 	    	if(first) {
 	    		first = false;
-	    		output.addAll(B.Closure(dst));
+	    		output.addAll(dst);
 	    	}
 	    	else {
-	    		output.retainAll(B.Closure(dst));
+	    		output.retainAll(dst);
 	    	}
 	    }
-		return output;
+		return B.Closure(output);
 	}
 }
