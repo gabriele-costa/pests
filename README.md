@@ -14,3 +14,16 @@ To use the method one must provide four inputs:
 # Running Tests
 
 Several JUnit tests are available under /it/unige/parteval/tests.
+
+For instance, running [ICALPExample.java](https://github.com/SCPTeam/pests/blob/master/src/it/unige/parteval/Test/ICALPExample.java) correstond to executing the partial evaluation of the specification
+
+![Specification](https://github.com/SCPTeam/pests/blob/master/fig/P.png)
+
+against the agent
+
+![Agent](https://github.com/SCPTeam/pests/blob/master/fig/A.png)
+
+which results in the quotient specification
+
+![Quotient](https://github.com/SCPTeam/pests/blob/master/fig/PA.png)
+
