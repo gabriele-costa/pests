@@ -1,4 +1,4 @@
-package it.unige.parteval.Test;
+package it.unige.parteval.test;
 
 import it.unige.automata.*;
 import it.unige.automata.impl.*;

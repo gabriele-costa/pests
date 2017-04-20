@@ -15,7 +15,7 @@ import it.unige.automata.impl.StateImpl;
 import it.unige.automata.impl.TransitionImpl;
 import it.unige.lts.LTS;
 import it.unige.mu.*;
-import it.unige.parteval.Test.Test;
+import it.unige.parteval.test.Test;
 
 public class Main {
 

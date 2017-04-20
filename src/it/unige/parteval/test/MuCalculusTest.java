@@ -1,4 +1,4 @@
-package it.unige.parteval.Test;
+package it.unige.parteval.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -270,7 +270,7 @@ public class MuCalculusTest {
 		
 		Set<String> G = TestGamma(TESTNUM);
 		
-		addGammaLoops(P, G); // necessario perchè le policy devono sempre avere self loop sulle azioni di sincronizzazione
+		addGammaLoops(P, G); // necessario perchï¿½ le policy devono sempre avere self loop sulle azioni di sincronizzazione
 		
 		NFAutomatonImpl PpA = Projection.partial(P, A, G);
 		

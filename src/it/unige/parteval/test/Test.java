@@ -1,4 +1,4 @@
-package it.unige.parteval.Test;
+package it.unige.parteval.test;
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
