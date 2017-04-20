@@ -32,7 +32,7 @@ public class FlexFactComponents {
 	}
 	
 	public static String stop(int x, int y) {
-		return start + "(" + x + "," + y + ")";
+		return stop + "(" + x + "," + y + ")";
 	}
 
 	public static DFAutomatonImpl ConveyorBelt(int x, int y, boolean horizontal) {
@@ -50,8 +50,8 @@ public class FlexFactComponents {
 	   	
 	   	DFAutomatonImpl C = new DFAutomatonImpl(se);
 	   	
-	   	C.addTransition(se, start(true), re);
-	   	C.addTransition(se, start(false), le);
+	   	C.addTransition(se, start(x, y, true), re);
+	   	C.addTransition(se, start(x, y, false), le);
 	   	
 
 	   	if(horizontal) {
@@ -63,10 +63,10 @@ public class FlexFactComponents {
 		   	C.addTransition(le, move(x,y+1,x,y), mf);	   		
 	   	}
 	   	
-	   	C.addTransition(mf, stop, sf);
+	   	C.addTransition(mf, stop(x,y), sf);
 	   	
-	   	C.addTransition(sf, start(true), rf);
-	   	C.addTransition(sf, start(false), lf);
+	   	C.addTransition(sf, start(x, y, true), rf);
+	   	C.addTransition(sf, start(x, y, false), lf);
 	   	
 	   	if(horizontal) {
 	   		C.addTransition(rf, move(x,y,x+1,y), se);
