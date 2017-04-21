@@ -73,8 +73,8 @@ public class Printer {
 	public static void createDotGraph(String dotFormat, String fileName) {
 	    GraphViz gv = new GraphViz();
 	    gv.add(dotFormat);
-	    String type = "png";
-	    // gv.increaseDpi();
+	    String type = "svg";
+	    //gv.increaseDpi();
 	    // gv.decreaseDpi();
 	    File out = new File(fileName+"."+ type); 
 	    gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out );

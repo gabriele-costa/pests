@@ -228,7 +228,9 @@ public class GraphViz
             Runtime rt = Runtime.getRuntime();
 
             // patch by Mike Chenault
-            String[] args = {DOT, "-T"+type, "-Gdpi="+dpiSizes[this.currentDpiPos], "-o", img.getAbsolutePath(), dot.getAbsolutePath()};
+            // String[] args = {DOT, "-T"+type, "-Gdpi="+dpiSizes[this.currentDpiPos], "-o", img.getAbsolutePath(), dot.getAbsolutePath()};
+            String[] args = {DOT, "-T"+type, "-o", img.getAbsolutePath(), dot.getAbsolutePath()};
+            
             Process p = rt.exec(args);
 
             p.waitFor();
