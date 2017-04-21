@@ -1,5 +1,8 @@
 package it.unige.parteval.test.flexfact;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import it.unige.automata.impl.DFAutomatonImpl;
 import it.unige.automata.impl.StateImpl;
 import it.unige.automata.impl.TransitionImpl;
@@ -38,7 +41,7 @@ public class FlexFactComponents {
 	
 	
 	public static String move(int x, int y, int x1, int y1) {
-		return move +"("+ x +","+ y + " -> "+ x1 + ","+ y1 + ")";
+		return move +"("+ x +","+ y + ","+ x1 + ","+ y1 + ")";
 	}
 	
 	public static String start(int x, int y, boolean plus) {
@@ -309,6 +312,56 @@ public class FlexFactComponents {
 		C.setFinal(es0, true);
 		
 		return C;
+	}
+	
+	public static Set<String> getConveyBeltControls(int x, int y) {
+		Set<String> G = new HashSet<String>();
+		
+		G.add(start(x, y, true));
+		G.add(start(x, y, false));
+		G.add(stop(x, y));
+		
+		return G;
+	}
+	
+	public static Set<String> getProcessingMachineControls(int x, int y) {
+		Set<String> G = new HashSet<String>();
+		
+		G.add(start(x, y, true));
+		G.add(start(x, y, false));
+		G.add(stop(x, y));
+		G.add(skip(x, y));
+		G.add(process(x, y));
+		
+		return G;
+	}
+	
+	public static Set<String> getRotaryTableControls(int x, int y) {
+		Set<String> G = new HashSet<String>();
+		
+		G.add(start(x, y, true));
+		G.add(start(x, y, false));
+		G.add(stop(x, y));
+		G.add(rotate(x, y));
+		
+		return G;
+	}
+	
+	public static Set<String> getStackFeederControls(int x, int y, boolean straight) {
+		Set<String> G = new HashSet<String>();
+		
+		G.add(start(x, y, straight));
+		G.add(reload(x, y));
+		
+		return G;
+	}
+	
+	public static Set<String> getExitSlideControls(int x, int y) {
+		Set<String> G = new HashSet<String>();
+		
+		G.add(out(x, y));
+		
+		return G;
 	}
 
 }
