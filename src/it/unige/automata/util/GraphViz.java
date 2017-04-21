@@ -68,12 +68,15 @@ public class GraphViz
     /**
      * The dir. where temporary files will be created.
      */
-  private static String TEMP_DIR = "/Users/yugoa/workspace/PartEval/tmp";
+  private static String PROJ_DIR = "/home/gabriele/git/pests";
+    
+  private static String TEMP_DIR = PROJ_DIR + "/tmp";
 
     /**
      * Where is your dot program located? It will be called externally.
      */
-  private static String DOT = "\"c:/Program Files (x86)/Graphviz2.38/bin/dot.exe\"";
+  private static String DOT = "dot";
+	//"\"c:/Program Files (x86)/Graphviz2.38/bin/dot.exe\"";
   	//configFile.getProperty("dotFor" + osName);
 
     /**
@@ -262,7 +265,11 @@ public class GraphViz
     {
         File temp;
         try {
-            temp = File.createTempFile("dorrr",".dot", new File(GraphViz.TEMP_DIR));
+        	File tempDir = new File(GraphViz.TEMP_DIR);
+        	if(!tempDir.exists())
+        		tempDir.mkdir();
+        	
+            temp = File.createTempFile("dorrr",".dot", tempDir);
             FileWriter fout = new FileWriter(temp);
             fout.write(str);
                        BufferedWriter br=new BufferedWriter(new FileWriter("dotsource.dot"));
