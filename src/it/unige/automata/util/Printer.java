@@ -8,6 +8,8 @@ import it.unige.automata.State;
 import it.unige.automata.Transition;
 
 public class Printer {
+	
+	public static String type = "svg";
 
 	public static String printAutomaton(Automaton A) {
 		StringBuilder builder = new StringBuilder();
@@ -73,7 +75,7 @@ public class Printer {
 	public static void createDotGraph(String dotFormat, String fileName) {
 	    GraphViz gv = new GraphViz();
 	    gv.add(dotFormat);
-	    String type = "png";
+	    //String type = "png";
 	    //gv.increaseDpi();
 	    // gv.decreaseDpi();
 	    File out = new File(fileName+"."+ type); 

@@ -1,12 +1,15 @@
 package it.unige.parteval.test.flexfact;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
 
 import it.unige.automata.impl.DFAutomatonImpl;
+import it.unige.automata.impl.NFAutomatonImpl;
 import it.unige.automata.impl.StateImpl;
 import it.unige.automata.util.Printer;
+import it.unige.parteval.Projection;
 
 public class FlexFactPlantTest {
 	
@@ -30,7 +33,17 @@ public class FlexFactPlantTest {
 		DFAutomatonImpl PA = plant.getPlantAutomaton();
 		Printer.createDotGraph(Printer.printDotAutomaton(PA, "PA"), "PA");
 		
-		// TODO partial evaluation 
+		DFAutomatonImpl spec = neverLeavePlant(3, 1);
+		
+		Printer.createDotGraph(Printer.printDotAutomaton(spec, "spec"), "spec");
+		
+		NFAutomatonImpl nPspec = Projection.partialA(spec, PA, new HashSet<String>(), getControls());
+		
+		Printer.createDotGraph(Printer.printDotAutomaton(nPspec, "nPspec"), "nPspec");
+		
+		DFAutomatonImpl Pspec = Projection.unify(nPspec, getControls());
+		
+		Printer.createDotGraph(Printer.printDotAutomaton(Pspec, "Pspec"), "Pspec");
 		
 	}
 	
@@ -39,9 +52,7 @@ public class FlexFactPlantTest {
 		StateImpl ok = new StateImpl("ok");
 		StateImpl fail = new StateImpl("fail");
 		
-		Set<String> controls = FlexFactComponents.getStackFeederControls(0, 0, true);
-		controls.addAll(FlexFactComponents.getRotaryTableControls(1, 0));
-		controls.addAll(FlexFactComponents.getExitSlideControls(2, 0));
+		Set<String> controls = getControls();
 		
 		DFAutomatonImpl S = new DFAutomatonImpl(ok);
 		
@@ -63,6 +74,15 @@ public class FlexFactPlantTest {
 		
 		return S;
 		
+	}
+	
+	Set<String> getControls() {
+		
+		Set<String> controls = FlexFactComponents.getStackFeederControls(0, 0, true);
+		controls.addAll(FlexFactComponents.getRotaryTableControls(1, 0));
+		controls.addAll(FlexFactComponents.getExitSlideControls(2, 0));
+		
+		return controls;
 	}
 
 }
