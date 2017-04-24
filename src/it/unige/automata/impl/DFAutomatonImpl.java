@@ -137,7 +137,7 @@ public class DFAutomatonImpl implements Automaton {
 		if(states.remove(s)) {
 			Set<Transition> R = new HashSet<Transition>();
 			for(Transition t : delta) {
-				if(t.getSource().equals(s) || t.getDestination().equals(s))
+				if(t.getSource().compareTo(s) == 0 || t.getDestination().compareTo(s) == 0)
 					R.add(t);
 			}
 			delta.removeAll(R);
@@ -376,5 +376,58 @@ public class DFAutomatonImpl implements Automaton {
 		for(State s : toRmv) {
 			removeState(s);
 		}
+	}
+	
+	public static DFAutomatonImpl control(DFAutomatonImpl A, DFAutomatonImpl C, Set<String> controls) {
+		
+		DFAutomatonImpl CA = parallel(A, C, controls);
+		
+		Set<String> uncontrollable = new HashSet<String>();
+		uncontrollable.addAll(A.getAlphabet());
+		uncontrollable.removeAll(controls);
+		
+		
+		Set<State> pits = getPits(CA, uncontrollable);
+		
+		while(!pits.isEmpty()) {
+			CA.removeStates(pits);
+			pits = getPits(CA, uncontrollable);
+		}
+		
+		return CA.minimize();
+		
+	}
+
+	private static Set<State> getPits(DFAutomatonImpl CA, Set<String> U) {
+
+		Set<State> pits = new HashSet<State>();
+		
+		for(State s : CA.getStates()) {
+			if(CA.getFinals().contains(s))
+				continue;
+			
+			boolean pit = true;
+			
+			for(Transition t : CA.getTransitions()) {
+				if(t.getDestination().compareTo(s) != 0)
+					continue;
+				
+				if(t.getSource().compareTo(s) == 0)
+					continue;
+				
+				if(U.contains(t.getLabel()))
+					continue;
+				
+				pit = true;
+				break;
+			}
+			
+			if(pit) {
+				pits.add(s);
+			}
+		}
+		
+		return pits;
+
 	}
 }

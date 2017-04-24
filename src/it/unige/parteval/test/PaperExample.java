@@ -39,7 +39,7 @@ public class PaperExample {
 	final int STEP = 5;
 	
 	@Test
-	public void test() {
+	public void testSCP() {
 
 		DFAutomatonImpl P = getPolicy(4);
 		
@@ -61,6 +61,51 @@ public class PaperExample {
 	}
 	
 	@Test
+	public void testCSP() {
+
+		DFAutomatonImpl P = getPolicy(3);
+		makeTotal(P);
+		
+		Printer.createDotGraph(Printer.printDotAutomaton(P, "PC"), "PC");
+		
+		Set<String> G = getGamma();
+		
+		DFAutomatonImpl AB = getAB();
+		Printer.createDotGraph(Printer.printDotAutomaton(AB, "AB"), "AB");
+			
+		NFAutomatonImpl Pp = Projection.partialA(P, AB, new HashSet<String>(), G);
+		Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPCAB"), "nPCAB");
+		P = Projection.unify(Pp, G);
+		P.collapse();
+		P.minimize();
+		//P.renameStates("p");
+		Printer.createDotGraph(Printer.printDotAutomaton(P, "PCAB"), "PCAB");
+		
+		DFAutomatonImpl CAB = DFAutomatonImpl.control(AB, P, G);
+		Printer.createDotGraph(Printer.printDotAutomaton(CAB, "CAB"), "CAB");
+		
+	}
+	
+	private void makeTotal(DFAutomatonImpl P) {
+		StateImpl fail = new StateImpl("ff");
+		Set<Transition> toAdd = new HashSet<Transition>();
+		
+		for(String a : P.getAlphabet()) {
+			for(State s : P.getStates()) {
+				if(P.trans(s, a).isEmpty()) {
+					toAdd.add(new TransitionImpl(s, a, fail));
+				}
+			}
+			
+			toAdd.add(new TransitionImpl(fail, a, fail));
+		}
+		
+		for(Transition t : toAdd) {
+			P.addTransition(t);
+		}
+	}
+
+	//@Test
 	public void testLoop() {
 
 		for(int b = BUFFER_MIN; b < BUFFER_MAX; b+=STEP) {
@@ -173,28 +218,63 @@ public class PaperExample {
 	   	return P;
 	}
 	
-	private DFAutomatonImpl getWA() {
+	private DFAutomatonImpl getAB() {
 		
 	   	StateImpl p0 = new StateImpl("q0");
+	   	
+	   	DFAutomatonImpl A = new DFAutomatonImpl(p0);
+	   	
 	   	StateImpl p1 = new StateImpl("q1");
-	   	
-	   	DFAutomatonImpl P = new DFAutomatonImpl(p0);
-	   	
-   		
-	   	
-	   	StateImpl out = new StateImpl("q3");
 	   	StateImpl p2 = new StateImpl("q2");
+	   	StateImpl p3 = new StateImpl("q3");
+	   	StateImpl p4 = new StateImpl("q4");
 	   	
-	   	P.addTransition(new TransitionImpl(p0, "a", p1));
-	   	P.addTransition(new TransitionImpl(p1, "a", p2));
-	   	P.addTransition(new TransitionImpl(p2, "s", p0));
-	   	P.addTransition(new TransitionImpl(p0, "t", out));
+	   	A.addTransition(new TransitionImpl(p0, "a", p1));
+	   	A.addTransition(new TransitionImpl(p1, "a", p2));
+	   	A.addTransition(new TransitionImpl(p2, "s", p3));
+	   	A.addTransition(new TransitionImpl(p3, "s", p0));
+	   	A.addTransition(new TransitionImpl(p0, "t", p4));
 	   	
-	   	P.setFinal(p0, true);
-	   	P.setFinal(p1, true);
-	   	P.setFinal(p2, true);
-	   	P.setFinal(out, true);
+	   	A.setFinal(p0, true);
+	   	A.setFinal(p1, true);
+	   	A.setFinal(p2, true);
+	   	A.setFinal(p3, true);
+	   	A.setFinal(p4, true);
 	   	
-	   	return P;
+	   	StateImpl w0 = new StateImpl("w0");
+	   	
+	   	
+	   	DFAutomatonImpl B = new DFAutomatonImpl(w0);
+	   	
+	   	StateImpl w1 = new StateImpl("w1");
+	   	StateImpl w2 = new StateImpl("w2");
+	   	StateImpl w3 = new StateImpl("w3");
+	   	StateImpl w4 = new StateImpl("w4");
+	   	StateImpl w5 = new StateImpl("w5");
+	   	StateImpl w6 = new StateImpl("w6");
+	   	StateImpl w7 = new StateImpl("w7");
+	   	
+	   	B.addTransition(new TransitionImpl(w0, "t", w7));
+	   	B.addTransition(new TransitionImpl(w0, "s", w1));
+	   	B.addTransition(new TransitionImpl(w1, "b", w2));
+	   	B.addTransition(new TransitionImpl(w2, "b", w4));
+	   	B.addTransition(new TransitionImpl(w2, "s", w3));
+	   	B.addTransition(new TransitionImpl(w3, "t", w5));
+	   	B.addTransition(new TransitionImpl(w3, "s", w6));
+	   	B.addTransition(new TransitionImpl(w4, "s", w0));
+	   	B.addTransition(new TransitionImpl(w5, "b", w7));
+	   	B.addTransition(new TransitionImpl(w6, "b", w1));
+	   	
+	   	B.setFinal(w0, true);
+	   	B.setFinal(w1, true);
+	   	B.setFinal(w2, true);
+	   	B.setFinal(w3, true);
+	   	B.setFinal(w4, true);
+	   	B.setFinal(w5, true);
+	   	B.setFinal(w6, true);
+	   	B.setFinal(w7, true);
+	   	
+	   	return DFAutomatonImpl.parallel(A, B, getGamma());
+	   	
 	}
 }
