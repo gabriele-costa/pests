@@ -28,7 +28,7 @@ import it.unige.mu.MuVar;
 import it.unige.parteval.Main;
 import it.unige.parteval.Projection;
 
-public class ICALPExample {
+public class PaperExample {
 
 	final int BUFFER_MIN  = 5;
 	final int UAV_CAP_MIN = 4;

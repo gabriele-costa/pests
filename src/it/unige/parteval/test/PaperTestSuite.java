@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 
 @SuiteClasses({
-	ICALPExample.class
+	PaperExample.class
 })
 
 public class PaperTestSuite {
