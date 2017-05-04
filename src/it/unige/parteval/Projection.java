@@ -19,7 +19,7 @@ import it.unige.automata.util.SetUtils;
 
 public class Projection {
 
-public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> SigmaB, Set<String> Gamma) {
+public static NFAutomatonImpl partial(Automaton<TransitionImpl> P, Automaton<TransitionImpl> A, Set<String> SigmaB, Set<String> Gamma) {
 		
 		
 		addGammaLoops(P, Gamma);
@@ -80,7 +80,7 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 		return B;
 	}
 
-	public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Gamma) {
+	public static NFAutomatonImpl partial(Automaton<TransitionImpl> P, Automaton<TransitionImpl> A, Set<String> Gamma) {
 		return partial(P, A, A.getAlphabet(), Gamma);
 	}
 
@@ -88,7 +88,7 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 		return new StateImpl("" + p.getLabel()+q.getLabel() + "");
 	}
 	
-	public static void addGammaLoops(Automaton A, Set<String> G) {
+	public static void addGammaLoops(Automaton<TransitionImpl> A, Set<String> G) {
 		
 		for(State q : A.getStates()) {
 			for(String g : G) {
@@ -99,14 +99,14 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 		
 	}
 
-	private static void makeSelfLoops(Automaton P, State q, Set<String> Act) {
+	private static void makeSelfLoops(Automaton<TransitionImpl> P, State q, Set<String> Act) {
 		for(String a : Act) {
 			if(P.trans(q, a).isEmpty())
 				P.addTransition(new TransitionImpl(q, a, q));
 		}
 	}
 	
-	private static void removeGammaLoops(Automaton A, Set<String> g) {
+	private static void removeGammaLoops(Automaton<Transition> A, Set<String> g) {
 		
 		HashSet<Transition> toRmv = new HashSet<Transition>();
 		
@@ -132,8 +132,8 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 			boolean found = true;
 			while(found) {
 				found = false;
-				Set<Transition> toCut = new HashSet<>();
-				for(Transition t : A.getTransitions()) {
+				Set<TransitionImpl> toCut = new HashSet<>();
+				for(TransitionImpl t : A.getTransitions()) {
 					if(toRmv.contains(t.getDestination())) {
 						toCut.add(t);
 						if(!SigmaC.contains(t.getLabel())) {
@@ -194,7 +194,7 @@ public static NFAutomatonImpl partial(Automaton P, Automaton A, Set<String> Sigm
 					
 					// if Qpp is empty == false
 					if(Qpp.isEmpty()) {
-						if(!Qap.isEmpty())
+						if(!Qap.isEmpty() && !Gamma.contains(a))
 							violating.add(prod(qp,qa));
 						continue;
 					}

@@ -246,7 +246,7 @@ public class MuCalculusTest {
 			P.addState(s);
 			P.setFinal(s, true);
 		}
-		for(Transition t : T.delta) {
+		for(TransitionImpl t : T.delta) {
 			P.addTransition(t);
 		}
 		

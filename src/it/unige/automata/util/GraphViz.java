@@ -56,7 +56,7 @@ public class GraphViz
     /**
      * Load the config.properties file.
      */
-    private final static String cfgProp = "/Users/yugoa/workspace/PartEval/config.properties";
+    private final static String cfgProp = "/home/gabriele/git/pests/config.properties";
     private final static Properties configFile = new Properties() {
         private final static long serialVersionUID = 1L; {
             try {
@@ -76,6 +76,8 @@ public class GraphViz
      * Where is your dot program located? It will be called externally.
      */
   private static String DOT = "dot";
+
+  //public static String tool = "twopi"; // "dot", "circo"
 	//"\"c:/Program Files (x86)/Graphviz2.38/bin/dot.exe\"";
   	//configFile.getProperty("dotFor" + osName);
 
@@ -230,6 +232,7 @@ public class GraphViz
             // patch by Mike Chenault
             // String[] args = {DOT, "-T"+type, "-Gdpi="+dpiSizes[this.currentDpiPos], "-o", img.getAbsolutePath(), dot.getAbsolutePath()};
             String[] args = {DOT, "-T"+type, "-o", img.getAbsolutePath(), dot.getAbsolutePath()};
+            // -v
             
             Process p = rt.exec(args);
 

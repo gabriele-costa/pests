@@ -6,12 +6,14 @@ import java.io.File;
 import it.unige.automata.Automaton;
 import it.unige.automata.State;
 import it.unige.automata.Transition;
+import it.unige.automata.impl.TransitionImpl;
 
 public class Printer {
 	
 	public static String type = "svg";
+	public static String outdir = "out/";
 
-	public static String printAutomaton(Automaton A) {
+	public static String printAutomaton(Automaton<TransitionImpl> A) {
 		StringBuilder builder = new StringBuilder();
 		
 		for(Transition t : A.getTransitions()) {
@@ -25,8 +27,8 @@ public class Printer {
 		
 		return builder.toString();
 	}
-	
-	public static String printDotAutomaton(Automaton A, String name) {
+
+	public static String printDotAutomaton(Automaton<TransitionImpl> A, String name) {
 		
 		StringBuilder builder = new StringBuilder();
 		
@@ -77,8 +79,8 @@ public class Printer {
 	    gv.add(dotFormat);
 	    //String type = "png";
 	    //gv.increaseDpi();
-	    // gv.decreaseDpi();
-	    File out = new File(fileName+"."+ type); 
+	    //gv.decreaseDpi();
+	    File out = new File(outdir + fileName+"."+ type); 
 	    gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out );
 	}
 	

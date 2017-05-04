@@ -9,20 +9,20 @@ import it.unige.automata.Transition;
 import it.unige.automata.util.SetUtils;
 import it.unige.parteval.Projection;
 
-public class DFAutomatonImpl implements Automaton {
+public class DFAutomatonImpl implements Automaton<TransitionImpl> {
 
 	Set<State> states;
 	State inits;
 	Set<State> finals;
 	Set<State> fails;
-	Set<Transition> delta;
+	Set<TransitionImpl> delta;
 	
 	public DFAutomatonImpl(State init) {
 		states = new HashSet<State>();
 		inits = init;
 		finals = new HashSet<State>();
 		fails = new HashSet<State>();
-		delta = new HashSet<Transition>();
+		delta = new HashSet<TransitionImpl>();
 		
 		states.add(init);
 	}
@@ -56,7 +56,7 @@ public class DFAutomatonImpl implements Automaton {
 			return states.add(s);
 		}
 		else
-			return fails.remove(s);
+			return finals.remove(s);
 	}
 
 	@Override
@@ -65,17 +65,17 @@ public class DFAutomatonImpl implements Automaton {
 	}
 
 	@Override
-	public Set<Transition> getTransitions() {
+	public Set<TransitionImpl> getTransitions() {
 		return delta;
 	}
 	
 	@Override
-	public void removeTransition(Transition t) {
+	public void removeTransition(TransitionImpl t) {
 		delta.remove(t);
 	}
 
 	@Override
-	public boolean addTransition(Transition t) {
+	public boolean addTransition(TransitionImpl t) {
 		assert(t.getLabel().compareTo(Automaton.EPSILON) != 0);
 		this.addState(t.getSource());
 		this.addState(t.getDestination());
@@ -269,6 +269,9 @@ public class DFAutomatonImpl implements Automaton {
 		}
 	}
 	
+	/*
+	 * Collapses all the pits in a single state
+	 */
 	public void collapse() {
 		Set<State> toKeep = new HashSet<State>();
 		toKeep.addAll(this.getFinals());
@@ -300,7 +303,7 @@ public class DFAutomatonImpl implements Automaton {
 		State ff = new StateImpl(FAIL);
 		
 		Set<Transition> toRemove = new HashSet<Transition>();
-		Set<Transition> toAdd = new HashSet<Transition>();
+		Set<TransitionImpl> toAdd = new HashSet<TransitionImpl>();
 		
 		for(Transition t: getTransitions()) {
 			if(toCollapse.contains(t.getDestination())) {
@@ -360,14 +363,15 @@ public class DFAutomatonImpl implements Automaton {
 			for(State q : B.getFinals())
 				nfa.setFinal(Projection.prod(p, q), true);
 		
-		DFAutomatonImpl AB = nfa.toDFA().minimize();
-		AB.collapse();
+		DFAutomatonImpl AB = nfa.toDFA();
+				//.minimize(); // too costly
+		// AB.collapse(); // perhaps unnecessary
 		return AB;
 		
 	}
 
-	public void removeTransitions(Set<Transition> toCut) {
-		for(Transition t : toCut) {
+	public void removeTransitions(Set<TransitionImpl> toCut) {
+		for(TransitionImpl t : toCut) {
 			removeTransition(t);
 		}
 	}

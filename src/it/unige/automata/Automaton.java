@@ -2,7 +2,7 @@ package it.unige.automata;
 
 import java.util.Set;
 
-public interface Automaton {
+public interface Automaton<T extends Transition> {
 	
 	public static final String EPSILON 	= "[e]";
 	public static final String FAIL 	= "ff";
@@ -23,9 +23,9 @@ public interface Automaton {
 	
 	public boolean addState(State s);
 	
-	public Set<Transition> getTransitions();
+	public Set<T> getTransitions();
 	
-	public boolean addTransition(Transition t);
+	public boolean addTransition(T t);
 	
 	public boolean addTransition(State s, String l, State d);
 
@@ -35,6 +35,6 @@ public interface Automaton {
 	
 	public boolean removeState(State s);
 	
-	public void removeTransition(Transition t);
+	public void removeTransition(T t);
 	
 }

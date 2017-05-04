@@ -106,7 +106,7 @@ public class NaturalProjection {
 		return AlgC1(Chi);
 	}
 	
-	private static ArrayList<ArrayList<State>> AlgC4(Automaton A, ArrayList<ArrayList<State>> Chi, Set<String> Sigma_B) {
+	private static ArrayList<ArrayList<State>> AlgC4(Automaton<TransitionImpl> A, ArrayList<ArrayList<State>> Chi, Set<String> Sigma_B) {
 		ArrayList<ArrayList<ArrayList<State>>> PY = new ArrayList<ArrayList<ArrayList<State>>>();
 		for(ArrayList<State> X_i : Chi){
 			ArrayList<ArrayList<State>> Y_ij = new ArrayList<ArrayList<State>>();
@@ -170,7 +170,7 @@ public class NaturalProjection {
 	 * 5 - Minimize the resulting automaton: 
 	 *     I checked in the paper they said that this algorithm computes a generator (not necessarily the minimum)  
 	 */
-	public static Automaton proj(Automaton A, Set<String> Sigma_B) {
+	public static Automaton proj(Automaton<TransitionImpl> A, Set<String> Sigma_B) {
 		ArrayList<ArrayList<State>> rstar = computeRStar(A, Sigma_B);
 		ArrayList<ArrayList<State>> rplus = computeRPlus(A, rstar, Sigma_B);
 		

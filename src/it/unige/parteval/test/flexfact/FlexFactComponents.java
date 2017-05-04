@@ -171,32 +171,32 @@ public class FlexFactComponents {
 	
 	public static DFAutomatonImpl RotaryTable(int x, int y) {
 		
-		StateImpl se = new StateImpl(PM + StoppedEmpty);
+		StateImpl se = new StateImpl(RT + StoppedEmpty);
 		
-		StateImpl re = new StateImpl(PM + RightEmpty);
-		StateImpl rf = new StateImpl(PM + RightFull);
+		StateImpl re = new StateImpl(RT + RightEmpty);
+		StateImpl rf = new StateImpl(RT + RightFull);
 		
-		StateImpl le = new StateImpl(PM + LeftEmpty);
-		StateImpl lf = new StateImpl(PM + LeftFull);
+		StateImpl le = new StateImpl(RT + LeftEmpty);
+		StateImpl lf = new StateImpl(RT + LeftFull);
 		
-		StateImpl mf = new StateImpl(PM + MovingFull);
-		StateImpl sf = new StateImpl(PM + StoppedFull);
+		StateImpl mf = new StateImpl(RT + MovingFull);
+		StateImpl sf = new StateImpl(RT + StoppedFull);
 		
-		StateImpl rd = new StateImpl(PM + ReadyFull);
+		//StateImpl rd = new StateImpl(RT + ReadyFull);
 		
 		// rotated state
-		StateImpl ser = new StateImpl(PM + StoppedEmpty + rotated);
+		StateImpl ser = new StateImpl(RT + StoppedEmpty + rotated);
 		
-		StateImpl rer = new StateImpl(PM + RightEmpty + rotated);
-		StateImpl rfr = new StateImpl(PM + RightFull + rotated);
+		StateImpl rer = new StateImpl(RT + RightEmpty + rotated);
+		StateImpl rfr = new StateImpl(RT + RightFull + rotated);
 		
-		StateImpl ler = new StateImpl(PM + LeftEmpty + rotated);
-		StateImpl lfr = new StateImpl(PM + LeftFull + rotated);
+		StateImpl ler = new StateImpl(RT + LeftEmpty + rotated);
+		StateImpl lfr = new StateImpl(RT + LeftFull + rotated);
 		
-		StateImpl mfr = new StateImpl(PM + MovingFull + rotated);
-		StateImpl sfr = new StateImpl(PM + StoppedFull + rotated);
+		StateImpl mfr = new StateImpl(RT + MovingFull + rotated);
+		StateImpl sfr = new StateImpl(RT + StoppedFull + rotated);
 		
-		StateImpl rdr = new StateImpl(PM + ReadyFull + rotated);
+		//StateImpl rdr = new StateImpl(RT + ReadyFull + rotated);
 	   	
 	   	DFAutomatonImpl C = new DFAutomatonImpl(se);
 	   	
@@ -209,10 +209,12 @@ public class FlexFactComponents {
 	   	
 	   	C.addTransition(mf, stop(x,y), sf);
 	   	
-	   	C.addTransition(sf, skip(x,y), rd);
+	   	//C.addTransition(sf, skip(x,y), rd);
 	   	
-	   	C.addTransition(rd, start(x, y, true), rf);
-	   	C.addTransition(rd, start(x, y, false), lf);
+	   	//C.addTransition(rd, start(x, y, true), rf);
+	   	//C.addTransition(rd, start(x, y, false), lf);
+	   	C.addTransition(sf, start(x, y, true), rf);
+	   	C.addTransition(sf, start(x, y, false), lf);
 	   	
 	   	C.addTransition(rf, move(x,y,x+1,y), se);
 	   	C.addTransition(lf, move(x,y,x-1,y), se);
@@ -226,10 +228,12 @@ public class FlexFactComponents {
 	   	
 	   	C.addTransition(mfr, stop(x,y), sfr);
 	   	
-	   	C.addTransition(sfr, skip(x,y), rdr);
+	   	//C.addTransition(sfr, skip(x,y), rdr);
 	   	
-	   	C.addTransition(rdr, start(x, y, true), rfr);
-	   	C.addTransition(rdr, start(x, y, false), lfr);
+	   	//C.addTransition(rdr, start(x, y, true), rfr);
+	   	//C.addTransition(rdr, start(x, y, false), lfr);
+	   	C.addTransition(sfr, start(x, y, true), rfr);
+	   	C.addTransition(sfr, start(x, y, false), lfr);
 	   	
 	   	C.addTransition(rfr, move(x,y,x,y+1), ser);
 	   	C.addTransition(lfr, move(x,y,x,y-1), ser);
@@ -263,6 +267,8 @@ public class FlexFactComponents {
 		for(int i = 0; i < size; i++) {
 			C.addTransition(ss[i*2], start(x, y, straight), ss[i*2+1]);
 			C.addTransition(ss[i*2], reload(x, y), ss[0]);
+			
+			C.setFinal(ss[i*2], true);
 			
 			if(i < size-1) {
 				if(horizontal)

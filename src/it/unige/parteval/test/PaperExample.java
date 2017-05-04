@@ -88,7 +88,7 @@ public class PaperExample {
 	
 	private void makeTotal(DFAutomatonImpl P) {
 		StateImpl fail = new StateImpl("ff");
-		Set<Transition> toAdd = new HashSet<Transition>();
+		Set<TransitionImpl> toAdd = new HashSet<TransitionImpl>();
 		
 		for(String a : P.getAlphabet()) {
 			for(State s : P.getStates()) {
@@ -100,7 +100,7 @@ public class PaperExample {
 			toAdd.add(new TransitionImpl(fail, a, fail));
 		}
 		
-		for(Transition t : toAdd) {
+		for(TransitionImpl t : toAdd) {
 			P.addTransition(t);
 		}
 	}
