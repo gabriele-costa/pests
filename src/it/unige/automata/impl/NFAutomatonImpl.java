@@ -257,7 +257,7 @@ public class NFAutomatonImpl implements Automaton {
 	        ArrayList<State> statesToAdd = new ArrayList<State>();
 	        for(State state : output)
 	        {
-	            for(Transition edge : this.getForwordStar(state))
+	            for(Transition edge : this.getForwardStar(state))
 	            {
 	                if (edge.getLabel().compareTo(EPSILON) == 0)
 	                {
@@ -272,7 +272,7 @@ public class NFAutomatonImpl implements Automaton {
 	    return output;
 	}
 
-	public ArrayList<Transition> getForwordStar(State state) {
+	public ArrayList<Transition> getForwardStar(State state) {
 		ArrayList<Transition> fs = new ArrayList<Transition>();
 		for(Transition t : this.getTransitions()) {
 			if(t.getSource().compareTo(state) == 0)
@@ -285,7 +285,7 @@ public class NFAutomatonImpl implements Automaton {
 		HashSet<State> output = new HashSet<State>();
 	    for(State state : inputState)
 	    {
-	        for(Transition edge : this.getForwordStar(state))
+	        for(Transition edge : this.getForwardStar(state))
 	        {
 	            if (edge.getLabel().compareTo(label) == 0)
 	            {
@@ -316,7 +316,7 @@ public class NFAutomatonImpl implements Automaton {
 		HashSet<State> output = new HashSet<State>();
 	    for(State state : inputState)
 	    {
-	        for(Transition edge : this.getForwordStar(state))
+	        for(Transition edge : this.getForwardStar(state))
 	        {
 	            if (edge.getLabel().compareTo(label) == 0)
 	            {

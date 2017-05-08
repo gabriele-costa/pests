@@ -386,10 +386,24 @@ public class DFAutomatonImpl implements Automaton<TransitionImpl> {
 		
 		DFAutomatonImpl CA = parallel(A, C, controls);
 		
+		NFAutomatonImpl nfa = new NFAutomatonImpl(CA.inits);
+		
+		for(TransitionImpl t : CA.getTransitions()) {
+			if(!controls.contains(t.getLabel())) {
+				t.label = EPSILON;
+			}
+			nfa.addTransition(t);
+		}
+		
+		for(State s : CA.getFinals()) {
+			nfa.setFinal(s, true);
+		}
+		
+		CA = nfa.toDFA();
+		
 		Set<String> uncontrollable = new HashSet<String>();
 		uncontrollable.addAll(A.getAlphabet());
 		uncontrollable.removeAll(controls);
-		
 		
 		Set<State> pits = getPits(CA, uncontrollable);
 		
@@ -422,7 +436,7 @@ public class DFAutomatonImpl implements Automaton<TransitionImpl> {
 				if(U.contains(t.getLabel()))
 					continue;
 				
-				pit = true;
+				pit = false;
 				break;
 			}
 			

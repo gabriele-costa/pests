@@ -223,8 +223,7 @@ public class EventAutomaton implements Automaton<SymbolicTransition> {
 			pits = getPits(CA, uncontrollable);
 		}
 		
-		return CA;
-		
+		return CA;		
 	}
 
 	private static Set<State> getPits(EventAutomaton CA, Set<String> U) {
@@ -247,7 +246,7 @@ public class EventAutomaton implements Automaton<SymbolicTransition> {
 				if(U.contains(t.getLabel()))
 					continue;
 				
-				pit = true;
+				pit = false;
 				break;
 			}
 			
@@ -274,4 +273,6 @@ public class EventAutomaton implements Automaton<SymbolicTransition> {
 	public Set<SymbolicTransition> getTransitions() {
 		return delta;
 	}
+
+	
 }

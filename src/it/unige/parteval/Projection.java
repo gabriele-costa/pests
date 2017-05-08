@@ -10,6 +10,12 @@ import org.junit.Test;
 import it.unige.automata.Automaton;
 import it.unige.automata.State;
 import it.unige.automata.Transition;
+import it.unige.automata.event.EventAutomaton;
+import it.unige.automata.event.G;
+import it.unige.automata.event.Guard;
+import it.unige.automata.event.NEventAutomaton;
+import it.unige.automata.event.ClosureRec;
+import it.unige.automata.event.SymbolicTransition;
 import it.unige.automata.impl.DFAutomatonImpl;
 import it.unige.automata.impl.MultiStateImpl;
 import it.unige.automata.impl.NFAutomatonImpl;
@@ -165,8 +171,96 @@ public static NFAutomatonImpl partial(Automaton<TransitionImpl> P, Automaton<Tra
 		return pits;
 	}
 	
-	/*
-	 * Official algorithm
+	/**
+	 * Official algorithm for EventAutomata
+	 */
+	public static NEventAutomaton partialS(EventAutomaton P, EventAutomaton A, Set<String> SigmaB, Set<String> Gamma) {
+		
+		
+		State i = prod(P.getInitial(), A.getInitial());
+		NEventAutomaton B = new NEventAutomaton(i);
+		
+//		State ffstate = new StateImpl(Automaton.FAIL);
+
+		for(State fa : A.getFinals())
+			for(State fp : P.getFinals())
+				B.setFinal(prod(fp, fa), true);
+		
+		Set<String> Sigma = new HashSet<>();
+		Sigma.addAll(A.getAlphabet());
+		Sigma.addAll(SigmaB);
+		
+		Set<State> violating = new HashSet<State>();
+		
+		for(State qp : P.getStates()) {
+			for(State qa : A.getStates()) {
+				for(String a : Sigma ) {
+					Set<SymbolicTransition> Tpp = P.forwardStar(qp, a);
+					Set<SymbolicTransition> Tap = A.forwardStar(qa, a);
+					
+					// if Qpp is empty == false
+					if(Tpp.isEmpty()) {
+						if(!Tap.isEmpty() && !Gamma.contains(a))
+							violating.add(prod(qp,qa));
+						continue;
+					}
+//						B.addTransition(new TransitionImpl(prod(qp,qa), a, ffstate));
+										
+					for(SymbolicTransition tpp : Tpp) {
+						
+						if(!Gamma.contains(a)) {
+							if(A.getAlphabet().contains(a)) { 	// a in SigmaA \ Gamma
+								for(SymbolicTransition tap : Tap)
+									B.addTransition(
+											new SymbolicTransition(
+													prod(qp,qa), 
+													Automaton.EPSILON, 
+													tpp.getVariable(),
+													G.and(G.and(tpp.getGuard(), tap.getGuard()), G.eq(G.var(tpp.getVariable()), G.var(tap.getVariable()))), 
+													prod(tpp.getDestination(), tap.getDestination())));
+							}
+							// else?
+							if(SigmaB.contains(a)) { 			// a in SigmaB \ Gamma
+								B.addTransition(new SymbolicTransition(
+										prod(qp,qa), 
+										a,
+										tpp.getVariable(),
+										tpp.getGuard(), 
+										prod(tpp.getDestination(), qa)));
+							}								
+						}
+						else { 									// a in Gamma
+							for(SymbolicTransition tap : Tap) {
+								B.addTransition(new SymbolicTransition(
+										prod(qp,qa), 
+										a,
+										tpp.getVariable(),
+										G.and(G.and(tpp.getGuard(), tap.getGuard()), G.eq(G.var(tpp.getVariable()), G.var(tap.getVariable()))), 
+										prod(tpp.getDestination(),tap.getDestination())));
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		for(State u : B.getStates()) {
+			ClosureRec C = B.Closure(u);
+			C.states.retainAll(violating);
+			if(!C.states.isEmpty()) {
+				violating.add(u);	
+			}
+		}
+		
+		for(State v : violating) {
+			B.removeState(v);
+		}
+		
+		return B;
+	}
+	
+	/**
+	 * Official algorithm for finite state automata
 	 */
 	public static NFAutomatonImpl partialA(DFAutomatonImpl P, DFAutomatonImpl A, Set<String> SigmaB, Set<String> Gamma) {
 		// TODO
@@ -237,10 +331,10 @@ public static NFAutomatonImpl partial(Automaton<TransitionImpl> P, Automaton<Tra
 		return B;
 	}
 
+	/**
+	 * From NFA to DFA (special algorithm)
+	 */
 	public static DFAutomatonImpl unify(NFAutomatonImpl B, Set<String> G) {
-		/*
-		 * From NFA to DFA (special algorithm)
-		 */
 		
 		Set<State> I = new HashSet<State>();
 		I.addAll(B.Closure(B.getInitial()));
@@ -285,12 +379,147 @@ public static NFAutomatonImpl partial(Automaton<TransitionImpl> P, Automaton<Tra
 		
 		return dfa;
 	}
+	
+
+	/**
+	 * From eNEA to DEA (special algorithm)
+	 */
+	public static EventAutomaton unifyS(NEventAutomaton B, Set<String> Gamma) {
+		
+		Set<State> I = new HashSet<State>();
+		I.addAll(B.Closure(B.getInitial()).states);
+		MultiStateImpl msi = new MultiStateImpl(I);
+		
+		EventAutomaton dfa = new EventAutomaton(msi);
+		
+		ArrayList<MultiStateImpl> todo = new ArrayList<MultiStateImpl>();
+		
+		todo.add(msi);
+		
+		while(!todo.isEmpty()) {
+			MultiStateImpl curr = todo.remove(0);
+			
+			Set<State> tmp, ff;
+			ff = new HashSet<>();
+			
+			ff.addAll(curr.states);
+			ff.removeAll(B.getFinals());
+			
+			if(ff.isEmpty())
+				dfa.setFinal(curr, true);
+			
+			for(String a : B.getAlphabet()) {
+				if(a.compareTo(Automaton.EPSILON) == 0)
+					continue;
+				
+				Set<SymbolicTransition> mc;
+				if(!Gamma.contains(a))
+					mc = AndMoveS(B, curr.states, a);
+				else
+					mc = OrMoveS(B, curr.states, a);
+				
+				if(!mc.isEmpty()) {
+					
+					Set<State> ds = new HashSet<State>();
+					
+					String var = null;
+					Guard g = null;
+					
+					for(SymbolicTransition st : mc) {
+						ds.add(st.getDestination());
+						
+						if(g == null) {
+							g = st.getGuard();
+						}
+						else {
+							g = G.and(g, st.getGuard());
+						}
+						
+						if(st.getLabel().compareTo(Automaton.EPSILON) == 0) 
+							continue;
+						
+						if(var == null) {
+							var = st.getVariable();
+						}
+						else {
+							g = G.and(g, G.eq(G.var(var), G.var(st.getVariable())));
+						}
+					}
+					
+					MultiStateImpl dest = new MultiStateImpl(ds);
+					if(!dfa.getStates().contains(dest))
+						todo.add(dest);
+					dfa.addTransition(
+							new SymbolicTransition(
+									curr, 
+									a, 
+									var,
+									g,
+									dest));
+				}
+			}
+		}
+		
+		return dfa;
+	}
+
+	private static HashSet<SymbolicTransition> OrMoveS(NEventAutomaton B, HashSet<State> states, String a) {
+		HashSet<SymbolicTransition> output = new HashSet<SymbolicTransition>();
+	    for(State state : states)
+	    {
+	        for(SymbolicTransition edge : B.getForwardStar(state, a))
+	        {
+	            if (edge.getLabel().compareTo(a) == 0)
+	            {
+	                output.add(edge);
+	            }
+	        }
+	    }
+	    
+	    return B.Closure(output);
+	}
+	
+	private static HashSet<SymbolicTransition> AndMoveS(NEventAutomaton B, HashSet<State> states, String a) {
+		HashSet<SymbolicTransition> output = new HashSet<SymbolicTransition>();
+	    boolean first = true;
+	    
+		for(State state : states)
+	    {
+			ArrayList<SymbolicTransition> dst = B.getForwardStar(state, a);
+	    	if(first) {
+	    		first = false;
+	    		output.addAll(dst);
+	    	}
+	    	else {
+	    		output = conjunction(output, dst);
+	    	}
+	    }
+		return B.Closure(output);
+	}
+	
+	private static HashSet<SymbolicTransition> conjunction(HashSet<SymbolicTransition> T, ArrayList<SymbolicTransition> R) {
+		
+		HashSet<SymbolicTransition> output = new HashSet<>();
+		
+		for(SymbolicTransition t : T) {
+			for(SymbolicTransition r : R) {
+				if(t.getLabel().compareTo(r.getLabel()) == 0) {
+					if(t.getDestination().equals(r.getDestination())) {
+						output.add(t);
+						output.add(r);
+					}
+				}
+			}
+		}
+		
+		return output;
+	}
 
 	private static HashSet<State> OrMove(NFAutomatonImpl B, HashSet<State> states, String a) {
 		HashSet<State> output = new HashSet<State>();
 	    for(State state : states)
 	    {
-	        for(Transition edge : B.getForwordStar(state))
+	        for(Transition edge : B.getForwardStar(state))
 	        {
 	            if (edge.getLabel().compareTo(a) == 0)
 	            {
@@ -300,22 +529,6 @@ public static NFAutomatonImpl partial(Automaton<TransitionImpl> P, Automaton<Tra
 	    }
 	    return B.Closure(output);
 	}
-	
-//	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
-//		HashSet<State> output = new HashSet<State>();
-//	    for(State state : states)
-//	    {
-//	    	Set<State> dst = B.trans(state, a);
-//	    	if(dst.isEmpty())
-//	    		return new HashSet<State>();
-//	    	
-//	    	if(output.isEmpty())
-//	    		output.addAll(dst);
-//	    	else 
-//	    		output.retainAll(dst);
-//	    }
-//	    return output;
-//	}
 
 	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
 		HashSet<State> output = new HashSet<State>();
