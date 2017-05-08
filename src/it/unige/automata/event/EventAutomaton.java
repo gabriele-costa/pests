@@ -261,6 +261,9 @@ public class EventAutomaton implements Automaton<SymbolicTransition> {
 
 	@Override
 	public boolean addTransition(SymbolicTransition t) {
+		
+		states.add(t.getDestination());
+		states.add(t.getSource());
 		return delta.add(t);
 	}
 

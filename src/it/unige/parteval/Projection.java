@@ -192,7 +192,9 @@ public static NFAutomatonImpl partial(Automaton<TransitionImpl> P, Automaton<Tra
 		
 		Set<State> violating = new HashSet<State>();
 		
-		for(State qp : P.getStates()) {
+		Set<State> Qp = P.getStates();
+		
+		for(State qp : Qp) {
 			for(State qa : A.getStates()) {
 				for(String a : Sigma ) {
 					Set<SymbolicTransition> Tpp = P.forwardStar(qp, a);
