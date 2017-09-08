@@ -13,7 +13,7 @@ import it.unige.parteval.Projection;
 
 public class FlexFactPlantTest {
 	
-	@Test
+	//@Test
 	public void testProcessingPlant() {
 		
 		FlexFactPlant plant = new FlexFactPlant(3,2);
@@ -72,7 +72,7 @@ public class FlexFactPlantTest {
 		
 	}
 	
-	//@Test
+	@Test
 	public void testSimplePlant() {
 		
 		FlexFactPlant plant = new FlexFactPlant(3,1);

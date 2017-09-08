@@ -11,20 +11,20 @@ import it.unige.automata.State;
 import it.unige.automata.Transition;
 import it.unige.automata.util.SetUtils;
 
-public class NFAutomatonImpl implements Automaton {
+public class NFAutomatonImpl implements Automaton<TransitionImpl> {
 
 	Set<State> states;
 	State inits;
 	Set<State> finals;
 	Set<State> fails;
-	Set<Transition> delta;
+	Set<TransitionImpl> delta;
 	
 	public NFAutomatonImpl(State init) {
 		states = new HashSet<State>();
 		inits = init;
 		finals = new HashSet<State>();
 		fails = new HashSet<State>();
-		delta = new HashSet<Transition>();
+		delta = new HashSet<TransitionImpl>();
 		
 		states.add(init);
 	}
@@ -67,12 +67,12 @@ public class NFAutomatonImpl implements Automaton {
 	}
 
 	@Override
-	public Set<Transition> getTransitions() {
+	public Set<TransitionImpl> getTransitions() {
 		return delta;
 	}
 
 	@Override
-	public boolean addTransition(Transition t) {
+	public boolean addTransition(TransitionImpl t) {
 		this.addState(t.getSource());
 		this.addState(t.getDestination());
 		return delta.add(t);
@@ -328,7 +328,7 @@ public class NFAutomatonImpl implements Automaton {
 	}
 
 	@Override
-	public void removeTransition(Transition t) {
+	public void removeTransition(TransitionImpl t) {
 		delta.remove(t);
 	}
 }
