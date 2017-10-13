@@ -31,24 +31,28 @@ import it.unige.parteval.Projection;
 
 public class TACASExaperiments {
 
-	final int BUFFER_MIN  = 2;
-	final int UAV_CAP_MIN = 1;
+	final int BUFFER_MIN  = 5;
 	
-	final int BUFFER_MAX  = 21;
-	final int UAV_CAP_MAX = 20;
-	
+	final int BOUND = 100;
 	final int STEP = 5;
 	
 	@Test
 	public void UAV_SCP() {
-		
+		for(int i = BUFFER_MIN; i < BOUND; i+=STEP) {
+			long time = System.currentTimeMillis();
+			int[] v = testCSP(i);
+			time = System.currentTimeMillis() - time;
+			System.out.println("Test "+i+") " + "Time=" + time +" ms, States="+v[0]+", Transitions=" + v[1]); 
+		}
 	}
 	
 	@Test
 	public void UAV_CSP() {
-		for(int i = BUFFER_MIN; i < STEP; i++) {
-			// get time in millis
-			testSCP(i);
+		for(int i = BUFFER_MIN; i < BOUND; i+=STEP) {
+			long time = System.currentTimeMillis();
+			int[] v = testSCP(i);
+			time = System.currentTimeMillis() - time;
+			System.out.println("Test "+i+") " + "Time=" + time +" ms, States="+v[0]+", Transitions=" + v[1]); 
 		}
 		
 	}
@@ -60,7 +64,7 @@ public class TACASExaperiments {
 	
 	
 	
-	public void testSCP(int size) {
+	public int[] testSCP(int size) {
 
 		DFAutomatonImpl P = getPolicy(size);
 		
@@ -75,34 +79,38 @@ public class TACASExaperiments {
 		NFAutomatonImpl Pp = Projection.partialA(P, A, getSigma(), G);
 		//Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPA"), "nPA");
 		P = Projection.unify(Pp, G);
+		
+		return new int[] {P.getStates().size(), P.getTransitions().size()};
 		//P.collapse();
 		//P.minimize();
 		//P.renameStates("p");
 		//Printer.createDotGraph(Printer.printDotAutomaton(P, "PA"), "PA");
 	}
 	
-	public void testCSP() {
+	public int[] testCSP(int size) {
 
-		DFAutomatonImpl P = getPolicy(3);
+		DFAutomatonImpl P = getPolicy(size);
 		makeTotal(P);
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(P, "PC"), "PC");
+		// Printer.createDotGraph(Printer.printDotAutomaton(P, "PC"), "PC");
 		
 		Set<String> G = getGamma();
 		
-		DFAutomatonImpl AB = getAB();
-		Printer.createDotGraph(Printer.printDotAutomaton(AB, "AB"), "AB");
+		DFAutomatonImpl AB = getAB(size - 1);
+		// Printer.createDotGraph(Printer.printDotAutomaton(AB, "AB"), "AB");
 			
 		NFAutomatonImpl Pp = Projection.partialA(P, AB, new HashSet<String>(), G);
-		Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPCAB"), "nPCAB");
+		// Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPCAB"), "nPCAB");
 		P = Projection.unify(Pp, G);
-		P.collapse();
-		P.minimize();
-		//P.renameStates("p");
-		Printer.createDotGraph(Printer.printDotAutomaton(P, "PCAB"), "PCAB");
 		
-		DFAutomatonImpl CAB = DFAutomatonImpl.control(AB, P, G);
-		Printer.createDotGraph(Printer.printDotAutomaton(CAB, "CAB"), "CAB");
+		return new int[] {P.getStates().size(), P.getTransitions().size()};
+		// P.collapse();
+		// P.minimize();
+		// P.renameStates("p");
+		// Printer.createDotGraph(Printer.printDotAutomaton(P, "PCAB"), "PCAB");
+		
+		// DFAutomatonImpl CAB = DFAutomatonImpl.control(AB, P, G);
+		// Printer.createDotGraph(Printer.printDotAutomaton(CAB, "CAB"), "CAB");
 		
 	}
 	
@@ -122,52 +130,6 @@ public class TACASExaperiments {
 		
 		for(TransitionImpl t : toAdd) {
 			P.addTransition(t);
-		}
-	}
-
-	//@Test
-	public void testLoop() {
-
-		for(int b = BUFFER_MIN; b < BUFFER_MAX; b+=STEP) {
-			DFAutomatonImpl P = getPolicy(b);
-			Set<String> G = getGamma();
-			Set<String> S = getSigma();
-			
-			System.out.println();
-			System.out.print("|\tP("+b+"): states = " + P.getStates().size()  + "\t\t|\n");
-			System.out.print("=========================================\n");
-			System.out.print("| #\t| A\t| Q\t| U\t| T\t|\n");
-			System.out.print("+---------------------------------------+\n");
-			//Printer.createDotGraph(Printer.printDotAutomaton(P, "P"+b), "P"+b);
-			
-			for(int c = UAV_CAP_MIN; c < UAV_CAP_MAX; c+=STEP) {
-				
-				if(c > b)
-					break;
-				
-				System.out.print("|"+c+"\t|");
-				
-				DFAutomatonImpl A = getA(c);
-				//Printer.createDotGraph(Printer.printDotAutomaton(A, "A"+c), "A"+c);
-				
-				System.out.print(A.getStates().size() + "\t|");
-				
-				long s = System.currentTimeMillis();
-				NFAutomatonImpl Pp = Projection.partialA(P, A, S, G);
-				DFAutomatonImpl PA = Projection.unify(Pp, G);
-				s = System.currentTimeMillis() - s;
-				
-				//Printer.createDotGraph(Printer.printDotAutomaton(PA, "PA"+b+""+c), "PA"+b+"-"+c);
-				System.out.print(Pp.getStates().size() + "\t|");
-				System.out.print(PA.getStates().size() + "\t|");
-//				
-//				PA.collapse();
-//				PA.minimize();
-//				
-//				System.out.print("Minim: states = " + PA.getStates().size() + "\t| ");
-				
-				System.out.print(s + "\t|\n");
-			}
 		}
 	}
 
@@ -238,63 +200,39 @@ public class TACASExaperiments {
 	   	return P;
 	}
 	
-	private DFAutomatonImpl getAB() {
+	private DFAutomatonImpl getB(int cap) {
 		
-	   	StateImpl p0 = new StateImpl("q0");
+	   	StateImpl[] p = new StateImpl[cap];
 	   	
-	   	DFAutomatonImpl A = new DFAutomatonImpl(p0);
+	   	for(int i = 0; i < cap; i++) {
+	   		p[i] = new StateImpl("p"+i);
+	   	}
 	   	
-	   	StateImpl p1 = new StateImpl("q1");
-	   	StateImpl p2 = new StateImpl("q2");
-	   	StateImpl p3 = new StateImpl("q3");
-	   	StateImpl p4 = new StateImpl("q4");
+	   	StateImpl r0 = new StateImpl("w0");
 	   	
-	   	A.addTransition(new TransitionImpl(p0, "a", p1));
-	   	A.addTransition(new TransitionImpl(p1, "a", p2));
-	   	A.addTransition(new TransitionImpl(p2, "s", p3));
-	   	A.addTransition(new TransitionImpl(p3, "s", p0));
-	   	A.addTransition(new TransitionImpl(p0, "t", p4));
+	   	DFAutomatonImpl P = new DFAutomatonImpl(r0);
 	   	
-	   	A.setFinal(p0, true);
-	   	A.setFinal(p1, true);
-	   	A.setFinal(p2, true);
-	   	A.setFinal(p3, true);
-	   	A.setFinal(p4, true);
+	   	for(int i = 0; i < cap-1; i++) {
+	   		P.addTransition(new TransitionImpl(p[i], "b", p[i+1]));
+	   		P.setFinal(p[i], true);
+	   	}
 	   	
-	   	StateImpl w0 = new StateImpl("w0");
+	   	StateImpl out = new StateImpl("out");
 	   	
+	   	P.addTransition(new TransitionImpl(r0, "t", out));
+	   	P.addTransition(new TransitionImpl(p[cap-1], "s", r0));
+	   	P.addTransition(new TransitionImpl(r0, "s", p[0]));
 	   	
-	   	DFAutomatonImpl B = new DFAutomatonImpl(w0);
+	   	P.setFinal(p[cap-1], true);
+	   	P.setFinal(out, true);
+	   	P.setFinal(r0, true);
 	   	
-	   	StateImpl w1 = new StateImpl("w1");
-	   	StateImpl w2 = new StateImpl("w2");
-	   	StateImpl w3 = new StateImpl("w3");
-	   	StateImpl w4 = new StateImpl("w4");
-	   	StateImpl w5 = new StateImpl("w5");
-	   	StateImpl w6 = new StateImpl("w6");
-	   	StateImpl w7 = new StateImpl("w7");
+	   	return P;
+	}
+	
+	private DFAutomatonImpl getAB(int cap) {
 	   	
-	   	B.addTransition(new TransitionImpl(w0, "t", w7));
-	   	B.addTransition(new TransitionImpl(w0, "s", w1));
-	   	B.addTransition(new TransitionImpl(w1, "b", w2));
-	   	B.addTransition(new TransitionImpl(w2, "b", w4));
-	   	B.addTransition(new TransitionImpl(w2, "s", w3));
-	   	B.addTransition(new TransitionImpl(w3, "t", w5));
-	   	B.addTransition(new TransitionImpl(w3, "s", w6));
-	   	B.addTransition(new TransitionImpl(w4, "s", w0));
-	   	B.addTransition(new TransitionImpl(w5, "b", w7));
-	   	B.addTransition(new TransitionImpl(w6, "b", w1));
-	   	
-	   	B.setFinal(w0, true);
-	   	B.setFinal(w1, true);
-	   	B.setFinal(w2, true);
-	   	B.setFinal(w3, true);
-	   	B.setFinal(w4, true);
-	   	B.setFinal(w5, true);
-	   	B.setFinal(w6, true);
-	   	B.setFinal(w7, true);
-	   	
-	   	return DFAutomatonImpl.parallel(A, B, getGamma());
+	   	return DFAutomatonImpl.parallel(getA(cap), getB(cap), getGamma());
 	   	
 	}
 }
