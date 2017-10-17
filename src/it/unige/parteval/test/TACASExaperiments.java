@@ -33,6 +33,8 @@ import it.unige.parteval.test.flexfact.FlexFactPlant;
 
 public class TACASExaperiments {
 
+	private static final int FACTMAX = 4;
+
 	final int BUFFER_MIN  = 5;
 	
 	final int BOUND = 101;
@@ -49,7 +51,7 @@ public class TACASExaperiments {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void UAV_CSP() {
 		for(int i = BUFFER_MIN; i < BOUND; i+=STEP) {
 			System.gc();
@@ -63,116 +65,104 @@ public class TACASExaperiments {
 	
 	@Test
 	public void FLEXFACT_CSP() {
-		FlexFactPlant plant = new FlexFactPlant(3,2);
+		for(int i = 1; i < FACTMAX; i++) {
+			System.gc();
+			long time = System.currentTimeMillis();
+			int[] v = testFlexFact(i);
+			time = System.currentTimeMillis() - time;
+			System.out.println("Test "+i+") " + "Time=" + time +" ms, States="+v[0]+", Transitions=" + v[1]); 
+		}
+	}
+	
+	public int[] testFlexFact(int size) {
+		FlexFactPlant plant = new FlexFactPlant(2 + size,3);
 		
-		DFAutomatonImpl SF = FlexFactComponents.StackFeeder(0, 0, true, true, 1);
-		DFAutomatonImpl RT = FlexFactComponents.RotaryTable(1, 0);
-		DFAutomatonImpl ES = FlexFactComponents.ExitSlide(2, 0, true, true);
-		DFAutomatonImpl PM = FlexFactComponents.ProcessingMachine(1, 1, false);
+		DFAutomatonImpl SF = FlexFactComponents.StackFeeder(0, 1, true, true, 1);
+		DFAutomatonImpl ES = FlexFactComponents.ExitSlide(size+2, 1, true, true);
+		plant.install(SF, 0, 1);
+		plant.install(ES, size+1, 1);
 		
-		plant.install(SF, 0, 0);
-		plant.install(RT, 1, 0);
-		plant.install(ES, 2, 0);
-		plant.install(PM, 1, 1);
+		Set<String> controls = FlexFactComponents.getStackFeederControls(0, 1, true);
+		controls.addAll(FlexFactComponents.getExitSlideControls(size+2, 1));
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(SF, "SF"), "SF");
-		Printer.createDotGraph(Printer.printDotAutomaton(RT, "RT"), "RT");
-		Printer.createDotGraph(Printer.printDotAutomaton(ES, "ES"), "ES");
-		Printer.createDotGraph(Printer.printDotAutomaton(PM, "PM"), "PM");
-			
+		for(int i = 0; i < size; i++) {
+			DFAutomatonImpl RT = FlexFactComponents.RotaryTable(i+1, 1);
+			DFAutomatonImpl PM1 = FlexFactComponents.ProcessingMachine(i+1, 0, false);
+			DFAutomatonImpl PM2 = FlexFactComponents.ProcessingMachine(i+1, 2, false);
+			plant.install(RT, i+1, 1);
+			plant.install(PM1, i+1, 0);
+			plant.install(PM2, i+1, 2);
+			controls.addAll(FlexFactComponents.getRotaryTableControls(i+1, 1));
+			controls.addAll(FlexFactComponents.getProcessingMachineControls(i+1, 0));
+			controls.addAll(FlexFactComponents.getProcessingMachineControls(i+1, 2));
+		}
+		
 		DFAutomatonImpl PA = plant.getPlantAutomaton();
 		
-		System.out.println("Plant ready. States: " + PA.getStates().size() + " Transitions: " + PA.getTransitions().size());
-		
-		Printer.createDotGraph(Printer.printDotAutomaton(PA, "PA"), "PA");
-		
-		Set<String> controls = FlexFactComponents.getStackFeederControls(0, 0, true);
-		controls.addAll(FlexFactComponents.getRotaryTableControls(1, 0));
-		controls.addAll(FlexFactComponents.getExitSlideControls(2, 0));
-		controls.addAll(FlexFactComponents.getProcessingMachineControls(1, 1));
-		
-		DFAutomatonImpl spec = neverLeavePlant(3, 2, controls);
-		
-		System.out.println("Spec ready.");
-		
-		Printer.createDotGraph(Printer.printDotAutomaton(spec, "spec"), "spec");
+		DFAutomatonImpl spec = processN(size, controls);
 		
 		NFAutomatonImpl nPspec = Projection.partialA(spec, PA, new HashSet<String>(), controls);
 		
-		System.out.println("ND partial spec ready. States: " + nPspec.getStates().size() + " Transitions: " + nPspec.getTransitions().size());
+		DFAutomatonImpl Pspec = Projection.unify(nPspec, controls);
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(nPspec, "nPspec"), "nPspec");
-		
-		DFAutomatonImpl Pspec = Projection.unify(nPspec, getControls());
-		
-		System.out.println("Partial spec ready. States: " + Pspec.getStates().size() + " Transitions: " + Pspec.getTransitions().size());
-		
-//		Pspec.minimize();
-//		
-//		System.out.println("Partial spec minimized. States: " + Pspec.getStates().size() + " Transitions: " + Pspec.getTransitions().size());
-//		
-//		Pspec.collapse();
-//		
-//		System.out.println("Partial spec collapsed. States: " + Pspec.getStates().size() + " Transitions: " + Pspec.getTransitions().size());
-		
-		Printer.createDotGraph(Printer.printDotAutomaton(Pspec, "Pspec"), "Pspec");
+		return new int[] {Pspec.getStates().size(), Pspec.getTransitions().size()};
 	}
 	
-	DFAutomatonImpl neverLeavePlant(int w, int h, Set<String> controls) {
+	DFAutomatonImpl processN(int size, Set<String> controls) {
 		
 		StateImpl ok = new StateImpl("ok");
-		StateImpl fail = new StateImpl("fail");
 		
 		DFAutomatonImpl S = new DFAutomatonImpl(ok);
 		
-		for(String c : controls) {
-			S.addTransition(ok, c, ok);
-			S.addTransition(fail, c, fail);
+		State[] in = new StateImpl[size];
+		State[] proc = new StateImpl[size];
+		State[] out = new StateImpl[size-1];
+		
+		
+		for(int i = 0; i < 2*size; i++) {
+			in[i] = new StateImpl("i"+i);
 		}
 		
-		for(int x = 0; x < w; x++) {
-			for(int y = 0; y < h; y++) {
-				if(x < w-1) {
-					S.addTransition(ok, FlexFactComponents.move(x, y, x+1, y), ok);
-					S.addTransition(fail, FlexFactComponents.move(x, y, x+1, y), fail);
-					S.addTransition(ok, FlexFactComponents.move(x+1, y, x, y), ok);
-					S.addTransition(fail, FlexFactComponents.move(x+1, y, x, y), fail);
-				}
-				
-				if(y < h-1) {
-					S.addTransition(ok, FlexFactComponents.move(x, y, x, y+1), ok);
-					S.addTransition(fail, FlexFactComponents.move(x, y, x, y+1), fail);
-					S.addTransition(ok, FlexFactComponents.move(x, y+1, x, y), ok);
-					S.addTransition(fail, FlexFactComponents.move(x, y+1, x, y), fail);
-				}
-			}
+		for(int i = 0; i < 2*size-1; i++) {
+			S.addTransition(in[i], FlexFactComponents.move(0, 1, 1, 1), in[i+1]);
 		}
 		
-		for(int x = 0; x < w; x++) {
-			S.addTransition(ok, FlexFactComponents.move(x, 0, x, -1), fail);
-			S.addTransition(ok, FlexFactComponents.move(x, h-1, x, h), fail);
+		if(size > 0) {
+			S.addTransition(ok, FlexFactComponents.move(0, 1, 1, 1), in[0]);
 		}
-		for(int y = 0; y < h; y++) {
-			S.addTransition(ok, FlexFactComponents.move(0, y, -1, y), fail);
-			S.addTransition(ok, FlexFactComponents.move(w-1, y, w, y), fail);
+		
+		for(int i = 0; i < 2*size; i++) {
+			proc[i] = new StateImpl("p"+i);
 		}
+		
+		for(int i = 1; i < 2*size; i++) {
+			S.addTransition(proc[i-1], FlexFactComponents.process((i/2)+1, (i%2 == 0) ? 0 : 2), proc[i]);
+		}
+		
+		if(size > 0) {
+			S.addTransition(in[in.length - 1], FlexFactComponents.process(1, 1), proc[0]);
+		}
+		
+		for(int i = 0; i < 2*size; i++) {
+			out[i] = new StateImpl("o"+i);
+		}
+		
+		for(int i = 0; i < 2*size-2; i++) {
+			S.addTransition(out[i], FlexFactComponents.out(size+2, 1), out[i+1]);
+		}
+		
+		if(size > 0) {
+			S.addTransition(proc[proc.length - 1], FlexFactComponents.out(size+2, 1), out[0]);
+			S.addTransition(out[out.length - 1], FlexFactComponents.out(size+2, 1), ok);
+		}
+		
+		S.complete(controls);
 		
 		S.setFinal(ok, true);
 		
 		return S;
 		
 	}
-	
-	Set<String> getControls() {
-		
-		Set<String> controls = FlexFactComponents.getStackFeederControls(0, 0, true);
-		controls.addAll(FlexFactComponents.getRotaryTableControls(1, 0));
-		controls.addAll(FlexFactComponents.getExitSlideControls(2, 0));
-		
-		return controls;
-	}
-	
-	
 	
 	public int[] testSCP(int size) {
 
