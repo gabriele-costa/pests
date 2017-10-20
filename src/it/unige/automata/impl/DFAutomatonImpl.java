@@ -448,4 +448,14 @@ public class DFAutomatonImpl implements Automaton<TransitionImpl> {
 		return pits;
 
 	}
+
+	public void selfLoops(Set<String> controls) {
+		
+		for(State s : this.getStates()) {
+			for(String a : controls) {
+				if(trans(s, a).isEmpty())
+					this.addTransition(new TransitionImpl(s, a, s));
+			}
+		}
+	}
 }

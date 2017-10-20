@@ -35,13 +35,14 @@ public class TACASExaperiments {
 
 	private static final int FACTMAX = 4;
 
-	final int BUFFER_MIN  = 5;
+	final int BUFFER_MIN  = 100;
 	
 	final int BOUND = 101;
 	final int STEP = 5;
 	
-	//@Test
+	@Test
 	public void UAV_SCP() {
+		System.out.println("SCP");
 		for(int i = BUFFER_MIN; i < BOUND; i+=STEP) {
 			System.gc();
 			long time = System.currentTimeMillis();
@@ -51,8 +52,9 @@ public class TACASExaperiments {
 		}
 	}
 	
-	//@Test
+	//@Test 
 	public void UAV_CSP() {
+		System.out.println("CSP");
 		for(int i = BUFFER_MIN; i < BOUND; i+=STEP) {
 			System.gc();
 			long time = System.currentTimeMillis();
@@ -63,7 +65,7 @@ public class TACASExaperiments {
 		
 	}
 	
-	@Test
+	//@Test
 	public void FLEXFACT_CSP() {
 		for(int i = 1; i < FACTMAX; i++) {
 			System.gc();
@@ -77,7 +79,7 @@ public class TACASExaperiments {
 	public int[] testFlexFact(int size) {
 		FlexFactPlant plant = new FlexFactPlant(2 + size,3);
 		
-		DFAutomatonImpl SF = FlexFactComponents.StackFeeder(0, 1, true, true, 1);
+		DFAutomatonImpl SF = FlexFactComponents.StackFeeder(0, 1, true, true, 3);
 		DFAutomatonImpl ES = FlexFactComponents.ExitSlide(size+2, 1, true, true);
 		plant.install(SF, 0, 1);
 		plant.install(ES, size+1, 1);
@@ -98,9 +100,9 @@ public class TACASExaperiments {
 		}
 		
 		DFAutomatonImpl PA = plant.getPlantAutomaton();
-		
+
 		DFAutomatonImpl spec = processN(size, controls);
-		
+				
 		NFAutomatonImpl nPspec = Projection.partialA(spec, PA, new HashSet<String>(), controls);
 		
 		DFAutomatonImpl Pspec = Projection.unify(nPspec, controls);
@@ -114,9 +116,9 @@ public class TACASExaperiments {
 		
 		DFAutomatonImpl S = new DFAutomatonImpl(ok);
 		
-		State[] in = new StateImpl[size];
-		State[] proc = new StateImpl[size];
-		State[] out = new StateImpl[size-1];
+		State[] in = new StateImpl[2*size];
+		State[] proc = new StateImpl[2*size];
+		State[] out = new StateImpl[2*size-1];
 		
 		
 		for(int i = 0; i < 2*size; i++) {
@@ -143,7 +145,7 @@ public class TACASExaperiments {
 			S.addTransition(in[in.length - 1], FlexFactComponents.process(1, 1), proc[0]);
 		}
 		
-		for(int i = 0; i < 2*size; i++) {
+		for(int i = 0; i < 2*size-1; i++) {
 			out[i] = new StateImpl("o"+i);
 		}
 		
@@ -156,7 +158,7 @@ public class TACASExaperiments {
 			S.addTransition(out[out.length - 1], FlexFactComponents.out(size+2, 1), ok);
 		}
 		
-		S.complete(controls);
+		S.selfLoops(controls);
 		
 		S.setFinal(ok, true);
 		
@@ -180,7 +182,7 @@ public class TACASExaperiments {
 		//Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPA"), "nPA");
 		P = Projection.unify(Pp, G);
 		
-		return new int[] {P.getStates().size(), P.getTransitions().size()};
+		return new int[] {Pp.getStates().size(), Pp.getTransitions().size()};
 		//P.collapse();
 		//P.minimize();
 		//P.renameStates("p");
@@ -203,7 +205,7 @@ public class TACASExaperiments {
 		// Printer.createDotGraph(Printer.printDotAutomaton(Pp, "nPCAB"), "nPCAB");
 		P = Projection.unify(Pp, G);
 		
-		return new int[] {P.getStates().size(), P.getTransitions().size()};
+		return new int[] {Pp.getStates().size(), Pp.getTransitions().size()};
 		// P.collapse();
 		// P.minimize();
 		// P.renameStates("p");

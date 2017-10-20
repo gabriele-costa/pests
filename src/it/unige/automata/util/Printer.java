@@ -11,7 +11,7 @@ import it.unige.automata.impl.TransitionImpl;
 
 public class Printer {
 	
-	public static String type = "svg";
+	public static String type = "png";
 	public static String outdir = "out/";
 
 	public static String printAutomaton(Automaton<TransitionImpl> A) {
