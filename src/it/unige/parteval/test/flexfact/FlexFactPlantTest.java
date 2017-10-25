@@ -8,12 +8,13 @@ import org.junit.Test;
 import it.unige.automata.impl.DFAutomatonImpl;
 import it.unige.automata.impl.NFAutomatonImpl;
 import it.unige.automata.impl.StateImpl;
+import it.unige.automata.util.AutomataTextualInterface;
 import it.unige.automata.util.Printer;
 import it.unige.parteval.Projection;
 
 public class FlexFactPlantTest {
 	
-	//@Test
+	@Test
 	public void testProcessingPlant() {
 		
 		FlexFactPlant plant = new FlexFactPlant(3,2);
@@ -28,16 +29,18 @@ public class FlexFactPlantTest {
 		plant.install(ES, 2, 0);
 		plant.install(PM, 1, 1);
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(SF, "SF"), "SF");
-		Printer.createDotGraph(Printer.printDotAutomaton(RT, "RT"), "RT");
-		Printer.createDotGraph(Printer.printDotAutomaton(ES, "ES"), "ES");
-		Printer.createDotGraph(Printer.printDotAutomaton(PM, "PM"), "PM");
+		//Printer.createDotGraph(Printer.printDotAutomaton(SF, "SF"), "SF");
+		//Printer.createDotGraph(Printer.printDotAutomaton(RT, "RT"), "RT");
+		//Printer.createDotGraph(Printer.printDotAutomaton(ES, "ES"), "ES");
+		//Printer.createDotGraph(Printer.printDotAutomaton(PM, "PM"), "PM");
 			
 		DFAutomatonImpl PA = plant.getPlantAutomaton();
 		
-		System.out.println("Plant ready. States: " + PA.getStates().size() + " Transitions: " + PA.getTransitions().size());
+		System.out.println("Plant ready.");
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(PA, "PA"), "PA");
+		//System.out.println("Plant ready. States: " + PA.getStates().size() + " Transitions: " + PA.getTransitions().size());
+		
+		//Printer.createDotGraph(Printer.printDotAutomaton(PA, "PA"), "PA");
 		
 		Set<String> controls = FlexFactComponents.getStackFeederControls(0, 0, true);
 		controls.addAll(FlexFactComponents.getRotaryTableControls(1, 0));
@@ -48,17 +51,19 @@ public class FlexFactPlantTest {
 		
 		System.out.println("Spec ready.");
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(spec, "spec"), "spec");
+		// Printer.createDotGraph(Printer.printDotAutomaton(spec, "spec"), "spec");
 		
 		NFAutomatonImpl nPspec = Projection.partialA(spec, PA, new HashSet<String>(), controls);
 		
-		System.out.println("ND partial spec ready. States: " + nPspec.getStates().size() + " Transitions: " + nPspec.getTransitions().size());
+		// System.out.println("ND partial spec ready. States: " + nPspec.getStates().size() + " Transitions: " + nPspec.getTransitions().size());
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(nPspec, "nPspec"), "nPspec");
+		// Printer.createDotGraph(Printer.printDotAutomaton(nPspec, "nPspec"), "nPspec");
 		
 		DFAutomatonImpl Pspec = Projection.unify(nPspec, getControls());
 		
-		System.out.println("Partial spec ready. States: " + Pspec.getStates().size() + " Transitions: " + Pspec.getTransitions().size());
+		System.out.println("Partial evaluation done.");
+		
+		// System.out.println("Partial spec ready. States: " + Pspec.getStates().size() + " Transitions: " + Pspec.getTransitions().size());
 		
 //		Pspec.minimize();
 //		
@@ -68,11 +73,15 @@ public class FlexFactPlantTest {
 //		
 //		System.out.println("Partial spec collapsed. States: " + Pspec.getStates().size() + " Transitions: " + Pspec.getTransitions().size());
 		
-		Printer.createDotGraph(Printer.printDotAutomaton(Pspec, "Pspec"), "Pspec");
+		// Printer.createDotGraph(Printer.printDotAutomaton(Pspec, "Pspec"), "Pspec");
+		
+		System.out.println("*** BEGIN SPEC ***\n" + AutomataTextualInterface.write(Pspec) + "*** END SPEC ***");
+		
+		System.out.println("Finished.");
 		
 	}
 	
-	@Test
+	//@Test
 	public void testSimplePlant() {
 		
 		FlexFactPlant plant = new FlexFactPlant(3,1);

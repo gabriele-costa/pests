@@ -35,4 +35,13 @@ Modules are chosen among a finite set including, convoy belts, rotatory tables a
 
 Packege [flexfact](https://github.com/SCPTeam/pests/tree/master/src/it/unige/parteval/test/flexfact) contains the encoding of the FlexFact modules that can be used to build a model of a plant.
 
-The class [FlexFactPlantTest](https://github.com/SCPTeam/pests/tree/master/src/it/unige/parteval/test/flexfact/FlexFactPlantTest.java) contains a test where a specification and a simple plant are used to synthesize a controller.
+The class [FlexFactPlantTest](https://github.com/SCPTeam/pests/tree/master/src/it/unige/parteval/test/flexfact/FlexFactPlantTest.java) contains a test where a specification and a 3x2 plant are used to synthesize a controller.
+In natural language, the specification reads as "the items should not drop out of the perimetr of the plant".
+The plant consists of a *Stack Feeder* (S), a *Rotatory Table* (R), an *Exit Slide* (E) and a *Processing Machine* (P), placed as in the following schema.
+
+```
++---+
+| P |
+|SRE| 
++---+
+```

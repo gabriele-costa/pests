@@ -20,7 +20,7 @@ public class AutomataTextualInterface {
 	private static final String LEND = ";";
 	private static final String LSEP = ",";
 	
-	public static Automaton<TransitionImpl> read(String s) throws IllegalArgumentException {
+	public static DFAutomatonImpl read(String s) throws IllegalArgumentException {
 		
 		// TODO test me!
 		
@@ -29,7 +29,7 @@ public class AutomataTextualInterface {
 		String sinit = lines[0].substring(lines[0].indexOf(':')+1, lines[0].indexOf(LEND));
 		State init = new StateImpl(sinit.trim());
 		
-		Automaton<TransitionImpl> A = new DFAutomatonImpl(init);
+		DFAutomatonImpl A = new DFAutomatonImpl(init);
 		
 		String[] sf = lines[1].substring(lines[1].indexOf(':')+1).split(LSEP);
 		for(int i = 0; i < sf.length; i++) {
@@ -61,10 +61,10 @@ public class AutomataTextualInterface {
 
 	public static String write(DFAutomatonImpl A) {
 		
-		String output = INIT + A.getInitial() + LEND + "\n";
+		String output = INIT + A.getInitial().getLabel() + LEND + "\n";
 		output += FINS;
 		for(State s : A.getFinals()) {
-			output += s + LSEP;
+			output += s.getLabel() + LSEP;
 		}
 		
 		output = output.substring(0, output.length() - 1);
@@ -79,7 +79,7 @@ public class AutomataTextualInterface {
 		output += LEND + "\n";
 		
 		for(Transition t : A.getTransitions()) {
-			output += t.getSource() + ARFR + t.getLabel() + ARTO + t.getDestination() + LEND + "\n";
+			output += t.getSource().getLabel() + ARFR + t.getLabel() + ARTO + t.getDestination().getLabel() + LEND + "\n";
 		}
 		
 		return output;
