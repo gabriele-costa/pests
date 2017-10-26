@@ -15,7 +15,7 @@ To use the method one must provide four inputs:
 
 Several JUnit tests are available under /it/unige/parteval/tests.
 
-For instance, running [PaperExample.java](https://github.com/SCPTeam/pests/blob/master/src/it/unige/parteval/Test/PaperExample.java) correstond to executing the partial evaluation of the specification
+For instance, running [PaperExample.java](https://github.com/SCPTeam/pests/blob/master/src/it/unige/parteval/Test/PaperExample.java) corresponds to executing the partial evaluation of the specification
 
 ![Specification](https://github.com/SCPTeam/pests/blob/master/fig/P.png)
 
