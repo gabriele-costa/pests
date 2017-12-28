@@ -26,6 +26,7 @@ import it.unige.mu.MuOr;
 import it.unige.mu.MuSystem;
 import it.unige.mu.MuVar;
 import it.unige.parteval.Main;
+import it.unige.parteval.PartEval;
 import it.unige.parteval.Projection;
 
 public class MuCalculusTest {
@@ -88,7 +89,7 @@ public class MuCalculusTest {
 		
 		LTS A = makePhil();
 		
-		MuSystem Phip = Main.quotienting(Phi, A, Sigma);
+		MuSystem Phip = PartEval.quotienting(Phi, A, Sigma);
 		System.out.println(Phip.toString());
 		System.out.println("\nSIZE: "+Phip.size() +"\n");
 		

@@ -1,5 +1,8 @@
 package it.unige.parteval;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,185 +16,137 @@ import it.unige.automata.impl.DFAutomatonImpl;
 import it.unige.automata.impl.NFAutomatonImpl;
 import it.unige.automata.impl.StateImpl;
 import it.unige.automata.impl.TransitionImpl;
+import it.unige.automata.util.AutomataTextualInterface;
 import it.unige.lts.LTS;
 import it.unige.mu.*;
 import it.unige.parteval.test.Test;
 
 public class Main {
+	
+	private final static String help = ""
+			+ "Usage: java -jar pests.jar INPUT [OPTIONS]\n"
+			+ "\n"
+			+ "INPUT must be an existing file containing a textual description of a finite state agent\n"
+			+ "\n"
+			+ "OPTIONS are a subset of the following:\n"
+			+ "-o=FILE\t\t\t write output on FILE. Writes on standard output if not specified.\n"
+			+ "-s=FILE\t\t\t read specification from FILE. Uses FALSE if not specified.\n"
+			+ "-a={v1,...,vN}\t\t use v1,...,vN as synchronization actions. Uses {} if not specified.\n"
+			+ "-f=txt|svg|png|pdf\t use the specified output format. Omitting this option is equivalent to -f=txt.\n"
+			+ "-h\t\t\t print this message and exit.\n"; 
+	
+	private final static String error = "Invalid arguments";
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Test.main(null);
-	}
-	
-	private static ArrayList<ArrayList<State>> AlgC1(ArrayList<ArrayList<State>> Chi) {
 		
-		int i = 1;
-		int k = Chi.size();
-		while(i <= k-1) {
-			boolean flag = false;
-			Set<State> Y = new HashSet<State>();
-			ArrayList<Collection<State>> Chip = new ArrayList<Collection<State>>();
-			int j = i + 1;
-			while(j <= k) {
-				Set<State> tmp = new HashSet<State>();
-				tmp.addAll(Chi.get(i));
-				tmp.retainAll(Chi.get(j));
-				if(!tmp.isEmpty()) {
-					flag = true;
-					Y.addAll(Chi.get(j));
-					Chi.remove(j);
-				}
-				else {
-					Chip.add(Chi.get(j));
-				}
-				j++;
-			}
-			if(!flag) {
-				i++;
-			}
-			else {
-				Chi.get(i).addAll(Y);
-				k = Chi.size();
-			}
-		}
+		Options opt = new Options();
 		
-		return Chi; 
-	}
-	
-	public static ArrayList<ArrayList<State>> AlgC2(ArrayList<ArrayList<ArrayList<State>>> P) {
-		ArrayList<ArrayList<State>> Z = new ArrayList<ArrayList<State>>();
-		for(ArrayList<ArrayList<State>> Pi : P) {
-			Z.addAll(Pi);
-		}
+		ArgsType val = validate(args, opt);
 		
-		return AlgC1(Z);
-	}
-	
-	public static ArrayList<ArrayList<State>> AlgC3(LTS A, Set<String> Sigma_B) {
-		ArrayList<State> Q = new ArrayList<State>();
-		Q.addAll(A.states);
-		State q0 = Q.get(0);
-		ArrayList<String> Sigma_AmB = new ArrayList<String>();
-		Sigma_AmB.addAll(A.Sigma());
-		Sigma_AmB.removeAll(Sigma_B);
-		Set<Transition> Tq0 = A.getTransitions(q0, Sigma_AmB);
-		ArrayList<State> Xq0 = new ArrayList<State>();
-		for(Transition t : Tq0) {
-			Xq0.add(t.getDestination());
+		if(val == ArgsType.HELP) {
+			System.out.println(help);
+			System.exit(0);
 		}
-		ArrayList<ArrayList<State>> Chi = new ArrayList<ArrayList<State>>();
-		Chi.add(Xq0);
-		
-		ArrayList<State> Y = new ArrayList<State>();
-		Y.addAll(Q);
-		Y.removeAll(Xq0);
-		while(!Y.isEmpty()) {
-			State q = Y.get(0);
-			Set<Transition> Tq = A.getTransitions(q, Sigma_AmB);
-			ArrayList<State> Xq = new ArrayList<State>();
-			for(Transition t : Tq) {
-				Xq.add(t.getDestination());
-			}
-			Chi.add(Xq);
-			Y.removeAll(Xq);
+		else if(val == ArgsType.INVALID) {
+			System.out.println(error);
+			System.out.println(help);
+			System.exit(1);
 		}
-		
-		return AlgC1(Chi);
-	}
-	
-	public static ArrayList<ArrayList<State>> AlgC4(LTS A, ArrayList<ArrayList<State>> Chi, ArrayList<String> Sigma_B) {
-		
-		return null;
-	}
-	
-	public static LTS proj(LTS spec, LTS A, Set<String> Sigma_B) {
-		return null;
-	}
-	
-	public static String quotienting(String x, String s) {
-		return x+ "_" +s;
-	}
-	
-	public static Assertion quotienting(Assertion f, LTS A, State s, Set<String> Sigma_B) {
-		if(f instanceof MuTT) return new MuTT();
-		else if(f instanceof MuFF) return new MuFF();
-		else if(f instanceof MuVar) return new MuVar(quotienting(((MuVar) f).x, s.getLabel()));
-		else if(f instanceof MuAnd) return new MuAnd(quotienting(((MuAnd) f).left, A, s, Sigma_B), quotienting(((MuAnd) f).right, A, s, Sigma_B));
-		else if(f instanceof MuOr) return new MuOr(quotienting(((MuOr) f).left, A, s, Sigma_B), quotienting(((MuOr) f).right, A, s, Sigma_B));
-		else if(f instanceof MuDia) {
-			MuDia dia = (MuDia) f;
-			if(!Sigma_B.contains(dia.a)) { // Sigma_A \ Gamma
-				ArrayList<Assertion> part = new ArrayList<Assertion>();
-				for(Transition t : A.getTransitions(s, dia.a))
-					part.add(quotienting(dia.f, A, t.getDestination(), Sigma_B));
-				return bigOr(part);
-			}
-			else if(!A.Sigma().contains(dia.a)) { // Sigma_B \ Gamma
-				return new MuDia(dia.a, quotienting(dia.f, A, s, Sigma_B));
-			}
-			else { // Gamma
-				ArrayList<Assertion> part = new ArrayList<Assertion>();
-				for(Transition t : A.getTransitions(s, dia.a))
-					part.add(new MuDia(dia.a, quotienting(dia.f, A, t.getDestination(), Sigma_B)));
-				return bigOr(part);
-			}
-		}
-		else if(f instanceof MuBox) {
-			MuBox box = (MuBox) f;
-			if(!Sigma_B.contains(box.a)) { // Sigma_A \ Gamma
-				ArrayList<Assertion> part = new ArrayList<Assertion>();
-				for(Transition t : A.getTransitions(s, box.a))
-					part.add(quotienting(box.f, A, t.getDestination(), Sigma_B));
-				return bigAnd(part);
-			}
-			else if(!A.Sigma().contains(box.a)) { // Sigma_B \ Gamma
-				return new MuBox(box.a, quotienting(box.f, A, s, Sigma_B));
-			}
-			else { // Gamma
-				ArrayList<Assertion> part = new ArrayList<Assertion>();
-				for(Transition t : A.getTransitions(s, box.a))
-					part.add(new MuBox(box.a, quotienting(box.f, A, t.getDestination(), Sigma_B)));
-				return bigAnd(part);
-			}
-		}
-		else assert(false); return null;
-	}
-	
-	private static Assertion bigOr(ArrayList<Assertion> part) {
-		if(part.isEmpty())
-			return new MuFF();
 		else {
-			Assertion head = part.remove(0);
-			Assertion tail = bigOr(part);
-			if(tail instanceof MuFF)
-				return head;
-			else
-				return new MuOr(head, tail);
+			
+			String buffer = "";
+			try {
+				buffer = readFile(opt.input);
+			} catch(IOException e) {
+				System.out.println(e);
+				System.exit(1);
+			}
+			DFAutomatonImpl A = AutomataTextualInterface.read(buffer);
+			
+			DFAutomatonImpl P;
+			
+			if(opt.specification == null) {
+				StateImpl i = new StateImpl("FF");
+				P = new DFAutomatonImpl(i);
+			} else {
+				try {
+					buffer = readFile(opt.input);
+				} catch(IOException e) {
+					System.out.println(e);
+					System.exit(1);
+				}
+				P = AutomataTextualInterface.read(buffer);
+			}
+			
+			// Set<String> G = getGamma();
+			
+				
+			// NFAutomatonImpl Pp = Projection.partialA(P, A, getSigma(), G);
+			
+			// P = Projection.unify(Pp, G);
 		}
+		
 	}
 	
-	private static Assertion bigAnd(ArrayList<Assertion> part) {
-		if(part.isEmpty())
-			return new MuTT();
-		else {
-			Assertion head = part.remove(0);
-			Assertion tail = bigAnd(part);
-			if(tail instanceof MuTT)
-				return head;
-			else
-				return new MuAnd(head, tail);
-		}
+	private static String readFile(String path) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded);
 	}
 
-	public static MuSystem quotienting(MuSystem spec, LTS A, Set<String> Sigma_B) {
-		MuSystem pSpec = new MuSystem();
-		
-		for(MuEquation me : spec.eq) {
-			for(State s : A.states) {
-				pSpec.eq.add(new MuEquation(quotienting(me.x, s.getLabel()), me.mu, quotienting(me.f, A, s, Sigma_B)));
-			}
+	private enum ArgsType {VALID, INVALID, HELP};
+	
+	private static ArgsType validate(String[] args, Options opt) {
+		if(args.length < 2) {
+			return ArgsType.INVALID;
 		}
-		return pSpec;
+		else {
+			
+			if(args[1].startsWith("-h")) {
+				return ArgsType.HELP;
+			}
+			else {
+				opt.input = args[1];
+			}
+			
+			for(int i = 2; i < args.length; i++) {
+				if(args[i].startsWith("-o")) {
+					if(opt.output != null)
+						return ArgsType.INVALID;
+					
+					opt.output = args[i].substring(3);
+				}
+				else if(args[i].startsWith("-s")) {
+					if(opt.specification != null)
+						return ArgsType.INVALID;
+					
+					opt.specification = args[i].substring(3);
+				}
+				else if(args[i].startsWith("-a")) {
+					if(opt.sync_actions != null)
+						return ArgsType.INVALID;
+					
+					opt.sync_actions = args[i].substring(4, args[i].length()-1).split(",");
+				}
+				else if(args[i].startsWith("-f")) {
+					if(opt.output_format != null)
+						return ArgsType.INVALID;
+					
+					opt.output_format = args[i].substring(3);
+				}
+				else 
+					return ArgsType.INVALID;
+			}
+			
+			return ArgsType.VALID;
+		}
+		
+	}
+	
+	private static class Options {
+		String input;
+		String output;
+		String specification;
+		String output_format;
+		String[] sync_actions;
 	}
 }
