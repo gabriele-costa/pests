@@ -18,6 +18,7 @@ import it.unige.automata.util.Printer;
 public class Main {
 	
 	private final static String help = ""
+			+ "Partial Evaluator of Simple Transition Systems (PESTS)\n"
 			+ "Usage: java -jar pests.jar INPUT [OPTIONS]\n"
 			+ "\n"
 			+ "INPUT must be an existing file containing a textual description of a finite state agent\n"
@@ -25,8 +26,8 @@ public class Main {
 			+ "OPTIONS are a subset of the following:\n"
 			+ "-o=FILE\t\t\t write output on FILE. Writes on standard output if not specified and option -f is set to txt.\n"
 			+ "-s=FILE\t\t\t read specification from FILE. Uses FALSE if not specified.\n"
-			+ "-a={v1,...,vN}\t\t use v1,...,vN as synchronous actions. Uses {} if not specified.\n"
-			+ "-b={v1,...,vN}\t\t use v1,...,vN as asynchronous actions. Uses {} if not specified.\n"
+			+ "-a=v1,...,vN\t\t use v1,...,vN as synchronous actions. Uses the empty set if not specified.\n"
+			+ "-b=v1,...,vN\t\t use v1,...,vN as asynchronous actions. Uses the empty set if not specified.\n"
 			+ "-f=txt|svg|png|pdf\t use the specified output format. Omitting this option is equivalent to -f=txt.\n"
 			+ "-v\t\t\t activate verbose output.\n"
 			+ "-h\t\t\t print this message and exit.\n"; 
@@ -58,7 +59,7 @@ public class Main {
 			try {
 				buffer = readFile(opt.input);
 			} catch(IOException e) {
-				System.out.println(e);
+				System.out.println("Could not open " + opt.input);
 				System.exit(1);
 			}
 			DFAutomatonImpl A = AutomataTextualInterface.read(buffer);
@@ -70,9 +71,9 @@ public class Main {
 				P = new DFAutomatonImpl(i);
 			} else {
 				try {
-					buffer = readFile(opt.input);
+					buffer = readFile(opt.specification);
 				} catch(IOException e) {
-					System.out.println(e);
+					System.out.println("Could not open " + opt.specification);
 					System.exit(1);
 				}
 				P = AutomataTextualInterface.read(buffer);
@@ -94,13 +95,13 @@ public class Main {
 			
 			NFAutomatonImpl Pp = Projection.partialA(P, A, S, G);
 			
-			long t1 = System.currentTimeMillis() - t0;
-			log("Partial evaluation: Time=" + t1 +" ms, States="+P.getStates().size()+", Transitions=" + P.getTransitions().size()); 
+			long t1 = System.currentTimeMillis();
+			log("Partial evaluation: Time=" + (t1-t0) +" ms, States="+P.getStates().size()+", Transitions=" + P.getTransitions().size()); 
 			
 			DFAutomatonImpl P2 = Projection.unify(Pp, G);
 			
-			long t2 = System.currentTimeMillis() - t1;
-			log("Unification: Time=" + t2 +" ms, States="+P2.getStates().size()+", Transitions=" + P2.getTransitions().size()); 
+			long t2 = System.currentTimeMillis();
+			log("Unification: Time=" + (t2-t1) +" ms, States="+P2.getStates().size()+", Transitions=" + P2.getTransitions().size()); 
 			
 			if(opt.output_format == null)
 				opt.output_format = "txt";
@@ -113,6 +114,7 @@ public class Main {
 				output = AutomataTextualInterface.write(P2);
 			} else {
 				Printer.type = opt.output_format;
+				Printer.outdir = new File(opt.output).getParent();
 				output = Printer.printDotAutomaton(P2, "PartEval");
 			}
 			
@@ -144,6 +146,7 @@ public class Main {
 	private final static int FIRSTARG = 0;
 	
 	private static ArgsType validate(String[] args, Options opt) {
+		
 		if(args.length < FIRSTARG + 1) {
 			return ArgsType.INVALID;
 		}
@@ -179,13 +182,13 @@ public class Main {
 					if(opt.sync_actions != null)
 						return ArgsType.INVALID;
 					
-					opt.sync_actions = args[i].substring(4, args[i].length()-1).split(",");
+					opt.sync_actions = args[i].substring(3).split(",");
 				}
 				else if(args[i].startsWith("-b")) {
 					if(opt.async_actions != null)
 						return ArgsType.INVALID;
 					
-					opt.async_actions = args[i].substring(4, args[i].length()-1).split(",");
+					opt.async_actions = args[i].substring(3).split(",");
 				}
 				else if(args[i].startsWith("-f")) {
 					if(opt.output_format != null)
