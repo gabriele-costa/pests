@@ -11,30 +11,6 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
- * <dl>
- * <dt>Purpose: GraphViz Java API
- * <dd>
- *
- * <dt>Description:
- * <dd> With this Java class you can simply call dot
- *      from your Java programs.
- * <dt>Example usage:
- * <dd>
- * <pre>
- *    GraphViz gv = new GraphViz();
- *    gv.addln(gv.start_graph());
- *    gv.addln("A -> B;");
- *    gv.addln("A -> C;");
- *    gv.addln(gv.end_graph());
- *    System.out.println(gv.getDotSource());
- *
- *    String type = "gif";
- *    File out = new File("out." + type);   // out.gif in this example
- *    gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out );
- * </pre>
- * </dd>
- *
- * </dl>
  *
  * @version v0.5.1, 2013/03/18 (March) -- Patch of Juan Hoyos (Mac support)
  * @version v0.5, 2012/04/24 (April) -- Patch of Abdur Rahman (OS detection + start subgraph + 

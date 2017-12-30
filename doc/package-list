@@ -1,0 +1,13 @@
+it.unige.automata
+it.unige.automata.event
+it.unige.automata.impl
+it.unige.automata.util
+it.unige.ctheory
+it.unige.ctheory.Test
+it.unige.lts
+it.unige.mu
+it.unige.parteval
+it.unige.parteval.test
+it.unige.parteval.test.event
+it.unige.parteval.test.flexfact
+it.unige.parteval.test.parse
