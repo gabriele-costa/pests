@@ -12,7 +12,7 @@ import it.unige.automata.impl.TransitionImpl;
 public class Printer {
 	
 	public static String type = "png";
-	public static String outdir = "out/";
+	public static String outdir = "";
 
 	public static String printAutomaton(Automaton<TransitionImpl> A) {
 		StringBuilder builder = new StringBuilder();

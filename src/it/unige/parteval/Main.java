@@ -3,8 +3,10 @@ package it.unige.parteval;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -111,6 +113,7 @@ public class Main {
 			String output = "";
 			
 			if(opt.output_format.equals("txt") || opt.output == null) {
+				Printer.type = "txt";
 				output = AutomataTextualInterface.write(P2);
 			} else {
 				Printer.type = opt.output_format;
@@ -122,9 +125,15 @@ public class Main {
 				System.out.println(output);
 			}
 			else {
-				Printer.createDotGraph(output, "PartEval");
-				File tmp = new File(Printer.outdir + "PartEval."+ Printer.type);
+				File tmp = new File(Printer.outdir + "PartEval."+ opt.output_format);
+				
 				try {
+					if(!tmp.exists())
+						tmp.createNewFile();
+					if(opt.output_format.equals("txt"))
+						Files.write(tmp.toPath(), output.getBytes(), StandardOpenOption.WRITE);
+					else 
+						Printer.createDotGraph(output, "PartEval");
 					Files.move(tmp.toPath(), (new File(opt.output)).toPath(), StandardCopyOption.REPLACE_EXISTING);
 				} catch (IOException e) {
 					System.out.println("Cannot write on file due to: "+e);
@@ -152,7 +161,7 @@ public class Main {
 		}
 		else {
 			
-			if(args[1].startsWith("-h")) {
+			if(args[FIRSTARG].startsWith("-h")) {
 				return ArgsType.HELP;
 			}
 			else {
