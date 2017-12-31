@@ -40,9 +40,13 @@ public class FlexFactPlant {
 			for(int j = 0; j < plant[i].length; j++) {
 				if(plant[i][j] != null) {
 					
-					//System.out.println("Adding component ("+i+","+j+")");
+					System.gc();
+					
+					System.out.println("Adding component ("+i+","+j+")");
 					
 					P = (P == null) ? plant[i][j] : DFAutomatonImpl.parallel(P, plant[i][j], getGamma(i,j));
+					
+					System.out.println("Size: " + P.getStates().size() + " states, " + P.getTransitions().size() + " transitions");
 				}
 			}
 		
