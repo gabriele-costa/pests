@@ -2,6 +2,14 @@ package it.unige.automata;
 
 import java.util.Set;
 
+
+/**
+ * Base interface for automata
+ * 
+ * @author Gabriele CostaS
+ *
+ * @param <T> A type extending the Transition interface
+ */
 public interface Automaton<T extends Transition> {
 	
 	public static final String EPSILON 	= "[e]";
