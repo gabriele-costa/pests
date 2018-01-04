@@ -146,19 +146,17 @@ To replicate the experiments table presented in the paper follow the steps below
 5. Run the shell script setting the number of experiments (between 1 and 20) to be executed. For example `./scp.sh 5` performs the first 5 experiments corresponding to the first 5 rows of the experiments table in the paper appendix (Table 4).
 
 > **NOTE**: For each experiment, the output of the tool has following structure.
-> ``` 
-** SCP Test number 1 **
-Starting partial evaluation.
-Partial evaluation: Time=10 ms, States=24, Transitions=36
-Unification: Time=4 ms, States=9, Transitions=11
-Writing output.
-Completed.
-```
-The output shown above refers to the first line of the SCP table (`** SCP Test number 1 **`).
-The total number of states and transitions processed by the partial evaluation algorithm is reported in the third line.
-These values must be compared with the second and third column of the table, respectively.
-Instead, the total execution time is given by the sum of the two phases (i.e. partial evaluation and unification).
-For instance, in the example the total time amounts to 14 ms.
+> `** SCP Test number 1 **`
+> `Starting partial evaluation.`
+> `Partial evaluation: Time=10 ms, States=24, Transitions=36`
+> `Unification: Time=4 ms, States=9, Transitions=11`
+> `Writing output.`
+> `Completed.`
+> The output shown above refers to the first line of the SCP table (`** SCP Test number 1 **`).
+> The total number of states and transitions processed by the partial evaluation algorithm is reported in the third line.
+> These values must be compared with the second and third column of the table, respectively.
+> Instead, the total execution time is given by the sum of the two phases (i.e. partial evaluation and unification).
+> For instance, in the example the total time amounts to 14 ms.
 
 > **WARNING**: Experiments above 15 may take up to some hours.
 
