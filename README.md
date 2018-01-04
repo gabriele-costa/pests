@@ -16,6 +16,8 @@ Given a specification S and an agent A, the tool returns (the most permissive sp
 
 This documentation refers to **PESTS version 1.1 (TACAS)**, available at [https://github.com/SCPTeam/pests/releases](https://github.com/SCPTeam/pests/releases).
 
+**DOI**: [10.5281/zenodo.1135110](http://dx.doi.org/10.5281/zenodo.1135110)
+
 ## Requirements
 
 - Oracle Java runtime environment (JRE) or Java development kit (JDK) version 8 or greater (http://www.oracle.com/technetwork/java/javase/downloads/index.html). 
