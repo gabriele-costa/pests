@@ -98,7 +98,7 @@ public class Main {
 			NFAutomatonImpl Pp = Projection.partialA(P, A, S, G);
 			
 			long t1 = System.currentTimeMillis();
-			log("Partial evaluation: Time=" + (t1-t0) +" ms, States="+P.getStates().size()+", Transitions=" + P.getTransitions().size()); 
+			log("Partial evaluation: Time=" + (t1-t0) +" ms, States="+Pp.getStates().size()+", Transitions=" + Pp.getTransitions().size()); 
 			
 			DFAutomatonImpl P2 = Projection.unify(Pp, G);
 			

@@ -31,7 +31,7 @@ public class AutomataTextualInterface {
 		
 		DFAutomatonImpl A = new DFAutomatonImpl(init);
 		
-		String[] sf = lines[1].substring(lines[1].indexOf(':')+1).split(LSEP);
+		String[] sf = lines[1].substring(lines[1].indexOf(':')+1, lines[1].indexOf(LEND)).split(LSEP);
 		for(int i = 0; i < sf.length; i++) {
 			State f = new StateImpl(sf[i].trim());
 			A.setFinal(f, true);
