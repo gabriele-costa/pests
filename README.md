@@ -16,7 +16,7 @@ Given a specification S and an agent A (both defined through a deterministic fin
 
 This documentation refers to **PESTS version 1.1 (TACAS)**, available at [https://github.com/SCPTeam/pests/releases](https://github.com/SCPTeam/pests/releases).
 
-**DOI**: [10.5281/zenodo.1135110](http://dx.doi.org/10.5281/zenodo.1135110)
+**DOI**: [10.5281/zenodo.1138898](http://dx.doi.org/10.5281/zenodo.1138898)
 
 ## Requirements
 
