@@ -1,7 +1,7 @@
 # PESTS
 
-PESTS is a tool suite for the partial evaluation of finite state models called the partial evaluator of simple transition systems.
-The tool implements the algorithm for quotienting finite-state systems introduced in the paper:
+**PESTS** (*Partial Evaluator of Simple Transition Systems*) is a tool suite for the partial evaluation of finite state agents.
+The tool implements the algorithm for quotienting finite-state automata introduced in the paper:
 
 > *Gabriele Costa, David Basin, Chiara Bodei, Pierpaolo Degano, and Letterio Galletta*, `From Natural Projection to Partial Model Checking and Back’. TACAS 2018 (accepted).
 
@@ -10,7 +10,7 @@ Among the others, PESTS can be used to address the following problems:
 2. synthesizing a submodule that respects a global specification: Submodule Construction Problem (SCP);
 3. synthesizing a controller for a given component: Controller Synthesis Problem (CSP).
 
-Given a specification S and an agent A, the tool returns (the most permissive specification of) a new agent A’ that, put in parallel with A, satisfies S.
+Given a specification S and an agent A (both defined through a deterministic finite state automaton), the tool returns (the most permissive specification of) a new agent A’ that, put in parallel with A, satisfies S.
 
 ## Version
 
@@ -78,12 +78,12 @@ OPTIONS are a subset of the following:
 ```
 
 The INPUT file contains the transition system A, while the -s options is used to pass the (file containing the) specification P.
-Options -a and -b permit to define sets S and G, respectively. 
+Options -a and -b permit one to define sets S and G, respectively. 
 Actions must be valid identifiers, i.e., alpha-numeric sequences without spaces.
 
 #### Input file format
 
-The input file contains the specification of a finite transition system defined through a deterministic finite state automaton (DFA).
+The input file contains the specification of a finite transition system defined as a deterministic finite state automaton (DFA).
 The file is structured in four parts:
 - *Initial* -- specifies the name of the initial state
 - *Finals* -- specifies the list of the names of final states
@@ -137,7 +137,7 @@ Here the most relevant classes and methods are:
 
 Javadoc describing the meaning and functionalities of the relevant classes are provided with the PESTS source code.
 
-## How to run TACAS paper experiments 
+## How to run the TACAS paper experiments 
 
 To replicate the experiments table presented in the paper follow the steps below.
 
