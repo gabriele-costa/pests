@@ -1,7 +1,4 @@
-theme : sky
-
-
-# From partial model checking to natural projection and back
+## From partial model checking to natural projection and back
 
 **Gabriele Costa**, David Basin, Chiara Bodei, Pierpaolo Degano, Letterio Galletta
 
