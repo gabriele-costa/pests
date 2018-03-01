@@ -1,17 +1,42 @@
-## From partial model checking to natural projection and back
+## From natural projection to partial model checking and back
 
-**Gabriele Costa**, David Basin, Chiara Bodei, Pierpaolo Degano, Letterio Galletta
+__**Gabriele Costa**__, Letterio Galletta (IMT Lucca) 
 
-[Slides available here](https://gitpitch.com/SCPTeam/pests)
+David Basin (ETH Zurich)
 
----
-
-### Disclaimer
-
+Chiara Bodei, Pierpaolo Degano (University of Pisa) 
 
 ---
 
-### Slide 3
+### Natural projection
+
+
+---
+
+### Partial model checking
+
+
+---
+
+### NP vs. PMC
+
+
+---
+
+
+### NP vs. PMC
+
+
+---
+
+
+### NP vs. PMC
+
+
+---
+
+
+### NP vs. PMC
 
 
 ---
