@@ -11,6 +11,7 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 ### Natural projection
 
 - Removes from a trace $\eta \in \Sigma^\ast$ the symbols belonging to $\Sigma' \subseteq \Sigma$
+- Can be generalized
 
 
 ---
@@ -45,5 +46,5 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODI1ODY0MDA5XX0=
+eyJoaXN0b3J5IjpbMTExNzA4NzMyMV19
 -->
