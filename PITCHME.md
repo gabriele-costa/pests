@@ -10,7 +10,7 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 
 ### Natural projection
 
-- Given a trace $$\eta
+- Given a trace $\eta \in \Sigma^\ast$
 
 
 ---
@@ -45,5 +45,5 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU5NDM3OTIzNl19
+eyJoaXN0b3J5IjpbMTQ2NDM0NTAzMl19
 -->
