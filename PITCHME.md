@@ -10,7 +10,7 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 
 ### Natural projection
 
-- Removes symbol
+- Removes symbols
 
 
 ---
@@ -45,5 +45,5 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjM4MjIyNzg0XX0=
+eyJoaXN0b3J5IjpbLTQwMzY4NTU5M119
 -->
