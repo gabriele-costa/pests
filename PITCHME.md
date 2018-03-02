@@ -17,7 +17,7 @@ Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \
 
 Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 
-
+**Example:** $\
 
 
 
@@ -53,5 +53,5 @@ Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTczNTE4MDIwN119
+eyJoaXN0b3J5IjpbLTQ4MTU1ODM3MV19
 -->
