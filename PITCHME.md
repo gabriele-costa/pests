@@ -17,7 +17,7 @@ Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \
 
 Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 
-**Example:** $\pi
+**Example:** $\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$
 
 
 
@@ -53,5 +53,5 @@ Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NDc4ODUxODBdfQ==
+eyJoaXN0b3J5IjpbNzQwMDA5NDk1XX0=
 -->
