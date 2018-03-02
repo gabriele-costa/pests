@@ -19,6 +19,8 @@ Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 
 
 
+
+
 ---
 
 ### Partial model checking
@@ -51,5 +53,5 @@ Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ2NDg5MzU1N119
+eyJoaXN0b3J5IjpbLTczNTE4MDIwN119
 -->
