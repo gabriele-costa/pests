@@ -15,7 +15,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 - **Example:** `$\pi_{\{b,g,u\}}(bungabunga) = nana$`
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 - **Example:** $\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$
-- Commonly used in control theory
+- _Commonly used in control theory_
 
 
 ---
@@ -50,5 +50,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwODEzMzE4NDRdfQ==
+eyJoaXN0b3J5IjpbLTE1NzAwMzExNTRdfQ==
 -->
