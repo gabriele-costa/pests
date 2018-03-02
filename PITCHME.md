@@ -12,7 +12,7 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 - Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
-- **Example:** $\pi_{\{b,g,u\}}(bungabunga) = nana$
+- **Example:** $\pi_{\left\{b,g,u\right\}}(bungabunga) = nana$
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 - **Example:** $\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$
 
@@ -50,5 +50,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NDA1NzU5NTldfQ==
+eyJoaXN0b3J5IjpbNzU0NDYzNjA0XX0=
 -->
