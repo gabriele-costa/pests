@@ -9,7 +9,7 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 ---
 
 ### Natural projection 
-$$\pi : \Sigma$
+$$\pi : \Sigma$$
 
 - Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
 - **Example:** 
@@ -49,5 +49,5 @@ $$\pi : \Sigma$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTgxMTEwOTgxOF19
+eyJoaXN0b3J5IjpbMTkzOTE5NjY1Nl19
 -->
