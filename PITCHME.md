@@ -13,7 +13,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
 
-**Example:** $\pi_{\b,g,u\}}(bungabunga) = nana$
+**Example:** $\pi_{\{b,g,u\}}(bungabunga) = nana$
 
 Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 
@@ -51,5 +51,5 @@ Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0Nzg1MTE4MDZdfQ==
+eyJoaXN0b3J5IjpbMTQ2NDg5MzU1N119
 -->
