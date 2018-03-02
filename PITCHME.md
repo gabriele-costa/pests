@@ -8,7 +8,7 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 
 ---
 
-### Natural projection $\pi$
+### Natural projection $\pi_\$
 
 - Removes from a trace $\eta \in \Sigma^\ast$ the symbols belonging to $\Sigma' \subseteq \Sigma$
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma^\ast$
@@ -47,5 +47,5 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU1ODYwMzgxM119
+eyJoaXN0b3J5IjpbLTM3Mjg4ODI3Ml19
 -->
