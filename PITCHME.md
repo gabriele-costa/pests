@@ -9,10 +9,10 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 ---
 
 ### Natural projection 
-$$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \$$
+$$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 - Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
-- **Example:** 
+- **Example:** $\pi_{\{
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
 
 
@@ -49,5 +49,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgzNDc3NTQ2OF19
+eyJoaXN0b3J5IjpbNTQ3NjExNTk4XX0=
 -->
