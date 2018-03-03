@@ -7,6 +7,9 @@ David Basin (ETH Zurich)
 Chiara Bodei, Pierpaolo Degano (University of Pisa) 
 
 ---
+### Partial evaluation
+
+---
 
 ### Natural projection 
 $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
@@ -48,5 +51,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk1MTIyNDkwNV19
+eyJoaXN0b3J5IjpbNjAyNDQ0NDc2XX0=
 -->
