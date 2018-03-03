@@ -7,7 +7,7 @@ David Basin (ETH Zurich)
 Chiara Bodei, Pierpaolo Degano (University of Pisa) 
 
 ---
-### System composition
+### System composition (A|B)
 
 Given two transition systems A and B, their (parallel) composition has
 - a state for each pair of A's and B's states
@@ -20,7 +20,7 @@ Given two transition systems A and B, their (parallel) composition has
 ---
 ### System decomposition
 
-Given two transition systems X and A
+Given two transition systems X and A find B such that A
 
 ---
 
@@ -64,5 +64,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM4NzM5NzE0OV19
+eyJoaXN0b3J5IjpbMTA0NDU4NzQxXX0=
 -->
