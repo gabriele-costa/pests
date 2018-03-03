@@ -9,8 +9,9 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 ---
 ### System composition
 
-Given two transition systems $A$ and $B$, their (parallel) compositio
-- Their (parallel) composition has a transition f
+Given two transition systems $A$ and $B$, their (parallel) composition has
+- a state for each states
+
 
 ---
 
@@ -54,5 +55,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTAxMTgyMjEzXX0=
+eyJoaXN0b3J5IjpbMTA2NTYxOTIwMV19
 -->
