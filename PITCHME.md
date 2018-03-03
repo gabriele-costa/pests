@@ -18,7 +18,7 @@ Given two transition systems A and B, their (parallel) composition has
 **Composition is everyday's operation**
 
 ---
-### System decomposition
+### System decomposition 
 
 Given two transition systems X and A find B such that A
 
@@ -64,5 +64,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA0NDU4NzQxXX0=
+eyJoaXN0b3J5IjpbLTQ0ODkzNzM1N119
 -->
