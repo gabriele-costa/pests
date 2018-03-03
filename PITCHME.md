@@ -18,9 +18,12 @@ Given two transition systems A and B, their (parallel) composition has
 **Composition is everyday's operation**
 
 ---
-### System decomposition 
+### System decomposition (X\A)
 
-Given two transition systems X and A find B such that A
+Given two transition systems X and A find B such that A|B = X
+
+
+
 
 ---
 
@@ -64,5 +67,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ0ODkzNzM1N119
+eyJoaXN0b3J5IjpbLTQ5ODQ1MDMxMF19
 -->
