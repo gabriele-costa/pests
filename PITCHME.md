@@ -11,7 +11,8 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 
 Given two transition systems $A$ and $B$, their (parallel) composition has
 - a state for each pair of A's and B's states
-- an initial state for each pair of initial states
+- an initial/final state for each pair of initial/final states
+- a transition for each 
 
 
 ---
@@ -56,5 +57,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAxMzM4NzY4MF19
+eyJoaXN0b3J5IjpbNDk4NjgxNzkxXX0=
 -->
