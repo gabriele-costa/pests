@@ -15,7 +15,7 @@ Given two transition systems A and B, their (parallel) composition has
 - a (synchronous) transition whenever A and B have an action in common
 - the remaining transitions of A and B
 
-**Composition is everyday's 
+**Composition is everyday's operation**
 
 
 ---
@@ -60,5 +60,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjE4NjA4ODhdfQ==
+eyJoaXN0b3J5IjpbNzQ0ODUwOTAxXX0=
 -->
