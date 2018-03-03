@@ -20,7 +20,7 @@ Given two transition systems A and B, their (parallel) composition has
 ---
 ### System decomposition
 
-Given 
+Given two transition systems X and A
 
 ---
 
@@ -64,5 +64,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk1NDIwNjAyMl19
+eyJoaXN0b3J5IjpbMTM4NzM5NzE0OV19
 -->
