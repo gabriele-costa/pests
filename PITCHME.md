@@ -22,7 +22,7 @@ Given two transition systems A and B, their (parallel) composition has
 
 Given two transition systems X and A find B such that A|B = X
 
-
+- many applications
 
 
 ---
@@ -67,5 +67,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ5ODQ1MDMxMF19
+eyJoaXN0b3J5IjpbOTU2MjAwMjY1XX0=
 -->
