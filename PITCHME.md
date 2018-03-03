@@ -7,7 +7,9 @@ David Basin (ETH Zurich)
 Chiara Bodei, Pierpaolo Degano (University of Pisa) 
 
 ---
-### Partial evaluation
+### System composition
+
+- give
 
 ---
 
@@ -51,5 +53,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjAyNDQ0NDc2XX0=
+eyJoaXN0b3J5IjpbMTgxNDE5NDEwMl19
 -->
