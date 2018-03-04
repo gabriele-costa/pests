@@ -36,8 +36,8 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 ---
 
 ### Partial model checking
-$$// : \Phi \times \mathbb{T} \rightarrow \Phi$$
-- Given a ($\mu$-calculus) formula $\phi$ and a transition system 
+$$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
+- Given a ($\mu$-calculus) formula $\phi$ and a transition system A 
 
 
 ---
@@ -67,6 +67,6 @@ $$// : \Phi \times \mathbb{T} \rightarrow \Phi$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3MDg5NTg3MDMsNTUwMjg0MTI3LDk1Nj
-IwMDI2NV19
+eyJoaXN0b3J5IjpbLTE4MzM2NTMxNSw1NTAyODQxMjcsOTU2Mj
+AwMjY1XX0=
 -->
