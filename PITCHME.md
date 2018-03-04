@@ -23,7 +23,7 @@ Given two transition systems A and B, their (parallel) composition has
 Given two transition systems X and A find B such that A|B = X
 
 - Less common but relevant for some problems on interest
-- **Example** Sub-module construction and contr
+- **Example** Sub-module construction and controller 
 ---
 
 ### Natural projection 
@@ -78,6 +78,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU0MTk3MTEwNywxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbLTEzMTA2NzUwNDcsMTM2NjQ2MzY5Miw1NT
+AyODQxMjcsOTU2MjAwMjY1XX0=
 -->
