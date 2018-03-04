@@ -20,7 +20,7 @@ Given two transition systems A and B, their (parallel) composition has
 ---
 ### System decomposition (X\A)
 
-Given two transition systems X and A find B such that A|B = applicationapplicationsapplicatio
+Given two transition systems X and A find B such that A|B 
 
 
 ---
@@ -65,5 +65,5 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5ODE2ODIxNzEsOTU2MjAwMjY1XX0=
+eyJoaXN0b3J5IjpbLTIxMjgzOTEzOTEsOTU2MjAwMjY1XX0=
 -->
