@@ -25,8 +25,9 @@ Given two transition systems X and A find B such that A|B = X
 - Less common but relevant for some problems on interest
 - **Example** Sub-module construction and controller synthesis
 - B could not exist
-- 
-- 
+
+**Difficult to solve in general**
+
 ---
 
 ### Natural projection 
@@ -81,6 +82,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM1OTMyODc2MywxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbLTExMTUwNzcwMjgsMTM2NjQ2MzY5Miw1NT
+AyODQxMjcsOTU2MjAwMjY1XX0=
 -->
