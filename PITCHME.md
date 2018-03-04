@@ -36,7 +36,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 ---
 
 ### Partial model checking
-$$// 
+$$// : \Phi \times \mathcal{T}
 
 
 ---
@@ -66,5 +66,5 @@ $$//
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI0MDY4MjA1NCw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbMjAzNzk2NzM2Nyw5NTYyMDAyNjVdfQ==
 -->
