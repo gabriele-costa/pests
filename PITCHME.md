@@ -74,10 +74,10 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### References
 
-[AA99] A. Andersen 
+[AA99] A. Andersen, Partial Model Checking
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA3NDEwMDAyLDEzNjY0NjM2OTIsNTUwMj
-g0MTI3LDk1NjIwMDI2NV19
+eyJoaXN0b3J5IjpbMTA4NTAwMTM2NiwxMzY2NDYzNjkyLDU1MD
+I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
