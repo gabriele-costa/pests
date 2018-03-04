@@ -41,6 +41,7 @@ $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
 
 A|B $\models \phi$  iff B $\models \phi'$
 
+- 
 
 ---
 
@@ -69,6 +70,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAyNDUzOTkwNiwxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbLTQxOTM2ODU3LDEzNjY0NjM2OTIsNTUwMj
+g0MTI3LDk1NjIwMDI2NV19
 -->
