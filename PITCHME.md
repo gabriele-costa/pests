@@ -37,7 +37,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Partial model checking
 $$// : \Phi \times \mathbb{T} \rightarrow \Phi$$
-
+- Given a ($\mu$-
 
 
 ---
@@ -67,5 +67,5 @@ $$// : \Phi \times \mathbb{T} \rightarrow \Phi$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODM3NzUyMDkzLDk1NjIwMDI2NV19
+eyJoaXN0b3J5IjpbNTUwMjg0MTI3LDk1NjIwMDI2NV19
 -->
