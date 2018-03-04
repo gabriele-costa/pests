@@ -24,7 +24,8 @@ Given two transition systems X and A find B such that A|B = X
 
 - Less common but relevant for some problems on interest
 - **Example** Sub-module construction and controller synthesis
-- B could not exis
+- B could not exist
+- 
 - 
 ---
 
@@ -80,6 +81,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NTc0NDk0LDEzNjY0NjM2OTIsNTUwMj
-g0MTI3LDk1NjIwMDI2NV19
+eyJoaXN0b3J5IjpbMTM1OTMyODc2MywxMzY2NDYzNjkyLDU1MD
+I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
