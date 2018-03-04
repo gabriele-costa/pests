@@ -74,10 +74,10 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### References
 
-[AA99] A. Andersen
+[AA99] A. Andersen 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAzOTU0MTMzOCwxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbMjA3NDEwMDAyLDEzNjY0NjM2OTIsNTUwMj
+g0MTI3LDk1NjIwMDI2NV19
 -->
