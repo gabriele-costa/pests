@@ -22,7 +22,7 @@ Given two transition systems A and B, their (parallel) composition has
 
 Given two transition systems X and A find B such that A|B = X
 
-- Less common but some problem of interest can be reduced to 
+- Less common but some problem of interest can be reduced to i
 
 
 ---
@@ -79,6 +79,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2MTM2ODE3MTYsMTM2NjQ2MzY5Miw1NT
+eyJoaXN0b3J5IjpbLTE2OTMxOTU0MjEsMTM2NjQ2MzY5Miw1NT
 AyODQxMjcsOTU2MjAwMjY1XX0=
 -->
