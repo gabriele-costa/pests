@@ -74,10 +74,10 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### References
 
-
+[
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzA5MDQzODE1LDEzNjY0NjM2OTIsNTUwMj
-g0MTI3LDk1NjIwMDI2NV19
+eyJoaXN0b3J5IjpbLTU1MzEzODkzNCwxMzY2NDYzNjkyLDU1MD
+I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
