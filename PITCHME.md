@@ -51,7 +51,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 ---
 
 
-### NP and PMC
+### NP as PMC
 
 
 ---
@@ -69,7 +69,15 @@ A|B $\models \phi$  iff B $\models \phi'$
 ---
 
 ### Conclusion
+
+---
+
+### References
+
+
+
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUzNjk4MzQ0LDEzNjY0NjM2OTIsNTUwMj
+eyJoaXN0b3J5IjpbNzA5MDQzODE1LDEzNjY0NjM2OTIsNTUwMj
 g0MTI3LDk1NjIwMDI2NV19
 -->
