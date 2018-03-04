@@ -35,7 +35,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ---
 
-### Partial model checking
+### Partial model checking [A99]
 $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
 - Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi' = \phi // A$ such that for all B
 
@@ -74,10 +74,10 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### References
 
-[AA99] A. Andersen, Partial Model Checking
+[A99] A. Andersen, Partial Model Checking
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA4NTAwMTM2NiwxMzY2NDYzNjkyLDU1MD
+eyJoaXN0b3J5IjpbMTg5MDkxNTk3NiwxMzY2NDYzNjkyLDU1MD
 I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
