@@ -24,7 +24,7 @@ Given two transition systems X and A find B such that A|B = X
 
 - Less common but relevant for some problems on interest
 - **Example** Sub-module construction and controller synthesis
-- B could no
+- B could not e
 - 
 ---
 
@@ -80,6 +80,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc0Nzk1OTI0MywxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbLTEzNjEyMzg0NDYsMTM2NjQ2MzY5Miw1NT
+AyODQxMjcsOTU2MjAwMjY1XX0=
 -->
