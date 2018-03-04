@@ -37,7 +37,9 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ### Partial model checking
 $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
-- Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi'$ such that A|B $\models$ 
+- Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi'$ such that
+
+A|B $\models \phi$  iff 
 
 
 ---
@@ -67,6 +69,6 @@ $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTExMTc4MzE5LDEzNjY0NjM2OTIsNTUwMj
-g0MTI3LDk1NjIwMDI2NV19
+eyJoaXN0b3J5IjpbLTE3MjIzNDczMDUsMTM2NjQ2MzY5Miw1NT
+AyODQxMjcsOTU2MjAwMjY1XX0=
 -->
