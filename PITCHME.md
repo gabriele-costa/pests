@@ -50,7 +50,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ---
 
-
 ### NP as PMC
 
 
@@ -75,9 +74,9 @@ A|B $\models \phi$  iff B $\models \phi'$
 ### References
 
 [A99] H. R. Andersen, Partial Model Checking
-[W
+[W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI3NDg4NzYyOSwxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbLTE1NTM4Mjg4NjQsMTM2NjQ2MzY5Miw1NT
+AyODQxMjcsOTU2MjAwMjY1XX0=
 -->
