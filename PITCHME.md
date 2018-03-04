@@ -41,7 +41,7 @@ $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
 
 A|B $\models \phi$  iff B $\models \phi'$
 
-- 
+- Several applications in the formal methods community
 
 ---
 
@@ -51,7 +51,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 ---
 
 
-### NP vs. PMC
+### NP and 
 
 
 ---
@@ -70,6 +70,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### Conclusion
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQxOTM2ODU3LDEzNjY0NjM2OTIsNTUwMj
-g0MTI3LDk1NjIwMDI2NV19
+eyJoaXN0b3J5IjpbMTgwMjU4MjU5NiwxMzY2NDYzNjkyLDU1MD
+I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
