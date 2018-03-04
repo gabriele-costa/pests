@@ -23,7 +23,7 @@ Given two transition systems A and B, their (parallel) composition has
 Given two transition systems X and A find B such that A|B = X
 
 - Less common but relevant for some problems on interest
-- **Example** B could 
+- **Example** B could be a 
 
 
 ---
@@ -80,6 +80,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI0NTI2NTI5MywxMzY2NDYzNjkyLDU1MD
+eyJoaXN0b3J5IjpbMTA4MTY0Mjg4OSwxMzY2NDYzNjkyLDU1MD
 I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
