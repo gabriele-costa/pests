@@ -53,6 +53,10 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### NP vs. PMC
 
+|---|
+| | NP | PMC |
+|
+
 
 ---
 
@@ -83,6 +87,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgzNjM4OTUzNywxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbNzQ4NTA0MTE4LDEzNjY0NjM2OTIsNTUwMj
+g0MTI3LDk1NjIwMDI2NV19
 -->
