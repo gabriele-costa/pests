@@ -53,10 +53,11 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### NP vs. PMC
 
-|---|
+|---|---|---|
 | | NP | PMC |
-|---|
+|---|---|---|
 | Computational model | RL | LTS |
+| Specification lan
 
 
 ---
@@ -88,6 +89,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI0MDE2ODExLDEzNjY0NjM2OTIsNTUwMj
-g0MTI3LDk1NjIwMDI2NV19
+eyJoaXN0b3J5IjpbMTMyNzU2ODIzMywxMzY2NDYzNjkyLDU1MD
+I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
