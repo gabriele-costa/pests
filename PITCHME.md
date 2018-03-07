@@ -57,6 +57,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 |---|---|---|
 | Computational model | FSA | LTS |
 | Specification language | FSA | $L_\mu$ |
+| Complexity | 
 
 
 ---
@@ -88,6 +89,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDEyMzM5MzkwLDEzNjY0NjM2OTIsNTUwMj
-g0MTI3LDk1NjIwMDI2NV19
+eyJoaXN0b3J5IjpbLTIxMjM0Njc2MDQsMTM2NjQ2MzY5Miw1NT
+AyODQxMjcsOTU2MjAwMjY1XX0=
 -->
