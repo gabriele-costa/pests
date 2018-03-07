@@ -53,11 +53,10 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### NP vs. PMC
 
-|---|---|---|
 | | NP | PMC |
 |---|---|---|
-| Computational model | RL | LTS |
-| Specification language 
+| Computational model | FSA | LTS |
+| Specification language | FSA | $L_\mu
 
 
 ---
@@ -89,6 +88,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg0MTIyMDEyMiwxMzY2NDYzNjkyLDU1MD
+eyJoaXN0b3J5IjpbLTU2MDI2OTY2OCwxMzY2NDYzNjkyLDU1MD
 I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
