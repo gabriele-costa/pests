@@ -47,7 +47,7 @@ $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
 
 A|B $\models \phi$  iff B $\models \phi'$
 
-- Several applications in the formal methods community
+- Several applications in the formal methods community (e.g. program refinement and monitoring)
 
 ---
 
@@ -83,6 +83,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1OTAzNzUxNzIsMTM2NjQ2MzY5Miw1NT
-AyODQxMjcsOTU2MjAwMjY1XX0=
+eyJoaXN0b3J5IjpbLTgzNjM4OTUzNywxMzY2NDYzNjkyLDU1MD
+I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
