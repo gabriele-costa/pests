@@ -57,7 +57,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 |---|---|---|
 | Computational model | FSA | LTS |
 | Specification language | FSA | $L_\mu$ |
-| Complexity | 
+| Complexity | EXPTIME* | EXPTIME | 
 
 
 ---
@@ -89,6 +89,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxMjM0Njc2MDQsMTM2NjQ2MzY5Miw1NT
-AyODQxMjcsOTU2MjAwMjY1XX0=
+eyJoaXN0b3J5IjpbMTI0Mzg1OTc5MiwxMzY2NDYzNjkyLDU1MD
+I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
