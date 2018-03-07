@@ -55,7 +55,8 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 |---|
 | | NP | PMC |
-|
+|---|
+| Computational model | words | t
 
 
 ---
@@ -87,6 +88,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzQ4NTA0MTE4LDEzNjY0NjM2OTIsNTUwMj
-g0MTI3LDk1NjIwMDI2NV19
+eyJoaXN0b3J5IjpbMTQ4NDMzMzc1MywxMzY2NDYzNjkyLDU1MD
+I4NDEyNyw5NTYyMDAyNjVdfQ==
 -->
