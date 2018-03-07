@@ -88,6 +88,5 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNjYzODk2NjIsMTM2NjQ2MzY5Miw1NT
-AyODQxMjcsOTU2MjAwMjY1XX0=
+eyJoaXN0b3J5IjpbLTEwNjYzODk2NjJdfQ==
 -->
