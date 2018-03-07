@@ -56,7 +56,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 | | NP | PMC |
 |---|---|---|
 | Computational model | FSA | LTS |
-| Specification language | FSA | $L_\mu
+| Specification language | FSA | $L_\mu$ |
 
 
 ---
@@ -88,6 +88,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU2MDI2OTY2OCwxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbNDEyMzM5MzkwLDEzNjY0NjM2OTIsNTUwMj
+g0MTI3LDk1NjIwMDI2NV19
 -->
