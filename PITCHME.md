@@ -59,7 +59,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 | Specification language | FSA | $L_\mu$ |
 | Complexity | EXPTIME* | EXPTIME | 
 
-
 ---
 
 ### NP as PMC
@@ -89,6 +88,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI0Mzg1OTc5MiwxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbLTEwNjYzODk2NjIsMTM2NjQ2MzY5Miw1NT
+AyODQxMjcsOTU2MjAwMjY1XX0=
 -->
