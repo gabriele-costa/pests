@@ -57,7 +57,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 | | NP | PMC |
 |---|---|---|
 | Computational model | RL | LTS |
-| Specification lan
+| Specification language
 
 
 ---
@@ -89,6 +89,6 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMyNzU2ODIzMywxMzY2NDYzNjkyLDU1MD
-I4NDEyNyw5NTYyMDAyNjVdfQ==
+eyJoaXN0b3J5IjpbLTgxNDc2MTYsMTM2NjQ2MzY5Miw1NTAyOD
+QxMjcsOTU2MjAwMjY1XX0=
 -->
