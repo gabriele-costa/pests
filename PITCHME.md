@@ -61,7 +61,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ---
 
-### NP 
+### 
 
 
 ---
@@ -88,5 +88,5 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTMzMjA3NjcxOV19
+eyJoaXN0b3J5IjpbLTEyNjgxNzE3MDVdfQ==
 -->
