@@ -60,12 +60,10 @@ A|B $\models \phi$  iff B $\models \phi'$
 | Complexity | EXPTIME* | EXPTIME | 
 
 ---
-
-### Unifying the computational model
+### A common computational model
 
 
 ---
-
 
 ### 
 
@@ -88,5 +86,5 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODkxMjI3MTcxXX0=
+eyJoaXN0b3J5IjpbODg4MTEzNTEzXX0=
 -->
