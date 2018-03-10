@@ -61,13 +61,13 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ---
 
-### 
+### Unifying the computational model
 
 
 ---
 
 
-### NP vs. PMC
+### 
 
 
 ---
@@ -88,5 +88,5 @@ A|B $\models \phi$  iff B $\models \phi'$
 [W] Wonham
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyNjgxNzE3MDVdfQ==
+eyJoaXN0b3J5IjpbODkxMjI3MTcxXX0=
 -->
