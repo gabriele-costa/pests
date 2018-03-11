@@ -60,8 +60,22 @@ A|B $\models \phi$  iff B $\models \phi'$
 | Complexity | EXPTIME* | EXPTIME | 
 
 ---
-### A common computational model
+### A common framework for NP
 
+For LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection on A** of a trace $\sigma$, in symbols $\pi_{A}({\sigma})$, is defined as follows:
+\[
+\begin{array}{l @{\:} c @{\:} l @{\hspace{20pt}} l}
+\proj{\spair{s_A}{s_B}}{A} & = & s_A \\
+\proj{\spair{s_A}{s_B} \xrightarrow{a}_{A \parallel B} \spair{s'_A}{s'_B} \cdot \sigma}{A} & = & s_A \xrightarrow{a}_{A} s'_A \cdot \proj{\sigma}{A} & \textnormal{if } a \in \Sigma_A  \\
+\proj{\spair{s_A}{s_B} \xrightarrow{b}_{A \parallel B} \spair{s_A}{s'_B} \cdot \sigma}{A} & = & \proj{\sigma}{A} & \textnormal{if } b \in \Sigma_B \setminus \Gamma .
+\end{array}
+\]
+Natural projection on second component $B$ is analogously defined.
+We extend the natural projection to sets of traces in the usual way: $\proj{T}{A} = \{\proj{\sigma}{A} \mid \sigma \in T\}$.
+
+
+The \emph{inverse projection} of a trace $\sigma$ over an LTS $A \parallel B$, in symbols $\iproj{\sigma}{A}$, is defined as $\iproj{\sigma}{A} = \{ \sigma' \mid \proj{\sigma'}{A} = \sigma \}$. 
+Its extension to sets is $\iproj{T}{A} = \bigcup\limits_{\sigma \in T} \iproj{\sigma}{A}$.\qed
 
 ---
 
