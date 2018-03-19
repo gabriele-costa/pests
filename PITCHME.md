@@ -102,3 +102,6 @@ Its extension to sets is $\iproj{T}{A} = \bigcup\limits_{\sigma \in T} \iproj{\s
 <!--stackedit_data:
 eyJoaXN0b3J5IjpbODg4MTEzNTEzXX0=
 -->
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTY4ODUzMjk3Ml19
+-->
