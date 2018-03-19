@@ -63,10 +63,11 @@ A|B $\models \phi$  iff B $\models \phi'$
 ### A common framework for NP
 
 For LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection on A** of a trace $\sigma$, in symbols $\pi_{A}({\sigma})$, is defined as follows:
-
+ $
 \proj{\spair{s_A}{s_B}}{A} & = & s_A \\
 \proj{\spair{s_A}{s_B} \xrightarrow{a}_{A \parallel B} \spair{s'_A}{s'_B} \cdot \sigma}{A} & = & s_A \xrightarrow{a}_{A} s'_A \cdot \proj{\sigma}{A} & \textnormal{if } a \in \Sigma_A  \\
 \proj{\spair{s_A}{s_B} \xrightarrow{b}_{A \parallel B} \spair{s_A}{s'_B} \cdot \sigma}{A} & = & \proj{\sigma}{A} & \textnormal{if } b \in \Sigma_B \setminus \Gamma 
+
 Natural projection on second component $B$ is analogously defined.
 We extend the natural projection to sets of traces in the usual way: $\proj{T}{A} = \{\proj{\sigma}{A} \mid \sigma \in T\}$.
 
@@ -100,5 +101,5 @@ Its extension to sets is $\iproj{T}{A} = \bigcup\limits_{\sigma \in T} \iproj{\s
 eyJoaXN0b3J5IjpbODg4MTEzNTEzXX0=
 -->
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM0NDg2MjA2OV19
+eyJoaXN0b3J5IjpbMjA4ODYwMjMwMV19
 -->
