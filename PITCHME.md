@@ -55,8 +55,8 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 | | NP | PMC |
 |---|---|---|
-| Computational model | RE | LTS |
-| Specification language | FSA | $L_\mu$ |
+| Agent | FSA | LTS |
+| Specification | FSA | $L_\mu$ |
 | Complexity | EXPTIME* | EXPTIME | 
 | Tools | TCT, IDES3, DESTool | mCRL2, CADP, MuDiv |
 
@@ -64,9 +64,28 @@ A|B $\models \phi$  iff B $\models \phi'$
 *: PTIME for a specific class of discrete-event systems
 
 ---
-### A common framework for NP
 
-For LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection on A** of a trace $\sigma$, in symbols $\pi_{A}({\sigma})$, is defined as follows:
+### Gravitational waves
+
+Two galaxies are colliding: **control theory** and **formal methods** [EL14]. In their words
+
+``Such a formal bridge should be a source of inspiration for new lines
+of investigation that will leverage the power of the synthesis techniques
+that have been developed in these two areas. [...] It would be worth-
+while to develop case studies that would allow a detailed comparison
+of these two frameworks in terms of plant and specification modeling,
+computational complexity of synthesis, and implementation of derived
+supervisor/controller.``
+
+---
+
+### A common framework: roadmap
+
+- [ ] Find a common semantic domain
+
+- [ ] Redefine the two operators
+
+For LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection**  on $A$ of a trace $\sigma$, in symbols $\pi_{A}({\sigma})$, is defined as follows:
  $
 \proj{\spair{s_A}{s_B}}{A} & = & s_A \\
 \proj{\spair{s_A}{s_B} \xrightarrow{a}_{A \parallel B} \spair{s'_A}{s'_B} \cdot \sigma}{A} & = & s_A \xrightarrow{a}_{A} s'_A \cdot \proj{\sigma}{A} & \textnormal{if } a \in \Sigma_A  \\
