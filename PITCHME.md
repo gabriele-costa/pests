@@ -73,24 +73,20 @@ Two galaxies are colliding: **control theory** and **formal methods** [EL14]
 
 ---
 
-### A common framework: roadmap
+### A common framework
 
-- [ ] Find a common semantic domain
+- We redefine NP to work with LTS agents and $L_\mu$ specifications. 
 
-- [ ] Redefine the two operators
+- A trace $\sigma$ is an alternation of state and action symbols.
 
-For LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection**  on $A$ of a trace $\sigma$, in symbols $\pi_{A}({\sigma})$, is defined as follows:
- $
-\proj{\spair{s_A}{s_B}}{A} & = & s_A \\
-\proj{\spair{s_A}{s_B} \xrightarrow{a}_{A \parallel B} \spair{s'_A}{s'_B} \cdot \sigma}{A} & = & s_A \xrightarrow{a}_{A} s'_A \cdot \proj{\sigma}{A} & \textnormal{if } a \in \Sigma_A  \\
-\proj{\spair{s_A}{s_B} \xrightarrow{b}_{A \parallel B} \spair{s_A}{s'_B} \cdot \sigma}{A} & = & \proj{\sigma}{A} & \textnormal{if } b \in \Sigma_B \setminus \Gamma 
+- Given LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection** on $A$ of a trace $\sigma$, in symbols $\pi_{A}({\sigma})$ is:
+ 
+ $\pi_{A}(\langle s_A, s_B \rangle) = s_A$
+ 
+$\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma) = s_A a s'_A \cdot \pi_{A}({\sigma})$ if $a \in \Sigma_A$
 
-Natural projection on second component $B$ is analogously defined.
-We extend the natural projection to sets of traces in the usual way: $\proj{T}{A} = \{\proj{\sigma}{A} \mid \sigma \in T\}$.
+\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$ if $b \in \Sigma_B \setminus \Gamma$ 
 
-
-The \emph{inverse projection} of a trace $\sigma$ over an LTS $A \parallel B$, in symbols $\iproj{\sigma}{A}$, is defined as $\iproj{\sigma}{A} = \{ \sigma' \mid \proj{\sigma'}{A} = \sigma \}$. 
-Its extension to sets is $\iproj{T}{A} = \bigcup\limits_{\sigma \in T} \iproj{\sigma}{A}$.\qed
 
 ---
 
