@@ -58,6 +58,10 @@ A|B $\models \phi$  iff B $\models \phi'$
 | Computational model | RE | LTS |
 | Specification language | FSA | $L_\mu$ |
 | Complexity | EXPTIME* | EXPTIME | 
+| Tools | TCT, IDES3, DESTool | mCRL2, CADP, MuDiv |
+
+
+*: PTIME for a specific class of discrete-event systems
 
 ---
 ### A common framework for NP
