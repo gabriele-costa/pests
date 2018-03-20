@@ -67,15 +67,9 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### Gravitational waves
 
-Two galaxies are colliding: **control theory** and **formal methods** [EL14]. In their words
+Two galaxies are colliding: **control theory** and **formal methods** [EL14]
 
-``Such a formal bridge should be a source of inspiration for new lines
-of investigation that will leverage the power of the synthesis techniques
-that have been developed in these two areas. [...] It would be worth-
-while to develop case studies that would allow a detailed comparison
-of these two frameworks in terms of plant and specification modeling,
-computational complexity of synthesis, and implementation of derived
-supervisor/controller.``
+![galaxies](https://apod.nasa.gov/apod/image/1308/arp271_gemini_2048.jpg)
 
 ---
 
