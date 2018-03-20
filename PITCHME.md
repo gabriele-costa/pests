@@ -61,7 +61,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 | Tools | TCT, IDES3, DESTool | mCRL2, CADP, MuDiv |
 
 
-*: PTIME for a specific class of discrete-event systems
+*: PTIME for a specific class of FSA
 
 ---
 
