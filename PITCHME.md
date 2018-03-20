@@ -79,7 +79,7 @@ Two galaxies are colliding: **control theory** and **formal methods** [EL14]
 
 - A trace $\sigma$ is an alternation of state and action symbols.
 
-- Given LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection** on $A$ of a trace $\sigma$, in symbols $\pi_{A}({\sigma})$ is:
+- Given LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection** on $A$ of a trace $\sigma$, in symbols $\pi_A(\sigma)$ is
  
  $\pi_{A}(\langle s_A, s_B \rangle) = s_A$
  
