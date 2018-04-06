@@ -7,6 +7,14 @@ David Basin (ETH Zurich)
 Chiara Bodei, Pierpaolo Degano (University of Pisa) 
 
 ---
+
+### Outline
+
+- Problem statement
+- Ongoing collision
+- 
+
+---
 ### System composition (A|B)
 
 Given two transition systems A and B, their (parallel) composition has
@@ -18,11 +26,10 @@ Given two transition systems A and B, their (parallel) composition has
 **Composition is everyday's operation**
 
 ---
-### System decomposition (X\A)
+### System decomposition (A\B)
 
-Given two transition systems X and A find B such that A|B = X
+Given two transition systems A and B find X such that X|B = A
 
-- Inverse operation of A|B
 - Less common but relevant for some problems on interest
 - **Example** Sub-module construction and controller synthesis
 - B could not exist (partial function)
@@ -69,7 +76,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 Two galaxies are colliding: **control theory** and **formal methods** [EL14]
 
-![galaxies](https://apod.nasa.gov/apod/image/1308/arp271_gemini_2048.jpg)
+![galaxies](https://apod.nasa.gov/apod/image/1308/arp271_gemini_2048.jpg =100x20)
 
 ---
 
