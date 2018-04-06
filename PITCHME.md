@@ -48,7 +48,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ---
 
-### Partial model checking [A99]
+### Partial model checking [Andersen99]
 $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
 - Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi' = \phi // A$ such that for all B
 
@@ -114,12 +114,6 @@ $\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma) = s
 
 ### References
 
-[A99] H. R. Andersen, Partial Model Checking
+[Andersen99] H. R. Andersen, Partial Model Checking
 [W] Wonham
 
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbODg4MTEzNTEzXX0=
--->
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA4ODYwMjMwMV19
--->
