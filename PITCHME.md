@@ -1,18 +1,17 @@
 ## From natural projection to partial model checking and back
 
-__**Gabriele Costa**__, Letterio Galletta (IMT Lucca) 
+__**Gabriele Costa**__, Letterio Galletta (IMT Lucca)
 
 David Basin (ETH Zurich)
 
-Chiara Bodei, Pierpaolo Degano (University of Pisa) 
+Chiara Bodei, Pierpaolo Degano (University of Pisa)
 
 ---
-
 ### Outline
 
 - Problem statement
 - Ongoing collision
-- 
+- Partial model checking vs. natural projection
 
 ---
 ### System composition (A|B)
@@ -38,7 +37,7 @@ Given two transition systems A and B find X such that X|B = A
 
 ---
 
-### Natural projection 
+### Natural projection
 $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 - Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
@@ -64,7 +63,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 |---|---|---|
 | Agent | FSA | LTS |
 | Specification | FSA | $L_\mu$ |
-| Complexity | EXPTIME* | EXPTIME | 
+| Complexity | EXPTIME* | EXPTIME |
 | Tools | TCT, IDES3, DESTool | mCRL2, CADP, MuDiv |
 
 
@@ -74,30 +73,30 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### Gravitational waves
 
-Two galaxies are colliding: **control theory** and **formal methods** [EL14]
+Two galaxies are colliding: **control theory** and **formal methods** [Ehlers et al. 14]
 
-![galaxies](https://apod.nasa.gov/apod/image/1308/arp271_gemini_2048.jpg =100x20)
+![galaxies](pitch/collision.png)
 
 ---
 
 ### A common framework
 
-- We redefine NP to work with LTS agents and $L_\mu$ specifications. 
+- We redefine NP to work with LTS agents and $L_\mu$ specifications.
 
 - A trace $\sigma$ is an alternation of state and action symbols.
 
 - Given LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection** on $A$ of a trace $\sigma$ is
- 
+
 $\pi_{A}(\langle s_A, s_B \rangle) = s_A$
- 
+
 $\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma) = s_A a s'_A \cdot \pi_{A}({\sigma})$ if $a \in \Sigma_A$
 
-\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$ if $b \in \Sigma_B \setminus \Gamma$ 
+\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$ if $b \in \Sigma_B \setminus \Gamma$
 
 
 ---
 
-### 
+###
 
 
 ---
@@ -116,4 +115,3 @@ $\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma) = s
 
 [Andersen99] H. R. Andersen, Partial Model Checking
 [W] Wonham
-
