@@ -37,7 +37,29 @@ Given two transition systems A and B find X such that X|B = A
 
 ---
 
-### Natural projection
+### UAV Example
+
+```latex {cmd=true hide=true}
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\begin{document}
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes,row sep=3em,column sep=4em,minimum width=2em]
+  {
+     F & B \\
+      & A \\};
+  \path[-stealth]
+    (m-1-1) edge node [above] {$\beta$} (m-1-2)
+    (m-1-2) edge node [right] {$\rho$} (m-2-2)
+    (m-1-1) edge node [left] {$\alpha$} (m-2-2);
+\end{tikzpicture}
+\end{document}
+```
+
+---
+
+### Natural projection [Wonham ]
 $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 - Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
@@ -47,7 +69,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ---
 
-### Partial model checking [Andersen99]
+### Partial model checking [Andersen 99]
 $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
 - Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi' = \phi // A$ such that for all B
 
@@ -73,9 +95,9 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### Gravitational waves
 
-Two galaxies are colliding: **control theory** and **formal methods** [Ehlers et al. 14]
+**Control theory** and **formal methods** are colliding [Ehlers et al. 14]
 
-![galaxies](pitch/collision.png)
+![galaxies](pitch/collision-label.png)
 
 ---
 
