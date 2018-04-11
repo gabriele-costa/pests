@@ -19,8 +19,8 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 Given two transition systems A and B, their (parallel) composition has
 - a state for each pair of A's and B's states
 - an initial/final state for each pair of initial/final states
-- a (synchronous) transition whenever A and B have an action in common
-- the remaining transitions of A and B
+- *synchronous* transitions on common actions
+- *asynchronous* transitions on the other actions
 
 **Composition is everyday's operation**
 
@@ -30,23 +30,24 @@ Given two transition systems A and B, their (parallel) composition has
 Given two transition systems A and B find X such that X|B = A
 
 - Less common but relevant for some problems on interest
-- **Example** Sub-module construction and controller synthesis
-- B could not exist (partial function)
+- **Example** Sub-module construction (SCP) and controller synthesis (CSP)
+- X could not exist
 
 **Difficult to solve in general**
 
 ---
 
-### UAV Example
+### Example: Drone Package Delivery
 
-`mermaid
-graph TD
-A[Christmas] -->|Get money| B(Go shopping)
-B --> C{Let me think}
-C -->|One| D[Laptop]
-C -->|Two| E[iPhone]
-C -->|Three| F[Car]
-`
+Unmanned aerial vehicles (UAV) operating on a docking station
+
+- A (deposits 2 items -d-, sends a synchronous signal -s-, eventually terminates -t-)
+
+![uav A](pitch/adder-w.png)
+
+- docking station
+
+![policy](pitch/buffer-n.png)
 
 ---
 
