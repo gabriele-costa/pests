@@ -12,6 +12,8 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 - Problem statement
 - Ongoing collision
 - Partial model checking vs. natural projection
+- Quotienting with PESTS
+- Conclusion and future work
 
 ---
 ### System composition (A|B)
@@ -29,9 +31,10 @@ Given two transition systems A and B, their (parallel) composition has
 
 Given two transition systems A and B find X such that X|B = A
 
-- Less common but relevant for some problems on interest
-- **Example** Sub-module construction (SCP) and controller synthesis (CSP)
-- X could not exist
+- \ a.k.a. **quotienting** operator
+- Less common but relevant for problems on interest
+- **Example:** Sub-module construction (SCP) and controller synthesis (CSP)
+- *X could not exist*
 
 **Difficult to solve in general**
 
@@ -41,7 +44,7 @@ Given two transition systems A and B find X such that X|B = A
 
 Unmanned aerial vehicles (UAV) operating on a docking station
 
-- **UAV A** repeatedly puts down 2 items (action $d$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$.
+- **Adder A** repeatedly puts down 2 items (action $d$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$.
 
 - **Docking station P$_n$** admits at most $n$ elements on a stack. Action $u$ stands for pick up.
 
