@@ -41,11 +41,11 @@ Given two transition systems A and B find X such that X|B = A
 
 Unmanned aerial vehicles (UAV) operating on a docking station
 
-- A (deposits 2 items -d-, sends a synchronous signal -s-, eventually terminates -t-)
+- A (puts down 2 items -$d$-, sends a synchronous signal -$s$-, eventually terminates -$t$-)
 
 ![uav A](pitch/adder-w.png)
 
-- docking station
+- docking station (at most $n$ elements on the stack). Action $u$ stands for pick up.
 
 ![policy](pitch/buffer-n.png)
 
