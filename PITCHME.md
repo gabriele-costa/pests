@@ -43,16 +43,14 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 - **UAV A** repeatedly puts down 2 items (action $d$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$.
 
-- **Docking station P** admits at most $n$ elements on a stack. Action $u$ stands for pick up.
+- **Docking station P$_n$** admits at most $n$ elements on a stack. Action $u$ stands for pick up.
 
 ---
 
 ### Example: Drone Package Delivery
 
-A
 ![uav A](pitch/adder-w.png)
 
-P$_n$
 ![policy](pitch/buffer-n.png)
 
 ---
