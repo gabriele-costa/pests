@@ -16,7 +16,7 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 - Conclusion and future work
 
 ---
-### System composition (A|B)
+### Composition (A|B)
 
 Given two transition systems A and B, their (parallel) composition has
 - a state for each pair of A's and B's states
@@ -24,10 +24,11 @@ Given two transition systems A and B, their (parallel) composition has
 - *synchronous* transitions on common actions
 - *asynchronous* transitions on the other actions
 
-**Composition is simple and common (e.g., multi-agent model checking)**
+**Common in system modeling and analysis**
 
 ---
-### System decomposition (A\B)
+
+### Decomposition (A\B)
 
 Given two transition systems A and B find X such that X|B = A
 
@@ -36,7 +37,7 @@ Given two transition systems A and B find X such that X|B = A
 - **Example:** Sub-module construction (SCP) and controller synthesis (CSP)
 - *X could not exist*
 
-**Difficult to solve in general**
+**Hard to solve in general**
 
 ---
 
@@ -142,7 +143,7 @@ $\pi_{A}(\langle s_A, s_B \rangle) = s_A$
 
 $\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma) = s_A a s'_A \cdot \pi_{A}({\sigma})$ if $a \in \Sigma_A$
 
-\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$ if $b \in \Sigma_B \setminus \Gamma$
+$\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$ if $b \in \Sigma_B \setminus \Gamma$
 
 
 ---
