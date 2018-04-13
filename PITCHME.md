@@ -70,7 +70,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 <img src="pitch/product-w.png" width="70%" height="70%">
 
-**P$_2$**
+**P$_n$**
 
 <img src="pitch/buffer-n.png" width="70%" height="70%">
 
