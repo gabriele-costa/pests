@@ -44,9 +44,21 @@ Given two transition systems A and B find X such that X|B = A
 
 Unmanned aerial vehicles (UAV) operating on a docking station
 
-- **Adder A** repeatedly puts down 2 items (action $d$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$.
+- **Adder A$_n$** repeatedly puts down $n$ items (action $d$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$
 
-- **Docking station P$_n$** admits at most $n$ elements on a stack. Action $u$ stands for pick up.
+- **Remover B$_n$** repeatedly picks up $n$ items (action $u$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$
+
+- **Docking station P$_n$** admits at most $n$ elements on a stack. Action $u$ stands for pick up
+
+---
+
+### Example: Drone Package Delivery
+
+![uav A2](pitch/adder-w.png){:height="100px" width="100px"}
+
+![uav B1](pitch/remover-w.png)
+
+![A2 par B1](pitch/product-w.png)
 
 ---
 
