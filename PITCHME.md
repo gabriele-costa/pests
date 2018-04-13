@@ -55,9 +55,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 ### Example: Drone Package Delivery
 
 <img src="pitch/adder-w.png" width="50%" height="50%">
-
 <img src="pitch/remover-w.png" width="50%" height="50%">
-
 <img src="pitch/product-w.png" width="70%" height="70%">
 
 ---
