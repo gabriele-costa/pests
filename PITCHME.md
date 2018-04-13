@@ -24,7 +24,7 @@ Given two transition systems A and B, their (parallel) composition has
 - *synchronous* transitions on common actions
 - *asynchronous* transitions on the other actions
 
-**Composition is everyday's operation**
+**Composition is simple and common (e.g., multi-agent model checking)**
 
 ---
 ### System decomposition (A\B)
@@ -61,6 +61,18 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 **B$_1$**
 
 <img src="pitch/remover-w.png" width="50%" height="50%">
+
+---
+
+### Example: Drone Package Delivery
+
+**A$_2$ | B$_1$**
+
+<img src="pitch/product-w.png" width="70%" height="70%">
+
+**P$_n$**
+
+<img src="pitch/buffer-n.png" width="70%" height="70%">
 
 ---
 
