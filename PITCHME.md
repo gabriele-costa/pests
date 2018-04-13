@@ -46,9 +46,9 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 - **Adder A$_n$** repeatedly puts down $n$ items (action $d$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$
 
-- **Remover B$_n$** repeatedly picks up $n$ items (action $u$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$
+- **Remover B$_n$** repeatedly picks up $n$ items (action $u$). Sync like A
 
-- **Docking station P$_n$** admits at most $n$ elements on a stack. Action $u$ stands for pick up
+- **Docking station P$_n$** has a limited, $n$-elements stack
 
 ---
 
