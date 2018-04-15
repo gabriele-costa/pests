@@ -9,10 +9,9 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 ---
 ### Outline
 
-- Problem statement
-- Ongoing collision
+- Problem overview
 - Partial model checking vs. natural projection
-- Quotienting with PESTS
+- A new quotienting algorithm and tool
 - Conclusion and future work
 
 ---
@@ -147,30 +146,47 @@ Given LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural pro
 
 - `$\pi_{A}(\langle s_A, s_B \rangle) = s_A$`
 - `$\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma) = s_A a s'_A \cdot \pi_{A}({\sigma})$`
- - if $a \in \Sigma_A$
+ - for any action `$a \in \Sigma_A$`
 - `$\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$`
- - if $b \in \Sigma_B \setminus \Gamma$
+ - for any *asynchronous* `$b \in \Sigma_B$`
 
 *We extend `$\pi$` to languages*
 
 ---
 
----
+### Theoretical results
 
-### Encoding NP as PMC
+*Encoding NP as PMC we can prove*
 
 **Theorem:** `$\mathcal{L}(\Phi_P // A) = \pi_{B}(\mathcal{L}(P))$`
 
 **Theorem:** The following statements are equivalent
 1. `$ A|B \models P$`
-2. `$ A \models \Phi_P // B$`
-3. `$ B \models$ \Phi_P // A$`
-4. `$\mathcal{L}(A) \subseteq \pi_{A}(\mathcal{L}(P))$`
-5. `$\mathcal{L}(B) \subseteq \pi_{B}(\mathcal{L}(P))$`
+2. `$ A \models \Phi_P // B$` (resp. B and A)
+3. `$\mathcal{L}(A) \subseteq \pi_{A}(\mathcal{L}(P))$` (resp. B)
+
+---
+
+### Practical results
+
+- A new quotienting algorithm for FSA
+ - Efficient on DFA (`$O(n^5)$` vs. `$O(n^6)$`)
+- *PESTS*: a OS implementation on github
+ - [https://github.com/SCPTeam/pests](https://github.com/SCPTeam/pests)
+
+---
+
+### Example end / Demo
 
 ---
 
 ### Conclusion
+
+*Results*
+-
+
+*Future work*
+- Symbolic automata and MSO logic
 
 ---
 
