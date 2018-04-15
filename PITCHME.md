@@ -33,7 +33,7 @@ Given two transition systems A and B find X such that X|B = A
 
 - \ a.k.a. **quotienting** operator
 - Less common but relevant for problems on interest
-- **Example:** Sub-module construction (SCP) and controller synthesis (CSP)
+- **Ex:** Sub-module construction (SCP) and controller synthesis (CSP)
 - *X could not exist*
 
 **Hard to solve in general**
@@ -91,9 +91,9 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 - Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
- - **Example:** `$\pi_{\{b,g,u\}}(bungabunga) = nana$`
+ - **Ex:** `$\pi_{\{b,g,u\}}(bungabunga) = nana$`
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
- - **Example:** `$\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$`
+ - **Ex:** `$\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$`
 
 ---
 
@@ -136,7 +136,7 @@ A|B $\models \phi$  iff B $\models \phi'$
  - Finite LTS $\sim$ FSA (with all accepting states)
  - Any FSA `$X$` can be encoded as a `$\mu K$` formula `$\Phi_X$`
 - A trace $\sigma$ is an alternation of states and actions
-**Example:** $q_0 d q_1 d q_2$ (rather than $d d$) is a trace of A$_2$
+ - **Ex:** $q_0 d q_1 d q_2$ (rather than $d d$) is a trace of A$_2$
 
 ---
 
@@ -192,6 +192,8 @@ Given LTS $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural proj
 
 ### Back to the working example (SCP)
 
+Is there a remover (`$\Sigma_B = \{u, s, t\}$`) for `$A$` that respects `$P$`?
+
 **`$B_2$`: decomposition against `$P_2$`**
 
 <img src="pitch/remover-2.png" width="30%" height="30%">
@@ -204,17 +206,22 @@ Given LTS $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural proj
 
 ### Back to the working example (CSP)
 
+`$A_2 | B_3 \not\models P_2$`. Is there a controller C (`$\Sigma_C = \{s,t\}$`)?
+
+<img src="pitch/control-2-on-3.png" width="50%" height="30%">
 
 
 ---
 
 ### Conclusion
 
-*Results*
--
+*Contributions*
+- Under reasonable assumptions PMC `$\equiv$` NP
+- A new algorithm and a tool for quotienting
 
 *Future work*
-- Symbolic automata and MSO logic
+- Extensions: symbolic automata and MSO logic
+- Applications: verification and testing
 
 ---
 
