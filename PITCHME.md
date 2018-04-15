@@ -98,7 +98,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 ---
 
 ### Partial model checking
-$$// : \Phi \times \mathbb{A} \rightarrow \Phi$$ [Andersen]
+`$// : \Phi \times \mathbb{A} \rightarrow \Phi$` [Andersen]
 - Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi' = \phi // A$ such that for all B
 
 A|B $\models \phi$  iff B $\models \phi'$
@@ -135,8 +135,8 @@ A|B $\models \phi$  iff B $\models \phi'$
 - We redefine NP to work with LTS agents and $\mu K$ specifications
  - Finite LTS $\sim$ FSA (with all accepting states)
  - Any FSA `$X$` can be encoded as a `$\mu K$` formula `$\Phi_X$`
-- A trace $\sigma$ is an alternation of state and action symbols
- - **Example:** $q_0 d q_1 d q_2$ (rather than $d d$) is a trace of A$_2$
+- A trace $\sigma$ is an alternation of states and actions
+**Example:** $q_0 d q_1 d q_2$ (rather than $d d$) is a trace of A$_2$
 
 ---
 
