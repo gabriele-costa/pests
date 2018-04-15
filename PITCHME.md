@@ -14,6 +14,8 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 - A new quotienting algorithm and tool
 - Conclusion and future work
 
+*See this presentation at [https://gitpitch.com/SCPTeam/pests](https://gitpitch.com/SCPTeam/pests)*
+
 ---
 ### Composition (A|B)
 
