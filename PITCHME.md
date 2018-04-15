@@ -192,10 +192,6 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 
 Is there a remover (`$\Sigma_B = \{u, s, t\}$`) for `$A$` that respects `$P$`?
 
-**`$B_2$`: decomposition against `$P_2$`**
-
-<img src="pitch/remover-2.png" width="30%" height="30%">
-
 **`$B_3$`: decomposition against `$P_3$`**
 
 <img src="pitch/remover-3.png" width="30%" height="30%">
@@ -206,7 +202,7 @@ Is there a remover (`$\Sigma_B = \{u, s, t\}$`) for `$A$` that respects `$P$`?
 
 `$A_2 | B_3 \not\models P_2$`. Is there a controller C (`$\Sigma_C = \{s,t\}$`)?
 
-<img src="pitch/control-2-on-3.png" width="50%" height="30%">
+<img src="pitch/control-2-on-3.png" width="70%" height="30%">
 
 
 ---
