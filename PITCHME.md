@@ -92,7 +92,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 ### Natural projection
 `$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$` [Wonham]
 
-- Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
+- `$\pi_\Sigma$` removes from $\sigma \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
  - **Ex:** `$\pi_{\{b,g,u\}}(bungabunga) = nana$`
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
  - **Ex:** `$\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$`
