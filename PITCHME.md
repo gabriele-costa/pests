@@ -113,7 +113,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 | | NP | PMC |
 |---|---|---|
 | Agent | FSA | LTS |
-| Specification | FSA | $L_\mu$ |
+| Specification | FSA | $\mu K$ |
 | Complexity | EXPTIME* | EXPTIME |
 | Tools | TCT, IDES3, DESTool | mCRL2, CADP, MuDiv |
 
@@ -133,11 +133,11 @@ A|B $\models \phi$  iff B $\models \phi'$
 ### A common framework (1)
 
 
-- We redefine NP to work with LTS agents and $L_\mu$ specifications
+- We redefine NP to work with LTS agents and $\mu K$ specifications
  - Finite LTS $\sim$ FSA (with all accepting states)
- - Any FSA can be encoded as a `$L_\mu$` formula `\Phi` 
+ - Any FSA `$X$` can be encoded as a `$\mu K$` formula `$\Phi_X$`
 - A trace $\sigma$ is an alternation of state and action symbols
- - **Example:** A does $q_0 d q_1 d q_2$ (rather than $d d$)
+ - **Example:** $q_0 d q_1 d q_2$ (rather than $d d$) is a trace of A$_2$
 
 ---
 
@@ -151,13 +151,22 @@ Given LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural pro
 - `$\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$`
  - if $b \in \Sigma_B \setminus \Gamma$
 
+*We extend `$\pi$` to languages*
+
+---
+
 ---
 
 ### Encoding NP as PMC
 
-- **Theorem:** NP and PMC are equivalent
+**Theorem:** `$\mathcal{L}(\Phi_P // A) = \pi_{B}(\mathcal{L}(P))$`
 
-- **Theorem:** A | B `$\models$ \Phi` iff ...
+**Theorem:** The following statements are equivalent
+1. `$ A|B \models P$`
+2. `$ A \models \Phi_P // B$`
+3. `$ B \models$ \Phi_P // A$`
+4. `$\mathcal{L}(A) \subseteq \pi_{A}(\mathcal{L}(P))$`
+5. `$\mathcal{L}(B) \subseteq \pi_{B}(\mathcal{L}(P))$`
 
 ---
 
