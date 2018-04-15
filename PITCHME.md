@@ -46,7 +46,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 - **Adder A$_n$** repeatedly puts down $n$ items (action $d$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$
 
-- **Remover B$_n$** repeatedly picks up $n$ items (action $u$). Sync like A
+- **Remover B$_n$** repeatedly picks up (action $u$) $n$ items and synchronizes like A
 
 - **Docking station P$_n$** has a limited, $n$-elements stack
 
@@ -97,8 +97,8 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 ---
 
-### Partial model checking [Andersen]
-$$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
+### Partial model checking
+$$// : \Phi \times \mathbb{A} \rightarrow \Phi$$ [Andersen]
 - Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi' = \phi // A$ such that for all B
 
 A|B $\models \phi$  iff B $\models \phi'$
