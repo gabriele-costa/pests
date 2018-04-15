@@ -158,9 +158,8 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 
 *Encoding NP as PMC we can prove*
 
-**Theorem:** `$\mathcal{L}(\Phi_P // A) = \pi_{B}(\mathcal{L}(P))$`
-
-**Theorem:** The following statements are equivalent
+- **Theorem:** `$\mathcal{L}(\Phi_P // A) = \pi_{B}(\mathcal{L}(P))$`
+- **Theorem:** The following statements are equivalent
 1. `$ A|B \models P$`
 2. `$ A \models \Phi_P // B$` (resp. B and A)
 3. `$\mathcal{L}(A) \subseteq \pi_{A}(\mathcal{L}(P))$` (resp. B)
