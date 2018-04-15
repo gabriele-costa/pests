@@ -94,7 +94,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
  - **Example:** `$\pi_{\{b,g,u\}}(bungabunga) = nana$`
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
  - **Example:** `$\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$`
-- Can be extended to finite state automata
+
 ---
 
 ### Partial model checking [Andersen]
