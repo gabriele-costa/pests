@@ -79,27 +79,26 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 ### Example: Drone Package Delivery
 
-**A$_2$ | B$_1$**
+- Does A$_2$ | B$_1$ fulfil P$_2$ (in symbols A$_2$ | B$_1$ $\models$ P$_n$)?
+ - No (e.g., $d d u s d d$)
 
-<img src="pitch/product-w.png" width="70%" height="70%">
+- Given A, can we modify B to fulfil P? (SCP)
 
-**P$_n$**
-
-<img src="pitch/buffer-n.png" width="70%" height="70%">
+- Is there an agent C (controller) that enforces P on A | B? (CSP)
 
 ---
 
-### Natural projection [Wonham ]
+### Natural projection [Wonham '17]
 $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 - Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
-- **Example:** `$\pi_{\{b,g,u\}}(bungabunga) = nana$`
+ - **Example:** `$\pi_{\{b,g,u\}}(bungabunga) = nana$`
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
-- **Example:** `$\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$`
-
+ - **Example:** `$\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$`
+- Can be extended to finite state automata
 ---
 
-### Partial model checking [Andersen 99]
+### Partial model checking [Andersen '99]
 $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
 - Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi' = \phi // A$ such that for all B
 
@@ -141,7 +140,8 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 $\pi_{A}(\langle s_A, s_B \rangle) = s_A$
 
-$\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma) = s_A a s'_A \cdot \pi_{A}({\sigma})$ if $a \in \Sigma_A$
+$\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma)$ = $s_A a s'_A \cdot \pi_{A}({\sigma})$
+if $a \in \Sigma_A$
 
 $\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$ if $b \in \Sigma_B \setminus \Gamma$
 
@@ -165,5 +165,5 @@ $\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \p
 
 ### References
 
-[Andersen99] H. R. Andersen, Partial Model Checking
-[W] Wonham
+- [Andersen '99] H. R. Andersen, Partial model checking
+- [Wonham '17] W. M. Wonham, Supervisory control of discrete-event systems
