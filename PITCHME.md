@@ -134,7 +134,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 - We redefine NP to work with LTS agents and $\mu K$ specifications
  - Finite LTS $\sim$ FSA (with all accepting states)
- - Any FSA `$X$` can be encoded as a `$\mu K$` formula `$\Phi_X$`
+ - Any FSA `$X$` can be encoded as a `$\mu K$` formula `$\phi_X$`
 - A trace $\sigma$ is an alternation of states and actions
  - **Ex:** $q_0 d q_1 d q_2$ (rather than $d d$) is a trace of A$_2$
 
@@ -158,10 +158,10 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 
 *Encoding NP as PMC we can prove*
 
-- **Theorem:** `$\mathcal{L}(\Phi_P // A) = \pi_{B}(\mathcal{L}(P))$`
+- **Theorem:** `$\mathcal{L}(\phi_P // A) = \pi_{B}(\mathcal{L}(P))$`
 - **Theorem:** The following statements are equivalent
  1. `$ A|B \models P$`
- 2. `$ A \models \Phi_P // B$` (resp. B and A)
+ 2. `$ A \models \phi_P // B$` (resp. B and A)
  3. `$\mathcal{L}(A) \subseteq \pi_{A}(\mathcal{L}(P))$` (resp. B)
 
 ---
