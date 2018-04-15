@@ -88,7 +88,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 ---
 
-### Natural projection [Wonham '17]
+### Natural projection [Wonham]
 $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 
 - Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
@@ -98,7 +98,7 @@ $$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
 - Can be extended to finite state automata
 ---
 
-### Partial model checking [Andersen '99]
+### Partial model checking [Andersen]
 $$// : \Phi \times \mathbb{A} \rightarrow \Phi$$
 - Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi' = \phi // A$ such that for all B
 
@@ -124,7 +124,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### Gravitational waves
 
-**Control theory** and **formal methods** are colliding [Ehlers et al. 14]
+**Control theory** and **formal methods** are colliding [Ehlers et al.]
 
 ![galaxies](pitch/collision-label.png)
 
@@ -135,7 +135,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 - We redefine NP to work with LTS agents and $L_\mu$ specifications
  - Finite LTS $\sim$ FSA (with all accepting states)
- - $L_\mu$ can encode any FSA
+ - Any FSA can be encoded as a `$L_\mu$` formula `\Phi` 
 - A trace $\sigma$ is an alternation of state and action symbols
  - **Example:** A does $q_0 d q_1 d q_2$ (rather than $d d$)
 
@@ -146,18 +146,18 @@ A|B $\models \phi$  iff B $\models \phi'$
 Given LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection** on $A$ of a trace $\sigma$ is
 
 - `$\pi_{A}(\langle s_A, s_B \rangle) = s_A$`
-
 - `$\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma) = s_A a s'_A \cdot \pi_{A}({\sigma})$`
  - if $a \in \Sigma_A$
-
-$\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$
+- `$\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \pi_{A}({\sigma})$`
  - if $b \in \Sigma_B \setminus \Gamma$
 
 ---
 
+### Encoding NP as PMC
 
-### NP vs. PMC
+- **Theorem:** NP and PMC are equivalent
 
+- **Theorem:** A | B `$\models$ \Phi` iff ...
 
 ---
 
@@ -167,5 +167,7 @@ $\pi_{A}(\langle s_A, s_B \rangle b \langle s_A, s'_B \rangle \cdot \sigma) = \p
 
 ### References
 
-- [Andersen '99] H. R. Andersen, Partial model checking
-- [Wonham '17] W. M. Wonham, Supervisory control of discrete-event systems
+- [Andersen] H. R. Andersen, Partial model checking, 1999
+- [Wonham] W. M. Wonham, Supervisory control of discrete-event systems, (online) 2017
+- [Ehlers et al.] R. Ehlers, S. Lafortune, S. Tripakis, M. Vardi. Bridging
+the Gap between Supervisory Control and Reactive Synthesis: Case of Full Observation and Centralized Control, 2014
