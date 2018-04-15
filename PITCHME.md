@@ -80,7 +80,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 ### Example: Drone Package Delivery
 
-- Does A$_2$ | B$_1$ fulfil P$_2$ (in symbols A$_2$ | B$_1$ $\models$ P$_n$)?
+- Does A$_2$ | B$_1$ satisfy P$_2$ (in symbols A$_2$ | B$_1$ $\models$ P$_n$)?
  - No (e.g., $d d u s d d$)
 
 - Given A, can we modify B to fulfil P? (SCP)
@@ -89,8 +89,8 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 ---
 
-### Natural projection [Wonham]
-$$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$$
+### Natural projection
+`$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$` [Wonham]
 
 - Removes from a trace $\eta \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
  - **Ex:** `$\pi_{\{b,g,u\}}(bungabunga) = nana$`
