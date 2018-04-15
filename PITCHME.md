@@ -204,7 +204,6 @@ Is there a remover (`$\Sigma_B = \{u, s, t\}$`) for `$A$` that respects `$P$`?
 
 <img src="pitch/control-2-on-3.png" width="70%" height="30%">
 
-
 ---
 
 ### Conclusion
@@ -216,6 +215,10 @@ Is there a remover (`$\Sigma_B = \{u, s, t\}$`) for `$A$` that respects `$P$`?
 *Future work*
 - Extensions: symbolic automata and MSO logic
 - Applications: verification and testing
+
+---
+
+**Thank you**
 
 ---
 
