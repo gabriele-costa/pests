@@ -142,7 +142,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ### A common framework (2)
 
-Given LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection** on $A$ of a trace $\sigma$ is
+Given LTS $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural projection** on $A$ of a trace $\sigma$ is
 
 - `$\pi_{A}(\langle s_A, s_B \rangle) = s_A$`
 - `$\pi_{A}(\langle s_A, s_B \rangle a \langle s'_A, s'_B \rangle \cdot \sigma) = s_A a s'_A \cdot \pi_{A}({\sigma})$`
@@ -169,14 +169,42 @@ Given LTSs $A$ and $B$ with $\Gamma = \Sigma_A \cap \Sigma_B$, the **natural pro
 
 ### Practical results
 
-- A new quotienting algorithm for FSA
- - Efficient on DFA (`$O(n^5)$` vs. `$O(n^6)$`)
-- *PESTS*: a OS implementation on github
- - [https://github.com/SCPTeam/pests](https://github.com/SCPTeam/pests)
+- A new quotienting algorithm for LTS
+ - Correct: finds the decomposition if it exists
+ - Efficient: `$O(n^5)$` for *deterministic* LTS
+  - Best NP algorithm: `$O(n^6)$` for (a subclass of) DFA
+- *PESTS*: a OS implementation working on FSA
+ - [PESTS@github](https://github.com/SCPTeam/pests)
+ - Also applied to real DES
+  - [FlexFact](http://www.rt.eei.uni-erlangen.de/FGdes/productionline.html)
 
 ---
 
-### Example end / Demo
+### Back to the working example (Fix)
+
+- `$P_2$` does not admit decomposition on `$A_2$`
+ - Because one `$s$` is not enough
+- Let `$A'_2$` be as follows
+
+<img src="pitch/adder-2.png" width="30%" height="30%">
+
+---
+
+### Back to the working example (SCP)
+
+**`$B_2$`: decomposition against `$P_2$`**
+
+<img src="pitch/remover-2.png" width="30%" height="30%">
+
+**`$B_3$`: decomposition against `$P_3$`**
+
+<img src="pitch/remover-3.png" width="30%" height="30%">
+
+---
+
+### Back to the working example (CSP)
+
+
 
 ---
 
