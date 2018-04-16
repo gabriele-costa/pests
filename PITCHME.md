@@ -85,17 +85,17 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 - Given A, can we modify B to fulfil P? (SCP)
 
-- Is there an controller C to enforce P on A | B? (CSP)
+- Is there a controller C to enforce P on A | B? (CSP)
 
 ---
 
 ### Natural projection
 `$\pi : 2^{\Sigma_0} \times \Sigma_0^\ast \rightarrow \Sigma_0^\ast$` [Wonham]
 
-- `$\pi_\Sigma$` removes from $\sigma \in \Sigma_0^\ast$ the symbols belonging to $\Sigma \subseteq \Sigma_0$
- - **Ex:** `$\pi_{\{b,g,u\}}(bungabunga) = nana$`
+- `$\pi_\Sigma$` removes from $\sigma \in \Sigma_0^\ast$ any symbol not in $\Sigma \subseteq \Sigma_0$
+ - **Ex:** `$\pi_{\{b,g,u\}}(bungabunga) = bugbug$`
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
- - **Ex:** `$\pi_{\{b,g,u\}}(bunga^\ast) = na^\ast$`
+ - **Ex:** `$\pi_{\{b,g,u\}}(bunga^\ast) = bug^\ast$`
 
 ---
 
