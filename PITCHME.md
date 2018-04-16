@@ -62,7 +62,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 **B$_1$**
 
-<img src="pitch/remover-w.png" width="50%" height="50%">
+<img src="pitch/remover-w.png" width="40%" height="40%">
 
 ---
 
