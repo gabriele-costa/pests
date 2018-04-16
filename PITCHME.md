@@ -128,12 +128,13 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 **Control theory** and **formal methods** are colliding [Ehlers et al.]
 
+An opportunity to share techniques, problems, solutions ...
+
 <img src="pitch/collision-label.png" width="70%" height="70%">
 
 ---
 
 ### A common framework (1)
-
 
 - We redefine NP to work with LTS agents and $\mu K$ specifications
  - Finite LTS $\sim$ FSA (with all accepting states)
