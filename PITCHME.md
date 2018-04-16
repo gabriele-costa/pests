@@ -109,9 +109,9 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 ---
 
-### NProj vs. PMC
+### NP vs. PMC
 
-| | NProj | PMC |
+| | NP | PMC |
 |---|---|---|
 | Agent | FSA | LTS |
 | Specification | FSA | $\mu K$ |
