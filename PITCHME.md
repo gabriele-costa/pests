@@ -176,7 +176,7 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 - A new quotienting algorithm for LTS
  - Correct: finds the *most general* decomposition if it exists
  - Efficient: `$O(n^5)$` for *deterministic* LTS
-   - Best NP algorithm: `$O(n^6)$` for (a subclass of) DFA
+   - Best NP algorithm: `$O(n^6)$` for *deterministic* FSA
 - *PESTS*: a OS implementation working on FSA
  - [PESTS@github](https://github.com/SCPTeam/pests)
  - Also applied to  [FlexFact](http://www.rt.eei.uni-erlangen.de/FGdes/productionline.html), a real DES
