@@ -170,6 +170,8 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 
 ### Practical results
 
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="pitch/aec-badge-tacas.pdf">
+
 - A new quotienting algorithm for LTS
  - Correct: finds the *most general* decomposition if it exists
  - Efficient: `$O(n^5)$` for *deterministic* LTS
