@@ -199,7 +199,7 @@ Find the remover `$B_n$` (`$\Sigma_B = \{u, s, t\}$`) s.t. `$A'_2 | B_n \models 
 
 **`$B_3$`: decomposition against `$P_3$`**
 
-<img src="pitch/remover-3.png" width="30%" height="30%">
+<img src="pitch/remover-3.png" width="40%" height="40%">
 
 ---
 
