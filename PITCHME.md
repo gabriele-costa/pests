@@ -35,7 +35,7 @@ Given two transition systems A and B find X such that X|B = A
 
 - **/** a.k.a. **quotienting** operator
 - Less common but relevant for problems on interest
-- **Ex:** Sub-module construction (SCP) and controller synthesis (CSP)
+ - **Ex:** Sub-module construction (*SCP*) and controller synthesis (*CSP*)
 - *X could not exist*
 
 **Hard to solve in general**
