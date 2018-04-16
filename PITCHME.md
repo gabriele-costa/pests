@@ -17,7 +17,7 @@ Chiara Bodei, Pierpaolo Degano (University of Pisa)
 *See this presentation at [https://goo.gl/R9MXhr](https://gitpitch.com/SCPTeam/pests)*
 
 ---
-### Composition (A|B)
+### Composition (A | B)
 
 Given two transition systems A and B, their (parallel) composition has
 - a state for each pair of A's and B's states
@@ -162,6 +162,7 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 *Encoding NP as PMC we can prove*
 
 - **Theorem:** `$\mathcal{L}(\phi_P // A) = \pi_{B}(\mathcal{L}(P))$`
+
 - **Theorem:** The following statements are equivalent
  1. `$ A|B \models P$`
  2. `$ A \models \phi_P // B$` (resp. B and A)
