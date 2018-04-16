@@ -171,7 +171,7 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 ### Practical results
 
 - A new quotienting algorithm for LTS
- - Correct: finds the decomposition if it exists
+ - Correct: finds the *most general* decomposition if it exists
  - Efficient: `$O(n^5)$` for *deterministic* LTS
    - Best NP algorithm: `$O(n^6)$` for (a subclass of) DFA
 - *PESTS*: a OS implementation working on FSA
@@ -192,7 +192,7 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 
 ### Back to the working example (SCP)
 
-Is there a remover (`$\Sigma_B = \{u, s, t\}$`) for `$A$` that respects `$P$`?
+Find the remover `$B_n$` (`$\Sigma_B = \{u, s, t\}$`) s.t. `$A'_2 | B_n \models P_n$`
 
 **`$B_3$`: decomposition against `$P_3$`**
 
@@ -202,7 +202,8 @@ Is there a remover (`$\Sigma_B = \{u, s, t\}$`) for `$A$` that respects `$P$`?
 
 ### Back to the working example (CSP)
 
-`$A_2 | B_3 \not\models P_2$`. Is there a controller C (`$\Sigma_C = \{s,t\}$`)?
+`$A_2 | B_3 \not\models P_2$`. 
+Find the controller `$C$` (`$\Sigma_C = \{s,t\}$`) s.t. $C (A_2 | B_3) \models P_2$
 
 <img src="pitch/control-2-on-3.png" width="70%" height="30%">
 
