@@ -170,7 +170,7 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 
 ### Practical results
 
-<img width="20%" style="position: absolute; top: 0; right: 0; border: 0;" src="pitch/aec-badge-tacas.png">
+<img width="20%" style="position: absolute; top: 2; right: 0; border: 0;" src="pitch/aec-badge-tacas.png">
 
 - A new quotienting algorithm for LTS
  - Correct: finds the *most general* decomposition if it exists
