@@ -205,7 +205,7 @@ Find the remover `$B_n$` (`$\Sigma_B = \{u, s, t\}$`) s.t. `$A'_2 | B_n \models 
 
 ### Back to the working example (CSP)
 
-`$A'_2 | B_3 \not\models P_2$`
+Clearly `$A'_2 | B_3 \not\models P_2$`
 
 Find the controller `$C$` (`$\Sigma_C = \{s,t\}$`) s.t. `$C | (A'_2 | B_3) \models P_2$`
 
