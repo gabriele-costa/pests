@@ -170,7 +170,7 @@ Given two LTS $A$ and $B$, the **natural projection** on $A$ of a trace $\sigma$
 
 ### Practical results
 
-<img style="position: absolute; top: 0; right: 0; border: 0;" src="pitch/aec-badge-tacas.pdf">
+<img width="20%" height="20%" style="position: absolute; top: 0; right: 0; border: 0;" src="pitch/aec-badge-tacas.png">
 
 - A new quotienting algorithm for LTS
  - Correct: finds the *most general* decomposition if it exists
@@ -204,7 +204,7 @@ Find the remover `$B_n$` (`$\Sigma_B = \{u, s, t\}$`) s.t. `$A'_2 | B_n \models 
 
 ### Back to the working example (CSP)
 
-`$A_2 | B_3 \not\models P_2$` 
+`$A_2 | B_3 \not\models P_2$`
 
 Find the controller `$C$` (`$\Sigma_C = \{s,t\}$`) s.t. $C (A_2 | B_3) \models P_2$
 
