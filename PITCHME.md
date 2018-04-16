@@ -80,7 +80,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 ### Example: Drone Package Delivery
 
-- Does A$_2$ | B$_1$ satisfy P$_2$ (in symbols A$_2$ | B$_1$ $\models$ P$_n$)?
+- Does A$_2$ | B$_1$ satisfy P$_2$ (in symbols A$_2$ | B$_1$ $\models$ P$_2$)?
  - No! Counterexample: $d d u s d d$
 
 - Given A, can we modify B to fulfil P? (SCP)
