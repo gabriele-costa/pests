@@ -233,7 +233,7 @@ Find the controller `$C$` (`$\Sigma_C = \{s,t\}$`) s.t. `$C | (A'_2 | B_3) \mode
 
 ### References
 
-- [Andersen] H. R. Andersen, Partial model checking, 1999
-- [Wonham] W. M. Wonham, Supervisory control of discrete-event systems, (online) 2017
-- [Ehlers et al.] R. Ehlers, S. Lafortune, S. Tripakis, M. Vardi. Bridging
-the Gap between Supervisory Control and Reactive Synthesis: Case of Full Observation and Centralized Control, 2014
+- [Andersen] H. R. Andersen, *Partial model checking*, 1999
+- [Wonham] W. M. Wonham, *Supervisory control of discrete-event systems*, (online) 2017
+- [Ehlers et al.] R. Ehlers, S. Lafortune, S. Tripakis, M. Vardi, *Bridging
+the Gap between Supervisory Control and Reactive Synthesis: Case of Full Observation and Centralized Control*, 2014
