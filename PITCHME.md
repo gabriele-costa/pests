@@ -226,6 +226,8 @@ Find the controller `$C$` (`$\Sigma_C = \{s,t\}$`) s.t. $C (A_2 | B_3) \models P
 
 **Thank you**
 
+*Questions?*
+
 ---
 
 ### References
