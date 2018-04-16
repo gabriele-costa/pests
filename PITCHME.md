@@ -207,7 +207,7 @@ Find the remover `$B_n$` (`$\Sigma_B = \{u, s, t\}$`) s.t. `$A'_2 | B_n \models 
 
 `$A'_2 | B_3 \not\models P_2$`
 
-Find the controller `$C$` (`$\Sigma_C = \{s,t\}$`) s.t. `$C | (A_2 | B_3) \models P_2$`
+Find the controller `$C$` (`$\Sigma_C = \{s,t\}$`) s.t. `$C | (A'_2 | B_3) \models P_2$`
 
 <img src="pitch/control-2-on-3.png" width="70%" height="30%">
 
