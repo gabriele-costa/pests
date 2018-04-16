@@ -96,6 +96,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
  - **Ex:** `$\pi_{\{b,g,u\}}(bungabunga) = bugbug$`
 - Can be extended to a language $\mathcal{L} \subseteq \Sigma_0^\ast$
  - **Ex:** `$\pi_{\{b,g,u\}}(bunga^\ast) = bug^\ast$`
+- Several applications in the control theory community (e.g. SCP and CSP)
 
 ---
 
