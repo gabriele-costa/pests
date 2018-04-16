@@ -127,7 +127,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 
 **Control theory** and **formal methods** are colliding [Ehlers et al.]
 
-![galaxies](pitch/collision-label.png)
+<img src="pitch/collision-label.png" width="70%" height="70%">
 
 ---
 
