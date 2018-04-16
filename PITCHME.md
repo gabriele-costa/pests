@@ -85,7 +85,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 - Given A, can we modify B to fulfil P? (SCP)
 
-- Is there an agent C (controller) that enforces P on A | B? (CSP)
+- Is there an controller C to enforce P on A | B? (CSP)
 
 ---
 
