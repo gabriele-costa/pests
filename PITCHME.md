@@ -220,8 +220,8 @@ Find the controller `$C$` (`$\Sigma_C = \{s,t\}$`) s.t. `$C | (A'_2 | B_3) \mode
 - A new algorithm and a tool for quotienting
 
 *Future work*
-- Extensions: symbolic automata and MSO logic
-- Applications: verification and testing
+- Extension: symbolic automata and MSO logic
+- Application: verification and testing
 
 ---
 
