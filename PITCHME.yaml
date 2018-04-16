@@ -2,4 +2,4 @@ theme : sky
 layout : center-left
 transition : none
 mathjax : TeX-MML-AM_HTMLorMML-full
-footnote : "Follow these slides at https://goo.gl/R9MXhr"
+footnote : "Follow this presentation at <a href="https://gitpitch.com/SCPTeam/pests">https://gitpitch.com/SCPTeam/pests<a>"
