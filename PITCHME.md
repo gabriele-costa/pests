@@ -46,21 +46,21 @@ Given two transition systems A and B find X such that X|B = A
 
 Unmanned aerial vehicles (UAV) operating on a docking station
 
-- **Adder A$_n$** repeatedly puts down $n$ items (action $d$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$
+- **Adder `$A_n$`** repeatedly puts down $n$ items (action $d$) and sends a synchronous signal (action $s$). Eventually terminates with a synchronous action $t$
 
-- **Remover B$_n$** repeatedly picks up (action $u$) $n$ items and synchronizes like A
+- **Remover `$B_n$`** repeatedly picks up (action $u$) $n$ items and synchronizes like A
 
-- **Docking station P$_n$** has a limited, $n$-elements stack
+- **Docking station `$P_n$`** has a limited, $n$-elements stack
 
 ---
 
 ### Example: Drone Package Delivery
 
-**A$_2$**
+**`$A_2$`**
 
 <img src="pitch/adder-w.png" width="50%" height="50%">
 
-**B$_1$**
+**`$B_1$`**
 
 <img src="pitch/remover-w.png" width="40%" height="40%">
 
@@ -68,11 +68,11 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 ### Example: Drone Package Delivery
 
-**A$_2$ | B$_1$**
+**`$A_2 | B_1$`**
 
 <img src="pitch/product-w.png" width="70%" height="70%">
 
-**P$_n$**
+**`$P_n$`**
 
 <img src="pitch/buffer-n.png" width="70%" height="70%">
 
@@ -80,8 +80,8 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 ### Example: Drone Package Delivery
 
-- Does A$_2$ | B$_1$ satisfy P$_2$ (in symbols A$_2$ | B$_1$ $\models$ P$_2$)?
- - No! Counterexample: $d d u s d d$
+- Does `$A_2 | B_1$` satisfy `$P_2$` (in symbols `$A_2 | B_1 \models P_2$`)?
+ - No! Counterexample: `$d d u s d d$`
 
 - Given A, can we modify B to fulfil P? (SCP)
 
@@ -104,7 +104,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 `$// : \Phi \times \mathbb{A} \rightarrow \Phi$` [Andersen]
 - Given a ($\mu$-calculus) formula $\phi$ and a transition system A find $\phi' = \phi // A$ such that for all B
 
-A|B $\models \phi$  iff B $\models \phi'$
+**Theorem:** `$A | B \models \phi$` iff `$B \models \phi'$`
 
 - Several applications in the formal methods community (e.g. program refinement and monitoring)
 
@@ -115,7 +115,7 @@ A|B $\models \phi$  iff B $\models \phi'$
 | | NP | PMC |
 |---|---|---|
 | Agent | FSA | LTS |
-| Specification | FSA | $\mu K$ |
+| Specification | FSA | `$\mu K$` |
 | Complexity | EXPTIME* | EXPTIME |
 | Tools | TCT, IDES3, DESTool | mCRL2, CADP, MuDiv |
 
