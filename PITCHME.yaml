@@ -1,3 +1,4 @@
 theme : sky
+layout : top-left
 transition : none
 mathjax : TeX-MML-AM_HTMLorMML-full
