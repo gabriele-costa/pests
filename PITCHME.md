@@ -33,7 +33,7 @@ Given two transition systems A and B, their (parallel) composition has
 
 Given two transition systems A and B find X such that X|B = A
 
-- \ a.k.a. **quotienting** operator
+- **\** a.k.a. **quotienting** operator
 - Less common but relevant for problems on interest
 - **Ex:** Sub-module construction (SCP) and controller synthesis (CSP)
 - *X could not exist*
@@ -81,7 +81,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 ### Example: Drone Package Delivery
 
 - Does A$_2$ | B$_1$ satisfy P$_2$ (in symbols A$_2$ | B$_1$ $\models$ P$_n$)?
- - No (e.g., $d d u s d d$)
+ - No! Counterexample: $d d u s d d$
 
 - Given A, can we modify B to fulfil P? (SCP)
 
