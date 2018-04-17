@@ -130,7 +130,7 @@ Unmanned aerial vehicles (UAV) operating on a docking station
 
 An opportunity to share techniques, problems, solutions ...
 
-<p align="center"><img src="pitch/collision-label.png" width="60%" height="65%"></img></p>
+<img src="pitch/collision-label.png" width="60%" height="60%">
 
 ---
 
