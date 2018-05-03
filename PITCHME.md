@@ -239,3 +239,6 @@ Find the controller `$C$` (`$\Sigma_C = \{s,t\}$`) s.t. `$C | (A'_2 | B_3) \mode
 - [Wonham] W. M. Wonham, *Supervisory control of discrete-event systems*, (online) 2017
 - [Ehlers et al.] R. Ehlers, S. Lafortune, S. Tripakis, M. Vardi, *Bridging
 the Gap between Supervisory Control and Reactive Synthesis: Case of Full Observation and Centralized Control*, 2014
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTgwODI0MjkxMF19
+-->
