@@ -3,7 +3,7 @@
 **PESTS** (*Partial Evaluator of Simple Transition Systems*) is a tool suite for the partial evaluation of finite state agents.
 The tool implements the algorithm for quotienting finite-state automata introduced in the paper:
 
-> *Gabriele Costa, David Basin, Chiara Bodei, Pierpaolo Degano, and Letterio Galletta*, `From Natural Projection to Partial Model Checking and Back’. TACAS 2018 (accepted).
+> *Gabriele Costa, David Basin, Chiara Bodei, Pierpaolo Degano, and Letterio Galletta*, `From Natural Projection to Partial Model Checking and Back’. TACAS 2018.
 
 Among the others, PESTS can be used to address the following problems: 
 1. reducing the verification of a parallel composition to that of a single component;
