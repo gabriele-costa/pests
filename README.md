@@ -16,7 +16,9 @@ Given a specification S and an agent A (both defined through a deterministic fin
 
 ## Version
 
-This documentation refers to **PESTS version 1.2 (JAR)**, available at [https://github.com/gabriele-costa/pests/releases](https://github.com/gabriele-costa/pests/releases).
+This documentation refers to **PESTS version 1.1 (TACAS)**, available at [https://github.com/gabriele-costa/pests/releases](https://github.com/gabriele-costa/pests/releases).
+
+**NOTE:** a new version of the documentation for *PESTS v1.2* is under construction.
 
 **DOI**: [10.5281/zenodo.1138898](http://dx.doi.org/10.5281/zenodo.1138898)
 
