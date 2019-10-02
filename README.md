@@ -1,11 +1,13 @@
 # PESTS
 
-**PESTS** (*Partial Evaluator of Simple Transition Systems*) is a tool suite for the partial evaluation of finite state agents.
+**PESTS** (*Partial Evaluator of Symbolic Transition Systems*) is a tool suite for the partial evaluation of finite state agents.
 The tool implements the algorithm for quotienting finite-state automata introduced in the paper:
 
 > *Gabriele Costa, David Basin, Chiara Bodei, Pierpaolo Degano, and Letterio Galletta*, `From Natural Projection to Partial Model Checking and Back’. TACAS 2018.
 
-Among the others, PESTS can be used to address the following problems: 
+**UPDATE: PESTS v1.2 is out with a new support for symbolic automata**
+
+Among the others, PESTS can be used to address the following problems:
 1. reducing the verification of a parallel composition to that of a single component;
 2. synthesizing a submodule that respects a global specification: Submodule Construction Problem (SCP);
 3. synthesizing a controller for a given component: Controller Synthesis Problem (CSP).
@@ -14,13 +16,13 @@ Given a specification S and an agent A (both defined through a deterministic fin
 
 ## Version
 
-This documentation refers to **PESTS version 1.1 (TACAS)**, available at [https://github.com/SCPTeam/pests/releases](https://github.com/SCPTeam/pests/releases).
+This documentation refers to **PESTS version 1.2 (JAR)**, available at [https://github.com/gabriele-costa/pests/releases](https://github.com/gabriele-costa/pests/releases).
 
 **DOI**: [10.5281/zenodo.1138898](http://dx.doi.org/10.5281/zenodo.1138898)
 
 ## Requirements
 
-- Oracle Java runtime environment (JRE) or Java development kit (JDK) version 8 or greater (http://www.oracle.com/technetwork/java/javase/downloads/index.html). 
+- Oracle Java runtime environment (JRE) or Java development kit (JDK) version 8 or greater (http://www.oracle.com/technetwork/java/javase/downloads/index.html).
 PESTS has been also tested with the OpenJDK version 8 (http://openjdk.java.net/)
 
 ### TACAS virtual machine instructions
@@ -31,7 +33,7 @@ PESTS has been also tested with the OpenJDK version 8 (http://openjdk.java.net/)
 ## Installation
 
 PESTS is implemented in pure Java and requires no particular installation procedures.
-It is provided as a self-contained Java archive (.jar) and it can be downloaded from [GitHub](https://github.com/SCPTeam/pests/releases).
+It is provided as a self-contained Java archive (.jar) and it can be downloaded from [GitHub](https://github.com/gabriele-costa/pests/releases).
 
 **TACAS release**
 
@@ -53,14 +55,14 @@ The inputs that must be provided to the partial evaluation procedure are:
 
 ## Usage
 
-PESTS can be used both as a *stand-alone, command line tool* and a *library*. 
+PESTS can be used both as a *stand-alone, command line tool* and a *library*.
 
 ### PESTS as a stand-alone tool
 
 Open a terminal and browse to the folder containing pests.jar.
 Then type `$ java -jar pests.jar -h` to get the following help message.
 
-``` 
+```
 $ java -jar pests.jar -h
 Partial Evaluator of Simple Transition Systems (PESTS)
 Usage: java -jar pests.jar INPUT [OPTIONS]
@@ -78,7 +80,7 @@ OPTIONS are a subset of the following:
 ```
 
 The INPUT file contains the transition system A, while the -s options is used to pass the (file containing the) specification P.
-Options -a and -b permit one to define sets S and G, respectively. 
+Options -a and -b permit one to define sets S and G, respectively.
 Actions must be valid identifiers, i.e., alpha-numeric sequences without spaces.
 
 #### Input file format
@@ -96,7 +98,7 @@ The following example defines a 3-states DFA
 
 ```
     initial:q0;
-    finals:q0,q1,q2; 
+    finals:q0,q1,q2;
     actions:a,s,t;
     q0--t->q2;
     q0--a->q1;
@@ -109,7 +111,7 @@ corresponding to the following diagram (where all the states are final).
    +-----------> q2
    |
    |      a             
--> q0 ---------> q1 
+-> q0 ---------> q1
    ^             |
    |      s      |
    +-------------+
@@ -124,7 +126,7 @@ DFAutomatonImpl P = ... // create a specification P adding states and transition
 DFAutomatonImpl A = ... // create the transition system A (similar to creating P)
 Set<String> S     = ... // Set of synchronous actions
 Set<String> G     = ... // Set of asynchronous actions
-			
+
 DFAutomatonImpl PP = Projection.unify(Projection.partialA(P, A, G, S), S);
 ```
 
@@ -137,12 +139,12 @@ Here the most relevant classes and methods are:
 
 Javadoc describing the meaning and functionalities of the relevant classes are provided with the PESTS source code.
 
-## How to run the TACAS paper experiments 
+## How to run the TACAS paper experiments
 
 To replicate the experiments table presented in the paper follow the steps below.
 
-1. Download **PESTS version 1.1 TACAS** ([pests-v1.1-tacas.zip](https://github.com/SCPTeam/pests/releases)).
-2. Decompress the .zip archive to some folder (e.g., with `$ unzip pests-v1.1-tacas.zip`) 
+1. Download **PESTS version 1.1 TACAS** ([pests-v1.1-tacas.zip](https://github.com/gabriele-costa/pests/releases)).
+2. Decompress the .zip archive to some folder (e.g., with `$ unzip pests-v1.1-tacas.zip`)
 3. Enter the unzipped folder and open a terminal there
 4. Make sure that both `scp.sh` and `csp.sh` are executable (in case add the executable flag with `$ chmod +x scp.sh` and `$ chmod +x scp.sh`)
 5. Run the shell script setting the number of experiments (between 1 and 20) to be executed. For example `./scp.sh 5` performs the first 5 experiments corresponding to the first 5 rows of the experiments table in the paper appendix (Table 4).
