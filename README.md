@@ -12,14 +12,15 @@ Among the others, PESTS can be used to address the following problems:
 2. synthesizing a submodule that respects a global specification: Submodule Construction Problem (SCP);
 3. synthesizing a controller for a given component: Controller Synthesis Problem (CSP).
 
-Given a specification S and an agent A (both defined through a deterministic finite state automaton), the tool returns (the most permissive specification of) a new agent A’ that, put in parallel with A, satisfies S.
+Given a specification S and an agent A (both defined through either a deterministic finite state automaton or a symbolic automata), the tool returns (the most permissive specification of) a new agent A’ that, put in parallel with A, satisfies S.
 
 ## Version
 
-This documentation refers to **PESTS version 1.1 (TACAS)**, available at [https://github.com/gabriele-costa/pests/releases](https://github.com/gabriele-costa/pests/releases).
+The last stable version of the tool is **PESTS version 1.2 (JAR)** available at [https://github.com/gabriele-costa/pests/releases](https://github.com/gabriele-costa/pests/releases).
 
-**NOTE:** a new version of the documentation for *PESTS v1.2* is under construction.
-
+The instructions for replicating the [TACAS experiments](#tacas-experiments) presented in 
+> *Gabriele Costa, David Basin, Chiara Bodei, Pierpaolo Degano, and Letterio Galletta*, `From Natural Projection to Partial Model Checking and Back’. TACAS 2018.
+refer to **PESTS version 1.1 (TACAS)**
 **DOI**: [10.5281/zenodo.1138898](http://dx.doi.org/10.5281/zenodo.1138898)
 
 ## Requirements
@@ -27,22 +28,10 @@ This documentation refers to **PESTS version 1.1 (TACAS)**, available at [https:
 - Oracle Java runtime environment (JRE) or Java development kit (JDK) version 8 or greater (http://www.oracle.com/technetwork/java/javase/downloads/index.html).
 PESTS has been also tested with the OpenJDK version 8 (http://openjdk.java.net/)
 
-### TACAS virtual machine instructions
-
-1. open a terminal and type `$ java -version` to check that a JRE is correctly installed and its version.
-2. if no JRE is installed, install it through `$ sudo apt install default-jre`.
-
 ## Installation
 
 PESTS is implemented in pure Java and requires no particular installation procedures.
 It is provided as a self-contained Java archive (.jar) and it can be downloaded from [GitHub](https://github.com/gabriele-costa/pests/releases).
-
-**TACAS release**
-
-The TACAS release consists of a .zip archive containing:
-- `pests.jar`: the PESTS tool binary
-- `test`: a folder containing the files necessary to replicate the experiments presented at TACAS '18
-- `scp.sh` and `csp.sh`: shell scripts to replicate the experiments
 
 ## Description
 
@@ -60,6 +49,8 @@ The inputs that must be provided to the partial evaluation procedure are:
 PESTS can be used both as a *stand-alone, command line tool* and a *library*.
 
 ### PESTS as a stand-alone tool
+
+**Note:** the current release of PESTS only support CLI for non-symbolic transition systems.
 
 Open a terminal and browse to the folder containing pests.jar.
 Then type `$ java -jar pests.jar -h` to get the following help message.
@@ -122,24 +113,53 @@ corresponding to the following diagram (where all the states are final).
 ### PESTS as a library
 
 As a Java library, pests.jar must be included in the build path of the Java compiler as usual, i.e., setting the `-cp` option or adding it with a IDE-specific procedure.
-A simple and common usage scenario is the following
+
+**Non-symbolic transition system.**
+A simple and common usage scenario for deterministic finite transition systems is the following
 ```
 DFAutomatonImpl P = ... // create a specification P adding states and transitions
 DFAutomatonImpl A = ... // create the transition system A (similar to creating P)
 Set<String> S     = ... // Set of synchronous actions
 Set<String> G     = ... // Set of asynchronous actions
 
-DFAutomatonImpl PP = Projection.unify(Projection.partialA(P, A, G, S), S);
+DFAutomatonImpl PP = Projection.unify(Projection.partialA(P, A, S, G), G);
 ```
 
 Here the most relevant classes and methods are:
 - Class `it.unige.automata.impl.DFAutomatonImpl`: a concrete implementation of a DFA.
 - Class `it.unige.automata.impl.NFAutomatonImpl`: a concrete implementation of a NFA.
 - Class `it.unige.parteval.Projection`: utility class implementing the core algorithms.
-- Method `partialA`: the implementation of the quotienting algorithm (Table 2 of the paper).
-- Method `unify`: the implementation of the unification algorithm (Table 3 of the paper).
+- Method `partialA`: the implementation of the quotienting algorithm.
+- Method `unify`: the implementation of the unification algorithm.
+
+**Symbolic transition systems.**
+Instead, for the partial evaluation of symbolic transition systems the common usage scenario is
+```
+EventAutomaton P = ... // create a specification P adding states and symbolic transitions
+EventAutomaton A = ... // create the symbolic transition system A (similar to creating P)
+Set<String> S    = ... // Set of synchronous symbolic events
+Set<String> G    = ... // Set of asynchronous symbolic events
+		
+EventAutomaton PP = Projection.unifyS(Projection.partialS(P, A, S, G), G);
+```
 
 Javadoc describing the meaning and functionalities of the relevant classes are provided with the PESTS source code.
+
+## TACAS Experiments
+
+Below we explain how to replicate the experiments presented a TACAS 2018.
+
+### TACAS virtual machine instructions
+
+1. open a terminal and type `$ java -version` to check that a JRE is correctly installed and its version.
+2. if no JRE is installed, install it through `$ sudo apt install default-jre`.
+
+**TACAS release**
+
+The TACAS release consists of a .zip archive containing:
+- `pests.jar`: the PESTS tool binary
+- `test`: a folder containing the files necessary to replicate the experiments presented at TACAS '18
+- `scp.sh` and `csp.sh`: shell scripts to replicate the experiments
 
 ## How to run the TACAS paper experiments
 
