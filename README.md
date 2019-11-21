@@ -20,6 +20,7 @@ The last stable version of the tool is **PESTS version 1.2 (JAR)** available at 
 
 The instructions for replicating the [TACAS experiments](#tacas-experiments) presented in 
 > *Gabriele Costa, David Basin, Chiara Bodei, Pierpaolo Degano, and Letterio Galletta*, `From Natural Projection to Partial Model Checking and Back’. TACAS 2018.
+
 refer to **PESTS version 1.1 (TACAS)**
 **DOI**: [10.5281/zenodo.1138898](http://dx.doi.org/10.5281/zenodo.1138898)
 
