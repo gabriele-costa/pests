@@ -189,7 +189,7 @@ To replicate the experiments table presented in the paper follow the steps below
 
 > **WARNING**: Experiments above 15 may take up to some hours.
 
-## Further tests and and examples
+## Flexible manufacturing system case study
 
 The package `it.unige.parteval.test` includes several JUnit tests and some case studies.
 Moreover, the package `it.unige.parteval.test.flexfact` provides utility classes representing the components of the [Flexible manufacturing system](http://www.rt.techfak.fau.de/FGdes/index.html).
