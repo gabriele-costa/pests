@@ -7,6 +7,8 @@ import java.util.Set;
 import org.junit.Assert.*;
 import org.junit.Test;
 
+import com.google.common.base.Equivalence;
+
 import it.unige.automata.Automaton;
 import it.unige.automata.State;
 import it.unige.automata.Transition;
@@ -532,7 +534,11 @@ public static NFAutomatonImpl partial(Automaton<TransitionImpl> P, Automaton<Tra
 	    return B.Closure(output);
 	}
 
-	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
+	
+	/*
+	 * Old implementatio of the And Move
+	 */
+	private static HashSet<State> AndMoveOld(NFAutomatonImpl B, HashSet<State> states, String a) {
 		HashSet<State> output = new HashSet<State>();
 	    boolean first = true;
 		for(State state : states)
@@ -547,5 +553,28 @@ public static NFAutomatonImpl partial(Automaton<TransitionImpl> P, Automaton<Tra
 	    	}
 	    }
 		return B.Closure(output);
+	}
+	
+	private static HashSet<State> AndMove(NFAutomatonImpl B, HashSet<State> states, String a) {
+		HashSet<State> output = new HashSet<State>();
+	    boolean first = true;
+		for(State state : states)
+	    {
+			Set<State> dst = B.trans(state, a);
+			assert(dst.size() <= 1);
+			if(first) {
+				if(dst.isEmpty())
+					return output;
+				else {
+					output = B.equivalenceClass(dst.iterator().next());
+				}
+				first = false;
+			}
+			else {
+				if(!output.containsAll(B.equivalenceClass(dst.iterator().next())))
+					return new HashSet<State>();
+	    	}
+	    }
+		return output;
 	}
 }

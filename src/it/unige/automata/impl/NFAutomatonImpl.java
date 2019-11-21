@@ -271,6 +271,24 @@ public class NFAutomatonImpl implements Automaton<TransitionImpl> {
 	    }
 	    return output;
 	}
+	
+	public HashSet<State> equivalenceClass(State s)
+	{
+		HashSet<State> output = new HashSet<State>();
+	    output.add(s);
+	 
+	    for(Transition edge : this.getTransitions()) {
+	    	if(edge.getLabel().compareTo(EPSILON) == 0) {
+	    		if(edge.getSource().compareTo(s) == 0) {
+	    			output.add(edge.getDestination());
+	    		}
+	    		else if(edge.getDestination().compareTo(s) == 0) {
+	    			output.add(edge.getSource());
+	    		}
+	    	}
+	    }
+	    return output;
+	}
 
 	public ArrayList<Transition> getForwardStar(State state) {
 		ArrayList<Transition> fs = new ArrayList<Transition>();

@@ -55,7 +55,7 @@ public class OpenCLExperiment {
 		
 	}
 	
-	@Test
+	// @Test
 	public void testCSP() {
 
 		DFAutomatonImpl P = getPolicy(8);

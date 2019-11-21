@@ -1,5 +1,5 @@
 package it.unige.automata.util;
 
-public class NFAUtilts {
+public class NFAUtils {
 
 }
